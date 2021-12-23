@@ -27,7 +27,6 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Check if user has select a county during previous app use
-    prefs.setString(constants.prefCounty, 'Benton');
     String? selectedCounty = prefs.getString(constants.prefCounty);
 
     return MaterialApp(
