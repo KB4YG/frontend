@@ -1,6 +1,8 @@
 // Preferences
-const String prefCounty = 'selectedCounty';
+const prefCounty = 'selectedCounty';
+const prefDark = 'isDark';
 
 // Navigation
-const String navSelectCounty = '/select-county';
-const String navParkingInfo = '/parking-info';
+const navSelectCounty = '/select-county';
+const navParkingInfo = '/parking-info';
+const navHome = '/home';
