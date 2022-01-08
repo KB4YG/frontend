@@ -21,12 +21,11 @@ class _LoadingState extends State<Loading> {
     String screen;
     List<AccessPoint>? locs;
     if (widget.selectedCounty == null) {
-      screen = constants.navSelectCounty;
+      screen = constants.navHome;
       locs = null;
     } else {
       screen = constants.navParkingInfo;
-      await widget.counties.refreshParkingCounts(widget.selectedCounty);
-      locs = List<AccessPoint>.from(widget.counties[widget.selectedCounty]);
+      locs = await widget.counties.refreshParkingCounts(widget.selectedCounty!);
     }
 
     // Replace loading screen with landing screen
@@ -40,7 +39,9 @@ class _LoadingState extends State<Loading> {
   void initState() {
     super.initState();
     // Wait for widget to finish binding before pushing next screen
-    pushScreen();
+    Future.delayed(Duration.zero,() async {
+      pushScreen();
+    });
   }
 
   @override
