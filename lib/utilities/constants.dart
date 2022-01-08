@@ -4,5 +4,5 @@ const prefDark = 'isDark';
 
 // Navigation
 const navSelectCounty = '/select-county';
-const navParkingInfo = '/parking-info';
+const navParkingInfo = '/parking';
 const navHome = '/home';

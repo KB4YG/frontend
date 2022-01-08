@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kb4yg/counties.dart';
 import 'package:kb4yg/screens/loading.dart';
 import 'package:kb4yg/screens/select_county.dart';
-import 'package:kb4yg/screens/parking_info.dart';
+import 'package:kb4yg/screens/parking.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
 class App extends StatelessWidget {
