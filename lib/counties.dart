@@ -52,7 +52,7 @@ class Counties {
   String elementAt(int index) => counties.keys.elementAt(index);
 
   // API function
-  Future<void> refreshParkingCounts(county) async {
+  Future<List<AccessPoint>?> refreshParkingCounts(String county) async {
     print('API CALL');
     int i = 0;
     for (var loc in counties[county]!) {
@@ -61,9 +61,10 @@ class Counties {
         counties[county]![i] = AccessPoint(loc);
       }
       // TODO: handle errors
-      counties[county]![i].getParking();
+      await counties[county]![i].getParking();
       i++;
     }
+    return List<AccessPoint>.from(counties[county]!);
   }
 
 }
