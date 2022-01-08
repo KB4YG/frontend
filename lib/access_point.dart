@@ -24,6 +24,8 @@ class AccessPoint {
     return accessPoint;
   }
 
+  String getName() => name;
+
   Future<void> getParking() async {
     try {
       // TODO: remove random numbers
