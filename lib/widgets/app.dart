@@ -45,10 +45,3 @@ class App extends StatelessWidget {
     },
   );
 }
-
-  // void toggleTheme() {
-  //   setState(() {
-  //     _themeMode = isDark ? ThemeMode.light : ThemeMode.dark;
-  //     isDark = !isDark;
-  //   });
-  // }
