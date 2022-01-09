@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
+bool isBright() => SchedulerBinding.instance!.window.platformBrightness == Brightness.light;
+
 class ThemeProvider extends ChangeNotifier {
   bool _isInitialized = false;
-  ThemeMode themeMode = ThemeMode.light;
+  ThemeMode themeMode = isBright() ? ThemeMode.light : ThemeMode.dark;
   bool get isDark => themeMode == ThemeMode.dark;
 
   Future<void> initTheme({SharedPreferences? prefs}) async {
@@ -16,6 +19,7 @@ class ThemeProvider extends ChangeNotifier {
       _isInitialized = true;
     }
   }
+
 
   void toggleTheme(bool isDark, {SharedPreferences? prefs}) async {
     print('Toggled Theme to ${ isDark ? 'Dark' : 'Light' }');
