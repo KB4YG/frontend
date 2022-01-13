@@ -15,4 +15,4 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-![Alt Text](https://github.com/clemoss/kb4yg/raw/master/docs/images/winter-break-progress-trimmed.gif)
+![Gif of App Functionality](https://github.com/clemoss/kb4yg/blob/master/docs/images/winter-progress.gif)
