@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/rendering.dart';
+import 'package:kb4yg/county.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
-final List<String> slideData = [
-  'header Text 1',
-  'header Text 2',
-  'header Text 3',
-  'header Text 4',
-  'header Text 5',
-];
 
 class Home extends StatelessWidget {
   final String title;
 
-  static const List<String> urls = ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+  static const List<String> urls = [
+    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'];
 
@@ -24,7 +18,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? selectedCounty = ModalRoute.of(context)?.settings.arguments == null ?
+    County? selectedCounty = ModalRoute.of(context)?.settings.arguments == null ?
       null : (ModalRoute.of(context)?.settings.arguments as ScreenArguments).county;
 
     return Scaffold(
@@ -33,7 +27,6 @@ class Home extends StatelessWidget {
         title: Text(title),
         centerTitle: true,
       ),
-      // body: body(_currentIndex, setCurrentIndex),
       endDrawer: const Settings(),
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 130, 30),
@@ -58,11 +51,7 @@ class Home extends StatelessWidget {
             itemCount: urls.length,
             itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
                 Container(
-                  // alignment: Alignment.center,
-                  // clipBehavior: Clip.hardEdge,
-                  // width: MediaQuery.of(context).size.width / 3,
                   decoration: BoxDecoration(
-                    // shape: BoxShape.circle,
                     border: Border.all(width: 0),
                     borderRadius: BorderRadius.circular(16.0),
                     image: DecorationImage(
