@@ -5,6 +5,7 @@ import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
 class Loading extends StatefulWidget {
+  // TODO: See if Loading() is candidate for Stateful -> Stateless
   final String? selectedCounty;
   final Counties counties;
   const Loading({Key? key, required this.selectedCounty, required this.counties}) : super(key: key);
@@ -29,10 +30,9 @@ class _LoadingState extends State<Loading> {
     }
 
     // Replace loading screen with landing screen
-    Navigator.pushReplacementNamed(context, screen, arguments: ScreenArguments(
-      county: widget.selectedCounty,
-      locations: locs
-    ));
+    Navigator.pushReplacementNamed(context, screen,
+        arguments: ScreenArguments(county: widget.counties[widget.selectedCounty])
+    );
   }
 
   @override

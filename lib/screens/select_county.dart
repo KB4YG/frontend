@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kb4yg/counties.dart';
-import 'package:kb4yg/access_point.dart';
+import 'package:kb4yg/county.dart';
+import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
-import 'package:kb4yg/widgets/settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectCounty extends StatelessWidget {
   // Single instance of all supported counties, static -> call API only once
@@ -21,9 +21,7 @@ class SelectCounty extends StatelessWidget {
     // Request updated parking spot counts
     await counties.refreshParkingCounts(county);
     // Push (if first run) or pop to parking-info
-    ScreenArguments args = ScreenArguments(county: county,
-        locations: List<AccessPoint>.from(counties[county])
-    );
+    ScreenArguments args = ScreenArguments(county: counties[county]);
     // Display ParkingInfo() screen
     if (firstRun) {
       Navigator.pushReplacementNamed(context, constants.navParkingInfo, arguments: args);
@@ -35,7 +33,7 @@ class SelectCounty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get selected county from previous screen if one was specified
-    String? selectedCounty = (ModalRoute.of(context)!.settings.arguments as ScreenArguments).county;
+    County? selectedCounty = (ModalRoute.of(context)!.settings.arguments as ScreenArguments).county;
 
     return Scaffold(
       endDrawer: const Settings(),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kb4yg/widgets/settings.dart';
+import 'package:kb4yg/widgets/fire_safety.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
-import 'package:kb4yg/widgets/settings.dart';
-
 
 class ParkingInfo extends StatefulWidget {
   const ParkingInfo({Key? key}) : super(key: key);
@@ -21,15 +21,12 @@ class _ParkingInfoState extends State<ParkingInfo> {
     dynamic result = await Navigator.pushNamed(
         context,
         constants.navSelectCounty,
-        arguments: ScreenArguments(
-            county: data[argCounty],
-            locations: data[argLocations]
-        )
+        arguments: ScreenArguments(county: data[argCounty])
     );
     // Update state with new county (if user selected one)
     if (result != null) {
       setState(() {
-        data = {argCounty: result.county, argLocations: result.locations};
+        data = {argCounty: result.county};
       });
     }
   }
@@ -45,7 +42,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
       final settings = ModalRoute.of(context)?.settings;
       if (settings?.arguments != null) {
         final args = settings!.arguments as ScreenArguments;
-        data = {argCounty: args.county, argLocations: args.locations};
+        data = {argCounty: args.county};
       }
     }
 
@@ -58,7 +55,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
         title: TextButton.icon(
           icon: const Icon(Icons.edit_location),
           label: Text(
-            '${data[argCounty]} County',
+            '${data[argCounty].name} County',
             style: const TextStyle(color: Colors.white, fontSize: 20)),
           onPressed: pushSelectCounty,
         )
@@ -106,7 +103,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
                   ],
                   rows: [
                     // Parking Information
-                    for (var loc in data[argLocations]) DataRow(
+                    for (var loc in data[argCounty].locs) DataRow(
                       onSelectChanged: (bool? selected) {
                         if (selected == true) {
                           // TODO: add screen for location
@@ -132,6 +129,7 @@ class _ParkingInfoState extends State<ParkingInfo> {
                     ]),
                   ]),
               ),
+              FireSafety(county: data[argCounty])
           ]),
         ),
       ),
