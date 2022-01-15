@@ -6,25 +6,31 @@ final _random = Random();
 
 class AccessPoint {
   static const url = 'https://cfb32cwake.execute-api.us-west-2.amazonaws.com/';
-  final String name; // name of parking lot / recreation area
-  int spots; // number of general parking spots currently available
-  int handicap; // number of handicap parking currently available
+  final String name;    // name of parking lot / recreation area
+  int spots;            // number of general parking spots currently available
+  int handicap;         // number of handicap parking currently available
+  final String address; // address of parking lot (able to put into Google Maps
+  final double lat;     // Latitude of address, decimal degrees
+  final double lng;     // Longitude of address, decimal degrees
 
   // Constructor 1:
   //  AccessPoint loc = AccessPoint();
   //  await loc.getParking();
-  AccessPoint(this.name, {this.spots = 0, this.handicap = 0});
+  AccessPoint(this.name, {
+    required this.address,
+    required this.lat, required this.lng,
+    this.spots = 0, this.handicap = 0
+  });
 
   // Constructor 2:
-  //  AccessPoint loc = await AccessPoint.create();
-  AccessPoint._(this.name, {this.spots = 0, this.handicap = 0});
-  static Future<AccessPoint> create(name) async {
-    var accessPoint = AccessPoint._(name);
+  //  AccessPoint loc = await AccessPoint.create({parameters});
+  AccessPoint._(this.name, this.address, this.lat, this.lng,
+      {this.spots = 0, this.handicap = 0});
+  static Future<AccessPoint> create(name, addr, lat, long) async {
+    var accessPoint = AccessPoint._(name, addr, lat, long);
     await accessPoint.getParking();
     return accessPoint;
   }
-
-  String getName() => name;
 
   Future<void> getParking() async {
     try {
@@ -41,7 +47,6 @@ class AccessPoint {
     } on NoSuchMethodError {
       print('!!!API IS DOWN!!!');
     }
-
   }
 
 }
