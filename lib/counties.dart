@@ -43,7 +43,27 @@ class Counties {
               address: 'Cardwell Hill Dr', // Philomath
               lat: 44.601518,
               lng: -123.423991),
-        ])
+        ]),
+        'Linn': County('Linn', locs: [
+          // coordinates from https://www.gps-coordinates.net/
+          AccessPoint('Loc 1',
+              address: '980 NW Panorama Dr', lat: 44.577511, lng: -123.36783),
+          // AccessPoint('Oak Creek Preserve',
+          //     lat: 2, lng: 2),
+          AccessPoint('Loc 2',
+              address: '6460 NW Oak Creek Dr',
+              lat: 44.5687743,
+              lng: -123.3335923),
+          AccessPoint('Loc 3',
+              address: '2778 NW Sulphur Springs Rd',
+              // Many different parking spots
+              lat: 44.632795,
+              lng: -123.281928),
+          AccessPoint('Loc 4',
+              address: 'Cardwell Hill Dr', // Philomath
+              lat: 44.601518,
+              lng: -123.423991),
+        ]),
       };
       hasData = true;
     }
