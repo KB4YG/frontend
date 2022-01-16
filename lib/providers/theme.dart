@@ -1,34 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
-bool isBright() => SchedulerBinding.instance!.window.platformBrightness == Brightness.light;
 
 class ThemeProvider extends ChangeNotifier {
-  bool _isInitialized = false;
-  ThemeMode themeMode = isBright() ? ThemeMode.light : ThemeMode.dark;
+  // Member variables
+  final SharedPreferences prefs;
+  late ThemeMode themeMode;
   bool get isDark => themeMode == ThemeMode.dark;
 
-  Future<void> initTheme({SharedPreferences? prefs}) async {
-    if (!_isInitialized) {
-      print('Initialized Theme Provider');
-      prefs ??= await SharedPreferences.getInstance();
-      final bool? isDark = prefs.getBool(constants.prefDark);
-      themeMode = isDark == true ? ThemeMode.dark : ThemeMode.light;
-      _isInitialized = true;
-    }
+  // Constructor
+  ThemeProvider({required this.prefs}) {
+    print('Initialized Theme Provider');
+    final darkPref = prefs.getBool(constants.prefDark);
+    themeMode = darkPref == true ? ThemeMode.dark : ThemeMode.light;
   }
 
-
-  void toggleTheme(bool isDark, {SharedPreferences? prefs}) async {
-    print('Toggled Theme to ${ isDark ? 'Dark' : 'Light' }');
-    prefs ??= await SharedPreferences.getInstance();
+  void toggleTheme(bool isDark) async {
+    print('Toggled Theme to ${isDark ? 'Dark' : 'Light'}');
     prefs.setBool(constants.prefDark, isDark);
     themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
+
+  @override
+  String toString() => 'ThemeProvider(themeMode: $themeMode, isDark: $isDark}';
 }
+
 
 class Themes {
   // TODO: add themes
