@@ -5,26 +5,24 @@ import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
-
 class Home extends StatelessWidget {
-  final String title;
-
   static const List<String> urls = [
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'];
+    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
+  ];
 
-  const Home({Key? key, required this.title}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    County? selectedCounty = ModalRoute.of(context)?.settings.arguments == null ?
-      null : (ModalRoute.of(context)?.settings.arguments as ScreenArguments).county;
+    County? selectedCounty = ModalRoute.of(context)?.settings.arguments == null
+      ? null : (ModalRoute.of(context)?.settings.arguments as ScreenArguments).county;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text(title),
+        title: const Text(constants.title),
         centerTitle: true,
       ),
       endDrawer: const Settings(),
@@ -33,10 +31,8 @@ class Home extends StatelessWidget {
         child: FloatingActionButton.extended(
             hoverColor: Colors.orange,
             onPressed: () {
-              Navigator.pushReplacementNamed(
-                context,
-                constants.navSelectCounty,
-                arguments: ScreenArguments(county: selectedCounty));
+              Navigator.pushNamed(context, constants.routeParking,
+                  arguments: ScreenArguments(county: selectedCounty));
             },
             label: const Text('Let\'s begin')),
       ),
@@ -49,7 +45,8 @@ class Home extends StatelessWidget {
               enlargeCenterPage: true,
             ),
             itemCount: urls.length,
-            itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+            itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) =>
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(width: 0),
@@ -58,10 +55,9 @@ class Home extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       fit: BoxFit.fitWidth,
                       image: NetworkImage(urls[itemIndex]),
+                    ),
                   ),
-                  ),
-                )
-            ),
+                )),
         ),
       ),
     );
