@@ -7,18 +7,16 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      semanticLabel: 'Settings',
-      child: ListView(children: const [
-        SizedBox(
-          height: 55,
-          child: DrawerHeader(
-            margin: EdgeInsets.zero,
-            child: Center(
-                child: Text('Settings',textScaleFactor: 1.2)
+        semanticLabel: 'Settings',
+        child: ListView(children: const [
+          SizedBox(
+            height: 55,
+            child: DrawerHeader(
+              margin: EdgeInsets.zero,
+              child: Center(child: Text('Settings', textScaleFactor: 1.2)),
             ),
           ),
-        ),
-        ThemeSwitch()
-      ]));
+          ThemeSwitch()
+        ]));
   }
 }
