@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:kb4yg/counties.dart';
+import 'package:kb4yg/models/counties.dart';
 import 'package:kb4yg/widgets/app.dart';
 
 void main() async {

@@ -1,4 +1,4 @@
-import 'package:kb4yg/access_point.dart';
+import 'package:kb4yg/models/access_point.dart';
 
 class County {
   final String name;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kb4yg/county.dart';
+import 'package:kb4yg/models/county.dart';
+import 'package:kb4yg/screens/parking_area.dart' show pushLocationScreen;
 
 class ParkingTable extends StatelessWidget {
   final County county;
@@ -45,6 +46,7 @@ class ParkingTable extends StatelessWidget {
                 if (selected == true) {
                   // TODO: add screen for location
                   print(loc.name);
+                  pushLocationScreen(context, loc);
                 }
               },
               cells: [

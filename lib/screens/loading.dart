@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kb4yg/counties.dart';
+import 'package:kb4yg/models/counties.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
