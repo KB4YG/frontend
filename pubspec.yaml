@@ -38,7 +38,13 @@ dependencies:
   http: ^0.13.4
   provider: ^6.0.2
   carousel_slider: ^4.0.0
+<<<<<<< Updated upstream
   latlong2: ^0.8.1
+=======
+  bulleted_list: ^0.0.1+0.1a
+  map_launcher: ^2.1.2
+  flutter_svg: ^1.0.1
+>>>>>>> Stashed changes
 
 dev_dependencies:
   flutter_test:
