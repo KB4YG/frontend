@@ -157,17 +157,20 @@ class FireSafety extends StatelessWidget {
               // TODO: make fire data table less ugly
               SelectableText(fireDanger.message, textScaleFactor: 1.2),
               if (fireDanger.nearestFires.isNotEmpty)
-                DataTable(
-                  columns: const [
-                    DataColumn(label: Text('Location')),
-                    DataColumn(label: Text('Nearest Fire'))
-                  ], rows: [
-                    for (var loc in fireDanger.nearestFires.entries)
-                      DataRow(cells: [
-                        DataCell(SelectableText(loc.key)),
-                        DataCell(SelectableText('${loc.value} miles'))
-                      ])
-                  ],
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    columns: const [
+                      DataColumn(label: Text('Location')),
+                      DataColumn(label: Text('Nearest Fire'))
+                    ], rows: [
+                      for (var loc in fireDanger.nearestFires.entries)
+                        DataRow(cells: [
+                          DataCell(SelectableText(loc.key)),
+                          DataCell(SelectableText('${loc.value} miles'))
+                        ])
+                    ],
+                  ),
                 ),
             ],
           );
