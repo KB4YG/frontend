@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:kb4yg/counties.dart';
-import 'package:kb4yg/access_point.dart';
+import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
-import 'package:kb4yg/widgets/settings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 
 class SelectCounty extends StatelessWidget {
   // Single instance of all supported counties, static -> call API only once
   // when SelectCounty is first initialized
   final Counties counties;
   final SharedPreferences prefs;
-  const SelectCounty({required this.prefs, required this.counties, Key? key}) : super(key: key);
+  final String? lastCounty;
+  const SelectCounty({required this.prefs, required this.counties,
+    this.lastCounty, Key? key}) : super(key: key);
 
   // Refresh parking spot counts for all locations in specified county
   // firstRun specifies whether to push & replace (true) or pop (false) screen
-  void updateCounty(BuildContext context, String county, bool firstRun) async {
+  void updateCounty(BuildContext context, String county) async {
     // Store selected county in user's local storage
     prefs.setString(constants.prefCounty, county);
-    // Request updated parking spot counts
-    await counties.refreshParkingCounts(county);
     // Push (if first run) or pop to parking-info
-    ScreenArguments args = ScreenArguments(county: county,
-        locations: List<AccessPoint>.from(counties[county])
-    );
+    ScreenArguments args = ScreenArguments(county: counties[county]);
     // Display ParkingInfo() screen
-    if (firstRun) {
-      Navigator.pushReplacementNamed(context, constants.navParkingInfo, arguments: args);
-    } else {
+    if (county != lastCounty) {
+      // Request updated parking spot counts
+      await counties.refreshParkingCounts(county);
+      // Replace SelectCounty
+      final routeName = '${constants.routeParking}/${county.toLowerCase()}';
+      Navigator.pushReplacementNamed(context, routeName, arguments: args);
+    }
+    else {
       Navigator.pop(context, args);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get selected county from previous screen if one was specified
-    String? selectedCounty = (ModalRoute.of(context)!.settings.arguments as ScreenArguments).county;
-
     return Scaffold(
       endDrawer: const Settings(),
       appBar: AppBar(
@@ -56,11 +55,10 @@ class SelectCounty extends StatelessWidget {
               return Card(
                 margin: const EdgeInsets.all(8.0),
                 child: TextButton(
-                  onPressed: () => updateCounty(context, county, selectedCounty == null),
+                  onPressed: () => updateCounty(context, county),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      '${county.toUpperCase()} COUNTY',
+                    child: Text('${county.toUpperCase()} COUNTY',
                       textScaleFactor: 1.3,
                     ),
                   ),

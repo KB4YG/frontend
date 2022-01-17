@@ -1,11 +1,12 @@
-import 'package:kb4yg/access_point.dart';
+import 'package:kb4yg/county.dart';
 
-const argCounty = 'county';
-const argLocations = 'locations';
+const argCounty = 0;
 
 class ScreenArguments {
-  final String? county;
-  final List<AccessPoint>? locations;
+  final County? county;
 
-  ScreenArguments({this.county, this.locations});
+  ScreenArguments({this.county});
+
+  @override
+  String toString() => 'ScreenArguments($county)';
 }

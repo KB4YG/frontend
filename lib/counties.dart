@@ -1,7 +1,8 @@
-import 'access_point.dart';
+import 'package:kb4yg/county.dart';
+import 'package:kb4yg/access_point.dart';
 
 class Counties {
-  late final Map<String, List<dynamic>> counties;
+  late final Map<String, County> counties;
   bool hasData = false;
 
   // Constructor 1:
@@ -11,9 +12,8 @@ class Counties {
 
   // Constructor 2:
   //  Counties counties = await Counties.create()
-  Counties._();
   static Future<Counties> create() async {
-    Counties counties = Counties._();
+    Counties counties = Counties();
     await counties.init();
     return counties;
   }
@@ -24,19 +24,46 @@ class Counties {
       // TODO: connect API with Counties()
       print('Created New Counties()');
       counties = {
-        'Linn': [
-          'Loc 1',
-          'Loc 2',
-          'Loc 3',
-          'Loc 4',
-        ],
-        'Benton': [
-          'Fitton Green',
-          'Oak Creek Preserve',
-          'Bald Hill',
-          'McDonald-Dunn Forest',
-          'Cardwell Hill',
-        ]
+        'Benton': County('Benton', locs: [
+          // coordinates from https://www.gps-coordinates.net/
+          AccessPoint('Fitton Green',
+              address: '980 NW Panorama Dr', lat: 44.577511, lng: -123.36783),
+          // AccessPoint('Oak Creek Preserve',
+          //     lat: 2, lng: 2),
+          AccessPoint('Bald Hill',
+              address: '6460 NW Oak Creek Dr',
+              lat: 44.5687743,
+              lng: -123.3335923),
+          AccessPoint('McDonald-Dunn Forest',
+              address: '2778 NW Sulphur Springs Rd',
+              // Many different parking spots
+              lat: 44.632795,
+              lng: -123.281928),
+          AccessPoint('Cardwell Hill',
+              address: 'Cardwell Hill Dr', // Philomath
+              lat: 44.601518,
+              lng: -123.423991),
+        ]),
+        'Linn': County('Linn', locs: [
+          // coordinates from https://www.gps-coordinates.net/
+          AccessPoint('Loc 1',
+              address: '980 NW Panorama Dr', lat: 44.577511, lng: -123.36783),
+          // AccessPoint('Oak Creek Preserve',
+          //     lat: 2, lng: 2),
+          AccessPoint('Loc 2',
+              address: '6460 NW Oak Creek Dr',
+              lat: 44.5687743,
+              lng: -123.3335923),
+          AccessPoint('Loc 3',
+              address: '2778 NW Sulphur Springs Rd',
+              // Many different parking spots
+              lat: 44.632795,
+              lng: -123.281928),
+          AccessPoint('Loc 4',
+              address: 'Cardwell Hill Dr', // Philomath
+              lat: 44.601518,
+              lng: -123.423991),
+        ]),
       };
       hasData = true;
     }
@@ -47,24 +74,17 @@ class Counties {
   operator []=(String key, dynamic value) => counties[key] = value; // set
 
   // Accessors
-  List getLocations(String county) => counties[county]!;
+  List getLocations(String county) => counties[county]!.locs;
   int length() => counties.keys.length;
   String elementAt(int index) => counties.keys.elementAt(index);
 
   // API function
   Future<List<AccessPoint>?> refreshParkingCounts(String county) async {
     print('API CALL');
-    int i = 0;
-    for (var loc in counties[county]!) {
-      if (loc is! AccessPoint) {
-        print('Converted $loc to AccessPoint()');
-        counties[county]![i] = AccessPoint(loc);
-      }
+    for (var loc in counties[county]!.locs) {
       // TODO: handle errors
-      await counties[county]![i].getParking();
-      i++;
+      await loc.getParking();
     }
-    return List<AccessPoint>.from(counties[county]!);
+    return counties[county]!.locs;
   }
-
 }
