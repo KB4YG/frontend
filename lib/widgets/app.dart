@@ -1,45 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:kb4yg/providers/theme.dart';
-import 'package:kb4yg/screens/home.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kb4yg/counties.dart';
-import 'package:kb4yg/screens/loading.dart';
-import 'package:kb4yg/screens/select_county.dart';
-import 'package:kb4yg/screens/parking_Info.dart';
+import 'package:kb4yg/utilities/router.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/providers/theme.dart';
+import 'package:provider/provider.dart' show Provider, ChangeNotifierProvider;
+import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
+
 
 class App extends StatelessWidget {
-  static const title = 'Know Before You Go';
   final SharedPreferences prefs;
   final Counties counties;
-  const App({Key? key, required this.prefs, required this.counties})
-      : super(key: key);
+  late final String landingPage;
+
+  App({Key? key, required this.prefs, required this.counties}) : super(key: key) {
+    final lastCounty = prefs.getString(constants.prefCounty);
+    landingPage = lastCounty == null ?
+      constants.routeHome : '${constants.routeParking}/${lastCounty.toLowerCase()}';
+  }
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (context) => ThemeProvider(),
-        builder: (context, _) {
-          // Check if user selected a county during previous app use
-          final String? selectedCounty = prefs.getString(constants.prefCounty);
-          final themeProvider = Provider.of<ThemeProvider>(context);
-          themeProvider.initTheme(prefs: prefs);
+    create: (context) => ThemeProvider(prefs: prefs),
+    builder: (context, _) {
+      // Get current theme (listening with ChangeNotifierProvider())
+      final themeProvider = Provider.of<ThemeProvider>(context);
 
-          return MaterialApp(
-              title: title,
-              themeMode: themeProvider.themeMode,
-              theme: Themes.lightTheme,
-              darkTheme: Themes.darkTheme,
-              routes: {
-                '/': (context) => Loading(
-                      selectedCounty: selectedCounty,
-                      counties: counties,
-                    ),
-                constants.navHome: (context) => const Home(title: title),
-                constants.navSelectCounty: (context) =>
-                    SelectCounty(prefs: prefs, counties: counties),
-                constants.navParkingInfo: (context) => const ParkingInfo(),
-              });
-        },
-      );
+      return MaterialApp(
+        title: constants.title,
+        themeMode: themeProvider.themeMode,
+        theme: Themes.lightTheme,
+        darkTheme: Themes.darkTheme,
+        initialRoute: landingPage,
+        onGenerateRoute: (settings) {
+          return routeHandler(settings, counties, prefs);
+        });
+    }
+  );
 }
