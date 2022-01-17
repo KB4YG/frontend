@@ -6,10 +6,10 @@ final _random = Random();
 
 class AccessPoint {
   static const url = 'https://cfb32cwake.execute-api.us-west-2.amazonaws.com/';
-  final String name;    // name of parking lot / recreation area
-  int spots;            // number of general parking spots currently available
-  int handicap;         // number of handicap parking currently available
-  final String address; // address of parking lot (able to put into Google Maps
+  final String name;    // Name of parking lot / recreation area
+  int spots;            // Number of general parking spots currently available
+  int handicap;         // Number of handicap parking currently available
+  final String address; // Address of parking lot (able to put into Google Maps
   final double lat;     // Latitude of address, decimal degrees
   final double lng;     // Longitude of address, decimal degrees
 
