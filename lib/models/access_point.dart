@@ -35,8 +35,9 @@ class AccessPoint {
   Future<void> getParking() async {
     try {
       // TODO: remove random numbers
-      // Response response = await get(Uri.parse('$url$name'));
+      // Response response = await get(Uri.parse('$url'), headers: {'Location': name});
       // Map data = jsonDecode(response.body);
+      // print(data);
       Map data = {'spots': _random.nextInt(10), 'handicap': _random.nextInt(10)};
       try {
         spots = data['spots'];
@@ -49,4 +50,6 @@ class AccessPoint {
     }
   }
 
+  @override
+  String toString() => name;
 }
