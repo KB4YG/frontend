@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kb4yg/counties.dart';
+import 'package:kb4yg/models/counties.dart';
 import 'package:kb4yg/screens/parking.dart';
+import 'package:kb4yg/screens/parking_area.dart';
 import 'package:kb4yg/screens/select_county.dart';
 import 'package:kb4yg/screens/home.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
@@ -19,8 +20,9 @@ MaterialPageRoute routeHandler(RouteSettings settings, Counties counties, Shared
         builder: (context) => const Home());
   }
 
-  // Handle 'parking/*'
   var uri = Uri.parse(settings.name!);
+
+  // Handle 'parking/*'
   if (uri.pathSegments.first == constants.routeParkingName) {
     // '/parking/:county'
     if (uri.pathSegments.length == 2) {
@@ -39,8 +41,7 @@ MaterialPageRoute routeHandler(RouteSettings settings, Counties counties, Shared
     // '/parking/' -> SelectCounty
     else if (uri.pathSegments.length == 1) {
       // Get last selected county if available
-      final ScreenArguments? args = settings.arguments == null ?
-      null : settings.arguments as ScreenArguments;
+      final args = ScreenArguments.getArgs(settings);
 
       return MaterialPageRoute(
           maintainState: false,
@@ -53,6 +54,29 @@ MaterialPageRoute routeHandler(RouteSettings settings, Counties counties, Shared
       );
     }
   }
+
+  else if (uri.pathSegments.length == 2 && uri.pathSegments.first == constants.routeLocationName) {
+    // var county = uri.pathSegments[1];
+    // county = county[0].toUpperCase() + county.substring(1);
+    //
+    // // Push Parking() screen if valid county specified in url
+    // if (counties[county] != null) {
+    //   return MaterialPageRoute(
+    //       maintainState: false,
+    //       settings: settings,
+    //       builder: (context) => Parking(county: counties[county]));
+    // }
+    final args = ScreenArguments.getArgs(settings);
+    if (args != null && args.location != null) {
+      return MaterialPageRoute(
+          maintainState: false,
+          settings: settings,
+          builder: (context) => ParkingArea(location: args.location!)
+      );
+    }
+  }
+
+
 
   // TODO: create unknown/error screen
   return MaterialPageRoute(

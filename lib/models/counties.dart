@@ -1,5 +1,5 @@
-import 'package:kb4yg/county.dart';
-import 'package:kb4yg/access_point.dart';
+import 'package:kb4yg/models/county.dart';
+import 'package:kb4yg/models/access_point.dart';
 
 class Counties {
   late final Map<String, County> counties;
