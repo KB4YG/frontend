@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:kb4yg/models/county.dart';
+import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
@@ -16,15 +16,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    County? selectedCounty = ModalRoute.of(context)?.settings.arguments == null
-      ? null : (ModalRoute.of(context)?.settings.arguments as ScreenArguments).county;
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text(constants.title),
-        centerTitle: true,
-      ),
+      appBar: const Header(title: Text(constants.title)),
       endDrawer: const Settings(),
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 130, 30),
@@ -32,7 +25,7 @@ class Home extends StatelessWidget {
             hoverColor: Colors.orange,
             onPressed: () {
               Navigator.pushNamed(context, constants.routeParking,
-                  arguments: ScreenArguments(county: selectedCounty));
+                  arguments: ScreenArguments());
             },
             label: const Text('Let\'s begin')),
       ),

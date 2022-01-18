@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/screens/help.dart';
 import 'package:kb4yg/widgets/bottom_nav_bar.dart';
+import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/parking_table.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/widgets/fire_safety.dart';
@@ -58,9 +59,7 @@ class Parking extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: const Settings(),
-      appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
+      appBar: Header(
           title: TextButton.icon(
             icon: const Icon(Icons.edit_location),
             label: Text('$county County',

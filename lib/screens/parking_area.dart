@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/access_point.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
+import 'package:kb4yg/widgets/header.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
@@ -25,8 +26,7 @@ class ParkingArea extends StatelessWidget {
     //map_launcher code
     openMapsSheet(context) async {
       try {
-        final coords = Coords(37.759392, -122.5107336);
-        const title = "Ocean Beach";
+        final coordinates = Coords(location.lat, location.lng);
         final availableMaps = await MapLauncher.installedMaps;
 
         showModalBottomSheet(
@@ -34,24 +34,22 @@ class ParkingArea extends StatelessWidget {
           builder: (BuildContext context) {
             return SafeArea(
               child: SingleChildScrollView(
-                child: Container(
-                  child: Wrap(
-                    children: <Widget>[
-                      for (var map in availableMaps)
-                        ListTile(
-                          onTap: () => map.showMarker(
-                            coords: coords,
-                            title: title,
-                          ),
-                          title: Text(map.mapName),
-                          leading: SvgPicture.asset(
-                            map.icon,
-                            height: 30.0,
-                            width: 30.0,
-                          ),
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () => map.showMarker(
+                          coords: coordinates,
+                          title: location.name,
                         ),
-                    ],
-                  ),
+                        title: Text(map.mapName),
+                        leading: SvgPicture.asset(
+                          map.icon,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                      ),
+                  ],
                 ),
               ),
             );
@@ -193,11 +191,11 @@ class ParkingArea extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        leading: const BackButton(),
-        automaticallyImplyLeading: true,
-        centerTitle: true,
-        elevation: 0,
+      appBar: Header(
+        // leading: const BackButton(),
+        // automaticallyImplyLeading: true,
+        // centerTitle: true,
+        // elevation: 0,
         title: Text(location.name,
           style: const TextStyle(color: Colors.white, fontSize: 20),
         ),

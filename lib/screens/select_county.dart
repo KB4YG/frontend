@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/counties.dart';
+import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
@@ -38,11 +39,8 @@ class SelectCounty extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: const Settings(),
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text('Select a County'),
-        centerTitle: true,
-        leading: (ModalRoute.of(context)?.canPop ?? false) ? const BackButton() : null
+      appBar: const Header(
+        title: Text('Select a County')
       ),
       // If first time running SelectCounty(), call API to get list of supported counties
       body: Center(
