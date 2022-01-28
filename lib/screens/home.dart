@@ -1,12 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:beamer/beamer.dart' show Beamer;
+import 'package:beamer/beamer.dart' show BeamPage, Beamer;
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
 
 
 class HomeScreen extends StatelessWidget {
+  static const path = constants.routeHome;
+  static const beamPage = BeamPage(
+      key: ValueKey('home'), title: 'Home - KB4YG', child: HomeScreen());
   static const List<String> urls = [
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
