@@ -23,7 +23,7 @@ class _LoadingState extends State<Loading> {
     if (widget.selectedCounty == null) {
       screen = constants.routeHome;
     } else {
-      screen = constants.routeParkingName;
+      screen = constants.routeLocations;
       await widget.counties.refreshParkingCounts(widget.selectedCounty!);
     }
 
