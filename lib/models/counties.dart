@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart' show BuildContext;
 import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/models/access_point.dart';
+import 'package:kb4yg/utilities/screen_arguments.dart';
+import 'package:provider/provider.dart' show Provider;
 
 class Counties {
   late final Map<String, County> counties;
@@ -18,13 +21,13 @@ class Counties {
     return counties;
   }
 
-  // API Call to get all counties and corresponding locations
+  // Initial API call to get all counties and corresponding locations
   Future<void> init() async {
     if (!hasData) {
       // TODO: connect API with Counties()
       print('Created New Counties()');
       counties = {
-        'Benton': County('Benton', locs: [
+        'benton': County('Benton', locs: [
           // coordinates from https://www.gps-coordinates.net/
           AccessPoint('Fitton Green',
               address: '980 NW Panorama Dr', lat: 44.577511, lng: -123.36783),
@@ -44,7 +47,7 @@ class Counties {
               lat: 44.601518,
               lng: -123.423991),
         ]),
-        'Linn': County('Linn', locs: [
+        'linn': County('Linn', locs: [
           // coordinates from https://www.gps-coordinates.net/
           AccessPoint('Loc 1',
               address: '980 NW Panorama Dr', lat: 44.577511, lng: -123.36783),
@@ -69,15 +72,6 @@ class Counties {
     }
   }
 
-  // Overridden operators
-  operator [](String? key) => key == null ? null : counties[key];
-  operator []=(String key, dynamic value) => counties[key] = value; // set
-
-  // Accessors
-  List getLocations(String county) => counties[county]!.locs;
-  int length() => counties.keys.length;
-  String elementAt(int index) => counties.keys.elementAt(index);
-
   // API function
   Future<List<AccessPoint>?> refreshParkingCounts(String county) async {
     print('API CALL');
@@ -87,4 +81,30 @@ class Counties {
     }
     return counties[county]!.locs;
   }
+
+  // TODO: replace this inefficient search with data base access
+  AccessPoint? getRecArea(String recreationAreaName) {
+    for (var county in counties.values) {
+      for (var loc in county.locs) {
+        if (sanitizeUrl(loc.name) == recreationAreaName) {
+          return loc;
+        }
+      }
+    }
+    return null;
+  }
+
+  // Accessors
+  int get length => counties.keys.length;
+  List getLocations(String county) => counties[county]!.locs;
+  String elementAt(int index) => counties.keys.elementAt(index);
+
+  // Context accessor (final counties = Counties.of(context);
+  static Counties of(BuildContext context) =>
+      Provider.of<Counties>(context, listen: false);
+
+  // Overridden operators
+  operator [](String? key) => key == null ? null : counties[key];
+  operator []=(String key, dynamic value) => counties[key] = value; // set
+
 }
