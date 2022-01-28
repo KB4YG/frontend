@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:latlong2/latlong.dart' show Distance, LatLng;
 import 'package:kb4yg/models/access_point.dart';
 import 'package:kb4yg/models/county.dart';
+import 'package:latlong2/latlong.dart' show Distance, LatLng;
 
 enum Danger {low, moderate, high}
 
@@ -30,17 +29,20 @@ class _FireDangerLevel {
     switch (danger) {
       case Danger.high:
         info = 'High';
-        message = 'There is at least one fire within likely spreading distance. DO NOT GO TO RECREATION AREA.';
+        message = 'There is at least one fire within likely spreading distance. '
+            'Recreation at the following locations is not recommended.';
         icon = const Icon(Icons.warning, color: Colors.red, size: 60);
         break;
       case Danger.moderate:
         info = 'Moderate';
-        message = 'There is at least one fire within 10 miles of a recreation area. Likelihood of spreading to area is low. Remain cautious.';
+        message = 'There is at least one fire within 10 miles of a recreation '
+            'area. Likelihood of spreading is low. Remain cautious.';
         icon = const Icon(Icons.warning_amber_rounded, color: Colors.amber, size: 60);
         break;
       default:
         info = 'Low';
-        message = 'There are no known fires nearby that are within likely spreading distance.';
+        message = 'There are no known fires nearby that are within likely '
+            'spreading distance.';
         icon = const Icon(Icons.check_circle_outline, color: Colors.green, size: 60);
     }
 
@@ -110,7 +112,7 @@ class FireSafety extends StatelessWidget {
   final County county;
   // TODO: remove unused fields (or use them)
   static const url = "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/Current_WildlandFire_Locations/FeatureServer/0/query?where=POOState%20%3D%20'US-OR'&outFields=POOState,POOCounty,FireMgmtComplexity,FireOutDateTime,ModifiedOnDateTime_dt,CreatedOnDateTime_dt,ContainmentDateTime,ControlDateTime&outSR=4326&f=json";
-  FireSafety({Key? key, required this.county}) : super(key: key);
+  const FireSafety({Key? key, required this.county}) : super(key: key);
 
   Future<_FireDangerLevel> getData() async {
     await Future<void>.delayed(const Duration(seconds: 2));
@@ -131,10 +133,10 @@ class FireSafety extends StatelessWidget {
     // final Map <String, dynamic> data = {"objectIdFieldName":"OBJECTID","uniqueIdField":{"name":"OBJECTID","isSystemMaintained":true},"globalIdFieldName":"GlobalID","geometryType":"esriGeometryPoint","spatialReference":{"wkid":4326,"latestWkid":4326},"fields":[{"name":"POOState","type":"esriFieldTypeString","alias":"POO State","sqlType":"sqlTypeOther","length":6,"domain":null,"defaultValue":null},{"name":"POOCounty","type":"esriFieldTypeString","alias":"POO County","sqlType":"sqlTypeOther","length":100,"domain":null,"defaultValue":null},{"name":"FireMgmtComplexity","type":"esriFieldTypeString","alias":"Fire Mgmt Complexity","sqlType":"sqlTypeOther","length":25,"domain":null,"defaultValue":null},{"name":"FireOutDateTime","type":"esriFieldTypeDate","alias":"Fire Out Date Time","sqlType":"sqlTypeOther","length":8,"domain":null,"defaultValue":"-2209161600000"},{"name":"ModifiedOnDateTime_dt","type":"esriFieldTypeDate","alias":"Modified On Date Time","sqlType":"sqlTypeOther","length":8,"domain":null,"defaultValue":"-2209161600000"},{"name":"CreatedOnDateTime_dt","type":"esriFieldTypeDate","alias":"Created On Date Time","sqlType":"sqlTypeOther","length":8,"domain":null,"defaultValue":"-2209161600000"},{"name":"ContainmentDateTime","type":"esriFieldTypeDate","alias":"Containment Date Time","sqlType":"sqlTypeOther","length":8,"domain":null,"defaultValue":"-2209161600000"},{"name":"ControlDateTime","type":"esriFieldTypeDate","alias":"Control Date Time","sqlType":"sqlTypeOther","length":8,"domain":null,"defaultValue":"-2209161600000"}],"features":[{"attributes":{"POOState":"US-OR","POOCounty":"Douglas","FireMgmtComplexity":null,"FireOutDateTime":null,"ModifiedOnDateTime_dt":1642006868000,"CreatedOnDateTime_dt":1621283634343,"ContainmentDateTime":null,"ControlDateTime":null},"geometry":{"x":-122.9040140285088,"y":42.948805284794119}},{"attributes":{"POOState":"US-OR","POOCounty":"Deschutes","FireMgmtComplexity":null,"FireOutDateTime":null,"ModifiedOnDateTime_dt":1642101235267,"CreatedOnDateTime_dt":1642100979657,"ContainmentDateTime":null,"ControlDateTime":null},"geometry":{"x":-121.52851397615072,"y":43.854215474768615}}]};
 
     // High danger
-    final Map <String, dynamic> data = {"objectIdFieldName":"OBJECTID","uniqueIdField":{"name":"OBJECTID","isSystemMaintained":true},"globalIdFieldName":"GlobalID","geometryType":"esriGeometryPoint","spatialReference":{"wkid":4326,"latestWkid":4326},"fields":[{"name":"POOState","type":"esriFieldTypeString","alias":"POO State","sqlType":"sqlTypeOther","length":6,"domain":null,"defaultValue":null},{"name":"POOCounty","type":"esriFieldTypeString","alias":"POO County","sqlType":"sqlTypeOther","length":100,"domain":null,"defaultValue":null}],"features":[{"attributes":{"POOState":"US-OR","POOCounty":"Douglas"},"geometry":{"x":-123.36783,"y":44.577511}}]};
+    // final Map <String, dynamic> data = {"objectIdFieldName":"OBJECTID","uniqueIdField":{"name":"OBJECTID","isSystemMaintained":true},"globalIdFieldName":"GlobalID","geometryType":"esriGeometryPoint","spatialReference":{"wkid":4326,"latestWkid":4326},"fields":[{"name":"POOState","type":"esriFieldTypeString","alias":"POO State","sqlType":"sqlTypeOther","length":6,"domain":null,"defaultValue":null},{"name":"POOCounty","type":"esriFieldTypeString","alias":"POO County","sqlType":"sqlTypeOther","length":100,"domain":null,"defaultValue":null}],"features":[{"attributes":{"POOState":"US-OR","POOCounty":"Douglas"},"geometry":{"x":-123.36783,"y":44.577511}}]};
 
     // Moderate danger
-    // final Map <String, dynamic> data = {"objectIdFieldName":"OBJECTID","uniqueIdField":{"name":"OBJECTID","isSystemMaintained":true},"globalIdFieldName":"GlobalID","geometryType":"esriGeometryPoint","spatialReference":{"wkid":4326,"latestWkid":4326},"fields":[{"name":"POOState","type":"esriFieldTypeString","alias":"POO State","sqlType":"sqlTypeOther","length":6,"domain":null,"defaultValue":null},{"name":"POOCounty","type":"esriFieldTypeString","alias":"POO County","sqlType":"sqlTypeOther","length":100,"domain":null,"defaultValue":null}],"features":[{"attributes":{"POOState":"US-OR","POOCounty":"Douglas"},"geometry":{"x":-123.36783,"y":44.7}}]};
+    final Map <String, dynamic> data = {"objectIdFieldName":"OBJECTID","uniqueIdField":{"name":"OBJECTID","isSystemMaintained":true},"globalIdFieldName":"GlobalID","geometryType":"esriGeometryPoint","spatialReference":{"wkid":4326,"latestWkid":4326},"fields":[{"name":"POOState","type":"esriFieldTypeString","alias":"POO State","sqlType":"sqlTypeOther","length":6,"domain":null,"defaultValue":null},{"name":"POOCounty","type":"esriFieldTypeString","alias":"POO County","sqlType":"sqlTypeOther","length":100,"domain":null,"defaultValue":null}],"features":[{"attributes":{"POOState":"US-OR","POOCounty":"Douglas"},"geometry":{"x":-123.36783,"y":44.7}}]};
 
     return _FireDangerLevel(data, county);
   }
