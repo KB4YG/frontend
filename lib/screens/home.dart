@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:beamer/beamer.dart' show Beamer;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
-import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 
-class Home extends StatelessWidget {
+
+class HomeScreen extends StatelessWidget {
   static const List<String> urls = [
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
   ];
 
-  const Home({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +25,13 @@ class Home extends StatelessWidget {
         child: FloatingActionButton.extended(
             hoverColor: Colors.orange,
             onPressed: () {
-              Navigator.pushNamed(context, constants.routeParking,
-                  arguments: ScreenArguments());
+              Beamer.of(context).beamToNamed(constants.routeLocations);
             },
             label: const Text('Let\'s begin')),
       ),
       body: Center(
         child: Container(
-          constraints: const BoxConstraints(minHeight: 200, maxHeight: 800),
+          constraints: const BoxConstraints(minHeight: 200, maxHeight: 600),
           child: CarouselSlider.builder(
             options: CarouselOptions(
               autoPlay: true,
