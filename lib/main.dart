@@ -1,15 +1,30 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:kb4yg/providers/theme.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kb4yg/models/counties.dart';
 import 'package:kb4yg/widgets/app.dart';
 
 void main() async {
-  // Initialize binding so SharedPreferences can interact with Flutter engine
-  WidgetsFlutterBinding.ensureInitialized();
+  // Remove "#" from URL
+  Beamer.setPathUrlStrategy();
+
   // Get preferences of user (used for theme and county parking info)
   final prefs = await SharedPreferences.getInstance();
   // Get list of counties from API
   final counties = await Counties.create();
+  // await Future.delayed(const Duration(seconds: 2));
+
   // Run application
-  return runApp(App(prefs: prefs, counties: counties));
+  return runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeProvider>(create: (context) => ThemeProvider(prefs: prefs)),
+        Provider<SharedPreferences>(create: (context) => prefs),
+        Provider<Counties>(create: (context) => counties)
+      ],
+      // child: MyApp()),
+      child: App(prefs: prefs))
+  );
 }
