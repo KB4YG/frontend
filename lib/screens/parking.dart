@@ -1,16 +1,12 @@
 import 'package:beamer/beamer.dart' show Beamer;
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/county.dart';
-import 'package:kb4yg/screens/help.dart';
-import 'package:kb4yg/widgets/bottom_nav_bar.dart';
+import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/utilities/screen_arguments.dart';
+import 'package:kb4yg/widgets/fire_safety.dart';
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/parking_table.dart';
 import 'package:kb4yg/widgets/settings.dart';
-import 'package:kb4yg/widgets/fire_safety.dart';
-import 'package:kb4yg/utilities/screen_arguments.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
-
-import 'about.dart';
 
 class CountyDetailsScreen extends StatelessWidget {
   final County county;
