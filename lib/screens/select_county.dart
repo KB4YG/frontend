@@ -3,7 +3,8 @@ import 'package:kb4yg/models/counties.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
-import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 class SelectCounty extends StatelessWidget {
   // Single instance of all supported counties, static -> call API only once
@@ -11,8 +12,9 @@ class SelectCounty extends StatelessWidget {
   final Counties counties;
   final SharedPreferences prefs;
   final String? lastCounty;
-  const SelectCounty({required this.prefs, required this.counties,
-    this.lastCounty, Key? key}) : super(key: key);
+  const SelectCounty(
+      {required this.prefs, required this.counties, this.lastCounty, Key? key})
+      : super(key: key);
 
   // Refresh parking spot counts for all locations in specified county
   // firstRun specifies whether to push & replace (true) or pop (false) screen
@@ -28,8 +30,7 @@ class SelectCounty extends StatelessWidget {
       // Replace SelectCounty
       final routeName = '${constants.routeParking}/${county.toLowerCase()}';
       Navigator.pushReplacementNamed(context, routeName, arguments: args);
-    }
-    else {
+    } else {
       Navigator.pop(context, args);
     }
   }
@@ -37,37 +38,38 @@ class SelectCounty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: const Settings(),
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text('Select a County'),
-        centerTitle: true,
-        leading: (ModalRoute.of(context)?.canPop ?? false) ? const BackButton() : null
-      ),
-      // If first time running SelectCounty(), call API to get list of supported counties
-      body: Center(
-        child: Container(
-          constraints: const BoxConstraints(minWidth: 200, maxWidth: 500),
-          child: ListView.builder(
-            itemCount: counties.length(),
-            itemBuilder: (context, index) {
-              final String county = counties.elementAt(index);
-              return Card(
-                margin: const EdgeInsets.all(8.0),
-                child: TextButton(
-                  onPressed: () => updateCounty(context, county),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text('${county.toUpperCase()} COUNTY',
-                      textScaleFactor: 1.3,
+        endDrawer: const Settings(),
+        appBar: AppBar(
+            backgroundColor: Colors.green,
+            title: const Text('Select a County'),
+            centerTitle: true,
+            leading: (ModalRoute.of(context)?.canPop ?? false)
+                ? const BackButton()
+                : null),
+        // If first time running SelectCounty(), call API to get list of supported counties
+        body: Center(
+          child: Container(
+            constraints: const BoxConstraints(minWidth: 200, maxWidth: 500),
+            child: ListView.builder(
+              itemCount: counties.length(),
+              itemBuilder: (context, index) {
+                final String county = counties.elementAt(index);
+                return Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    onPressed: () => updateCounty(context, county),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        '${county.toUpperCase()} COUNTY',
+                        textScaleFactor: 1.3,
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 }

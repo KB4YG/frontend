@@ -7,4 +7,14 @@ class County {
 
   @override
   String toString() => name;
+
+  // API function
+  Future<List<AccessPoint>?> refreshParkingCounts(String county) async {
+    print('API CALL');
+    for (var loc in locs) {
+      // TODO: handle errors
+      await loc.getParking();
+    }
+    return locs;
+  }
 }
