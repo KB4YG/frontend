@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/models/county.dart';
+import 'package:kb4yg/models/recreation_area.dart';
 import 'package:latlong2/latlong.dart' show Distance, LatLng;
 
 enum Danger {low, moderate, high}

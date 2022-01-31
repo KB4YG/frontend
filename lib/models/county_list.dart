@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show BuildContext;
-import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/models/county.dart';
+import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/utilities/sanitize_url.dart';
 import 'package:provider/provider.dart' show Provider;
 
