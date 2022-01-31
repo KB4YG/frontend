@@ -14,55 +14,55 @@ class ParkingTable extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: width * 0.05),
       constraints: const BoxConstraints(minWidth: 200, maxWidth: 600),
       child: DataTable(
-        // TODO: add ability to sort columns
-        columnSpacing: 45,
-        showCheckboxColumn: false,
-        columns: const [
-          DataColumn(
-              tooltip: 'Name of recreation area',
-              label: Expanded(
-                child: Text(
-                  'Location',
-                  textAlign: TextAlign.center,
-                  textScaleFactor: 1.5,
-                  style: TextStyle(
-                      //TODO
-                      ),
-                ),
-              )),
-          DataColumn(
-              numeric: true,
-              tooltip: 'General parking spots currently available',
-              label: Icon(Icons.directions_car)),
-          DataColumn(
-              numeric: true,
-              tooltip: 'Handicap parking spots currently available',
-              label: Icon(Icons.accessible))
-        ],
-        rows: [
-          for (var loc in county.locs)
-            DataRow(
-              onSelectChanged: (bool? selected) {
-                if (selected == true) {
-                  // TODO: add screen for location
-                  print(loc.name);
-                  pushLocationScreen(context, loc);
-                }
-              },
-              cells: [
-                DataCell(Text(loc.name, textScaleFactor: 1.25)),
-                DataCell(Center(
-                  child: Text(loc.spots.toString(),
-                    textAlign: TextAlign.center),
-                )),
-                DataCell(Center(
+          // TODO: add ability to sort columns
+          columnSpacing: 45,
+          showCheckboxColumn: false,
+          columns: const [
+            DataColumn(
+                tooltip: 'Name of recreation area',
+                label: Expanded(
                   child: Text(
-                    loc.handicap.toString(),
+                    'Location',
                     textAlign: TextAlign.center,
+                    textScaleFactor: 1.5,
+                    style: TextStyle(
+                        //TODO
+                        ),
                   ),
                 )),
-              ]),
-        ]),
+            DataColumn(
+                numeric: true,
+                tooltip: 'General parking spots currently available',
+                label: Icon(Icons.directions_car)),
+            DataColumn(
+                numeric: true,
+                tooltip: 'Handicap parking spots currently available',
+                label: Icon(Icons.accessible))
+          ],
+          rows: [
+            for (var loc in county.locs)
+              DataRow(
+                  onSelectChanged: (bool? selected) {
+                    if (selected == true) {
+                      // TODO: add screen for location
+                      print(loc.name);
+                      pushLocationScreen(context, loc);
+                    }
+                  },
+                  cells: [
+                    DataCell(Text(loc.name, textScaleFactor: 1.25)),
+                    DataCell(Center(
+                      child: Text(loc.spots.toString(),
+                          textAlign: TextAlign.center),
+                    )),
+                    DataCell(Center(
+                      child: Text(
+                        loc.handicap.toString(),
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
+                  ]),
+          ]),
     );
   }
 }
