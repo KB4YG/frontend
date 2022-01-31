@@ -4,7 +4,6 @@ import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
-
 class ParkingTable extends StatefulWidget {
   final County county;
   const ParkingTable({Key? key, required this.county}) : super(key: key);
@@ -74,46 +73,10 @@ class _ParkingTableState extends State<ParkingTable> {
                 )),
                 DataCell(Center(
                   child: Text(
-                    'Location',
-                    textAlign: TextAlign.center,
-                    textScaleFactor: 1.5,
-                    style: TextStyle(
-                        //TODO
-                        ),
-                  ),
+                    loc.handicap.toString(),
+                    textAlign: TextAlign.center),
                 )),
-            DataColumn(
-                numeric: true,
-                tooltip: 'General parking spots currently available',
-                label: Icon(Icons.directions_car)),
-            DataColumn(
-                numeric: true,
-                tooltip: 'Handicap parking spots currently available',
-                label: Icon(Icons.accessible))
-          ],
-          rows: [
-            for (var loc in county.locs)
-              DataRow(
-                  onSelectChanged: (bool? selected) {
-                    if (selected == true) {
-                      // TODO: add screen for location
-                      print(loc.name);
-                      pushLocationScreen(context, loc);
-                    }
-                  },
-                  cells: [
-                    DataCell(Text(loc.name, textScaleFactor: 1.25)),
-                    DataCell(Center(
-                      child: Text(loc.spots.toString(),
-                          textAlign: TextAlign.center),
-                    )),
-                    DataCell(Center(
-                      child: Text(
-                        loc.handicap.toString(),
-                        textAlign: TextAlign.center,
-                      ),
-                    )),
-                  ]),
+              ]),
           ]),
     );
   }
