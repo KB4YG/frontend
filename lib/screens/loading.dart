@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/counties.dart';
-import 'package:kb4yg/utilities/screen_arguments.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/utilities/screen_arguments.dart';
 
 // TODO: remove or remake loading.dart
 
@@ -23,7 +23,7 @@ class _LoadingState extends State<Loading> {
     if (widget.selectedCounty == null) {
       screen = constants.routeHome;
     } else {
-      screen = constants.routeParkingName;
+      screen = constants.routeLocations;
       await widget.counties.refreshParkingCounts(widget.selectedCounty!);
     }
 

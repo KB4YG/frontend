@@ -1,19 +1,26 @@
-import 'package:flutter/material.dart' show RouteSettings;
+import 'package:flutter/material.dart' show ModalRoute, BuildContext, RouteSettings;
 import 'package:kb4yg/models/access_point.dart';
 import 'package:kb4yg/models/county.dart';
 
-const argCounty = 0;
 
 class ScreenArguments {
   final County? county;
   final AccessPoint? location;
-  final int? navIndex;
+  final String? lastCounty;
 
-  ScreenArguments({this.county, this.location, this.navIndex});
+  ScreenArguments({this.county, this.location, this.lastCounty});
 
-  static getArgs(RouteSettings settings) =>
-      settings.arguments == null ? null : settings.arguments as ScreenArguments;
+  static ScreenArguments? of(BuildContext context) {
+    final settings = ModalRoute.of(context)?.settings;
+    return settings != null ? getArgs(settings) : null;
+  }
 
   @override
-  String toString() => 'ScreenArguments($county)';
+  String toString() => 'ScreenArguments('
+      'county: $county, '
+      'location: $location, '
+      'lastCounty: $lastCounty)';
 }
+
+ScreenArguments? getArgs(RouteSettings settings) =>
+    settings.arguments == null ? null : settings.arguments as ScreenArguments;

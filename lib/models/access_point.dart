@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:math'; // TODO: remove temporary dependency
-import 'package:http/http.dart';
 
 final _random = Random();
 

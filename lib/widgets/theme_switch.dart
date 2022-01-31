@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:kb4yg/providers/theme.dart';
+import 'package:provider/provider.dart';
 
 class ThemeSwitch extends StatelessWidget {
   const ThemeSwitch({Key? key}) : super(key: key);
