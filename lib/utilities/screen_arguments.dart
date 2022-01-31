@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart' show ModalRoute, BuildContext, RouteSettings;
-import 'package:kb4yg/models/access_point.dart';
+import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/models/county.dart';
 
 
 class ScreenArguments {
   final County? county;
-  final AccessPoint? location;
+  final RecreationArea? location;
   final String? lastCounty;
 
   ScreenArguments({this.county, this.location, this.lastCounty});

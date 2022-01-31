@@ -2,19 +2,19 @@ import 'dart:math'; // TODO: remove temporary dependency
 
 final _random = Random();
 
-class AccessPoint {
+class RecreationArea {
   static const url = 'https://cfb32cwake.execute-api.us-west-2.amazonaws.com/';
-  final String name; // Name of parking lot / recreation area
-  int spots; // Number of general parking spots currently available
-  int handicap; // Number of handicap parking currently available
+  final String name;    // Name of parking lot / recreation area
+  int spots;            // Number of general parking spots currently available
+  int handicap;         // Number of handicap parking currently available
   final String address; // Address of parking lot (able to put into Google Maps
-  final double lat; // Latitude of address, decimal degrees
-  final double lng; // Longitude of address, decimal degrees
+  final double lat;     // Latitude of address, decimal degrees
+  final double lng;     // Longitude of address, decimal degrees
 
   // Constructor 1:
-  //  AccessPoint loc = AccessPoint();
+  //  RecreationArea loc = RecreationArea();
   //  await loc.getParking();
-  AccessPoint(this.name,
+  RecreationArea(this.name,
       {required this.address,
       required this.lat,
       required this.lng,
@@ -22,25 +22,24 @@ class AccessPoint {
       this.handicap = 0});
 
   // Constructor 2:
-  //  AccessPoint loc = await AccessPoint.create({parameters});
-  AccessPoint._(this.name, this.address, this.lat, this.lng,
+  //  RecreationArea loc = await RecreationArea.create({parameters});
+  RecreationArea._(this.name, this.address, this.lat, this.lng,
       {this.spots = 0, this.handicap = 0});
-  static Future<AccessPoint> create(name, addr, lat, long) async {
-    var accessPoint = AccessPoint._(name, addr, lat, long);
-    await accessPoint.getParking();
-    return accessPoint;
+  static Future<RecreationArea> create(name, addr, lat, long) async {
+    var recArea = RecreationArea._(name, addr, lat, long);
+    await recArea.getParking();
+    return recArea;
   }
 
   Future<void> getParking() async {
-    print('this form access point');
     try {
       // TODO: remove random numbers
       // Response response = await get(Uri.parse('$url'), headers: {'Location': name});
       // Map data = jsonDecode(response.body);
       // print(data);
       Map data = {
-        'spots': _random.nextInt(20),
-        'handicap': _random.nextInt(20)
+        'spots': _random.nextInt(10),
+        'handicap': _random.nextInt(10)
       };
 
       try {

@@ -9,11 +9,9 @@ import 'package:kb4yg/widgets/settings.dart';
 import 'package:provider/provider.dart' show Provider, Consumer;
 import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 
-
 class CountyListScreen extends StatelessWidget {
   static const path = constants.routeLocations;
   const CountyListScreen({Key? key}) : super(key: key);
-
 
   // Refresh parking spot counts for all locations in specified county
   void updateCounty(BuildContext context, String county) async {

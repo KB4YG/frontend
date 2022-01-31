@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' show BuildContext;
-import 'package:kb4yg/models/access_point.dart';
+import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/utilities/sanitize_url.dart';
 import 'package:provider/provider.dart' show Provider;
@@ -31,40 +31,40 @@ class Counties {
       counties = {
         'benton': County('Benton', locs: [
           // coordinates from https://www.gps-coordinates.net/
-          AccessPoint('Fitton Green',
+          RecreationArea('Fitton Green',
               address: '980 NW Panorama Dr', lat: 44.577511, lng: -123.36783),
           // AccessPoint('Oak Creek Preserve',
           //     lat: 2, lng: 2),
-          AccessPoint('Bald Hill',
+          RecreationArea('Bald Hill',
               address: '6460 NW Oak Creek Dr',
               lat: 44.5687743,
               lng: -123.3335923),
-          AccessPoint('McDonald-Dunn Forest',
+          RecreationArea('McDonald-Dunn Forest',
               address: '2778 NW Sulphur Springs Rd',
               // Many different parking spots
               lat: 44.632795,
               lng: -123.281928),
-          AccessPoint('Cardwell Hill',
+          RecreationArea('Cardwell Hill',
               address: 'Cardwell Hill Dr', // Philomath
               lat: 44.601518,
               lng: -123.423991),
         ]),
         'linn': County('Linn', locs: [
           // coordinates from https://www.gps-coordinates.net/
-          AccessPoint('Loc 1',
+          RecreationArea('Loc 1',
               address: '980 NW Panorama Dr', lat: 44.577511, lng: -123.36783),
           // AccessPoint('Oak Creek Preserve',
           //     lat: 2, lng: 2),
-          AccessPoint('Loc 2',
+          RecreationArea('Loc 2',
               address: '6460 NW Oak Creek Dr',
               lat: 44.5687743,
               lng: -123.3335923),
-          AccessPoint('Loc 3',
+          RecreationArea('Loc 3',
               address: '2778 NW Sulphur Springs Rd',
               // Many different parking spots
               lat: 44.632795,
               lng: -123.281928),
-          AccessPoint('Loc 4',
+          RecreationArea('Loc 4',
               address: 'Cardwell Hill Dr', // Philomath
               lat: 44.601518,
               lng: -123.423991),
@@ -75,17 +75,14 @@ class Counties {
   }
 
   // API function
-  Future<List<AccessPoint>?> refreshParkingCounts(String county) async {
-    print('API CALL');
-    for (var loc in counties[county]!.locs) {
-      // TODO: handle errors
-      await loc.getParking();
-    }
-    return counties[county]!.locs;
+  Future<void> refreshParkingCounts(String county) async {
+    // print('API CALL');
+    await counties[county]!.refreshParking();
+    // return counties[county]!.locs;
   }
 
   // TODO: replace this inefficient search with data base access
-  AccessPoint? getRecArea(String recreationAreaName) {
+  RecreationArea? getRecArea(String recreationAreaName) {
     for (var county in counties.values) {
       for (var loc in county.locs) {
         if (sanitizeUrl(loc.name) == recreationAreaName) {

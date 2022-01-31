@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kb4yg/models/access_point.dart';
+import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/models/county.dart';
 import 'package:latlong2/latlong.dart' show Distance, LatLng;
 
@@ -77,7 +77,7 @@ class _FireDangerLevel {
         // Get distance from fire to each recreation area
         final double x1 = data['geometry']['x'];
         final double y1 = data['geometry']['y'];
-        for (final AccessPoint loc in county.locs) {
+        for (final RecreationArea loc in county.locs) {
           // Convert meters to miles and round to nearest mile
           final int miles = (distance(LatLng(y1, x1), LatLng(loc.lat, loc.lng)) * 0.00062137).round();
 
