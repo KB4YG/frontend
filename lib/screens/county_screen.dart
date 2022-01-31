@@ -8,19 +8,19 @@ import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/parking_table.dart';
 import 'package:kb4yg/widgets/settings.dart';
 
-class CountyDetailsScreen extends StatefulWidget {
+class CountyScreen extends StatefulWidget {
   final County county;
-  const CountyDetailsScreen({Key? key, required this.county}) : super(key: key);
+  const CountyScreen({Key? key, required this.county}) : super(key: key);
 
   @override
-  State<CountyDetailsScreen> createState() => _CountyDetailsScreenState();
+  State<CountyScreen> createState() => _CountyScreenState();
 }
 
-class _CountyDetailsScreenState extends State<CountyDetailsScreen> {
+class _CountyScreenState extends State<CountyScreen> {
   Future _pullRefresh() async {
     // TODO: ensure responsive UX
     //await Future.delayed(Duration(seconds: 2));
-    await widget.county.refreshParkingCounts();
+    await widget.county.refreshParking();
     setState(() {});
   }
 
