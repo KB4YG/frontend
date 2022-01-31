@@ -24,6 +24,7 @@ class Counties {
 
   // Initial API call to get all counties and corresponding locations
   Future<void> init() async {
+    print("refresh");
     if (!hasData) {
       // TODO: connect API with Counties()
       print('Created New Counties()');

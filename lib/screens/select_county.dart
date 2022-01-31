@@ -14,6 +14,7 @@ class CountyListScreen extends StatelessWidget {
   static const path = constants.routeLocations;
   const CountyListScreen({Key? key}) : super(key: key);
 
+
   // Refresh parking spot counts for all locations in specified county
   void updateCounty(BuildContext context, String county) async {
     // Store selected county in user's local storage

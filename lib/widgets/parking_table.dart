@@ -74,12 +74,47 @@ class _ParkingTableState extends State<ParkingTable> {
                 )),
                 DataCell(Center(
                   child: Text(
-                    loc.handicap.toString(),
+                    'Location',
                     textAlign: TextAlign.center,
+                    textScaleFactor: 1.5,
+                    style: TextStyle(
+                        //TODO
+                        ),
                   ),
                 )),
-              ]),
-        ]),
+            DataColumn(
+                numeric: true,
+                tooltip: 'General parking spots currently available',
+                label: Icon(Icons.directions_car)),
+            DataColumn(
+                numeric: true,
+                tooltip: 'Handicap parking spots currently available',
+                label: Icon(Icons.accessible))
+          ],
+          rows: [
+            for (var loc in county.locs)
+              DataRow(
+                  onSelectChanged: (bool? selected) {
+                    if (selected == true) {
+                      // TODO: add screen for location
+                      print(loc.name);
+                      pushLocationScreen(context, loc);
+                    }
+                  },
+                  cells: [
+                    DataCell(Text(loc.name, textScaleFactor: 1.25)),
+                    DataCell(Center(
+                      child: Text(loc.spots.toString(),
+                          textAlign: TextAlign.center),
+                    )),
+                    DataCell(Center(
+                      child: Text(
+                        loc.handicap.toString(),
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
+                  ]),
+          ]),
     );
   }
 

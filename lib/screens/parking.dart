@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart' show Beamer;
 import 'package:flutter/material.dart';
+import 'package:kb4yg/models/counties.dart';
 import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/screen_arguments.dart';
@@ -11,6 +12,14 @@ import 'package:kb4yg/widgets/settings.dart';
 class CountyDetailsScreen extends StatelessWidget {
   final County county;
   const CountyDetailsScreen({Key? key, required this.county}) : super(key: key);
+
+  Future _refreshData() async {
+    //await Future.delayed(Duration(seconds: 2));
+
+    await county.refreshParkingCounts();
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +37,13 @@ class CountyDetailsScreen extends StatelessWidget {
             },
           )),
       endDrawer: const Settings(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(children: [
-            ParkingTable(county: county),
-            FireSafety(county: county)
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(children: [
+              ParkingTable(county: county),
+              FireSafety(county: county)
           ]),
         ),
       ),
