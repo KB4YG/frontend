@@ -11,10 +11,11 @@ class ZoomButtons extends StatefulWidget {
 }
 
 class _ZoomButtonsState extends State<ZoomButtons>
-    with TickerProviderStateMixin { // Extend with ticker for vsync of AnimationController
+    with TickerProviderStateMixin {
+  // Extend with ticker for vsync of AnimationController
   get mapController => widget.mapController;
 
-  // Animate zoom buttons -- adapted from:
+  // Animate zooming with buttons -- adapted from:
   // https://github.com/fleaflet/flutter_map/blob/master/example/lib/pages/animated_map_controller.dart
   void animatedMapZoom(double destZoom) {
     final _zoomTween = Tween<double>(begin: mapController.zoom, end: destZoom);
@@ -44,40 +45,30 @@ class _ZoomButtonsState extends State<ZoomButtons>
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: kIsWeb ? Alignment.topLeft : Alignment.bottomRight,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 40.0),
-        child: Column(
-          mainAxisAlignment:
-              kIsWeb ? MainAxisAlignment.start : MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: kIsWeb
-                  ? const EdgeInsets.all(10.0)
-                  : const EdgeInsets.only(right: 4.0),
-              child: FloatingActionButton.small(
-                  child: const Icon(Icons.add),
-                  tooltip: 'Zoom in',
-                  onPressed: () {
-                    var zoom = mapController.zoom + 0.75;
-                    animatedMapZoom(zoom);
-                  }),
-            ),
-            Padding(
-                padding: kIsWeb
-                    ? const EdgeInsets.symmetric(horizontal: 10.0)
-                    : const EdgeInsets.only(right: 4.0),
-                child: FloatingActionButton.small(
-                    child: const Icon(Icons.remove),
-                    tooltip: 'Zoom Out',
-                    onPressed: () {
-                      var zoom = mapController.zoom - 0.75;
-                      animatedMapZoom(zoom);
-                    })),
-          ],
+    return Column(
+      mainAxisAlignment:
+          kIsWeb ? MainAxisAlignment.start : MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: kIsWeb
+              ? const EdgeInsets.only(bottom: 5.0)
+              : const EdgeInsets.all(0),
+          child: FloatingActionButton.small(
+              child: const Icon(Icons.add),
+              tooltip: 'Zoom in',
+              onPressed: () {
+                var zoom = mapController.zoom + 0.75;
+                animatedMapZoom(zoom);
+              }),
         ),
-      ),
+        FloatingActionButton.small(
+            child: const Icon(Icons.remove),
+            tooltip: 'Zoom Out',
+            onPressed: () {
+              var zoom = mapController.zoom - 0.75;
+              animatedMapZoom(zoom);
+            }),
+      ],
     );
   }
 }

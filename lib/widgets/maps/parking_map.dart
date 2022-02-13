@@ -9,19 +9,21 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:kb4yg/widgets/maps/attribution_card.dart';
 import 'package:kb4yg/widgets/maps/cached_tile_provider.dart';
 import 'package:kb4yg/widgets/maps/parking_map_popup.dart';
-import 'package:kb4yg/widgets/no_internet_widget.dart';
+import 'package:kb4yg/widgets/maps/fullscreen_button.dart';
 
 class ParkingMap extends StatefulWidget {
   final LatLng center;
   final List<RecreationArea> locations;
   final void Function(BuildContext, RecreationArea)? onTap;
-  final void Function()? scrollUp;
+  // final void Function()? scrollUp;
+  final void Function()? maximizeToggle;
   const ParkingMap(
       {Key? key,
       required this.center,
       required this.locations,
-      required this.onTap,
-      required this.scrollUp})
+      this.onTap,
+      // this.scrollUp,
+      this.maximizeToggle})
       : super(key: key);
 
   @override
@@ -37,7 +39,7 @@ class _ParkingMapState extends State<ParkingMap> {
   final PopupController popupController = PopupController();
   // Map controller: handle zoom button actions
   final MapController mapController = MapController();
-  bool _hasInternet = true;
+  bool _displaySnackBar = true;
 
   @override
   void initState() {
@@ -63,90 +65,117 @@ class _ParkingMapState extends State<ParkingMap> {
     ];
   }
 
-  // If map fails to load, display internet access error
-  void onImageLoadFail() => setState(() => _hasInternet = false);
+  void suppressSnackBar(Duration duration) async {
+    if (_displaySnackBar) {
+      _displaySnackBar = false;
+      await Future.delayed(duration);
+      _displaySnackBar = true;
+    }
+  }
+
+  // If map fails to load, display internet access snack bar error
+  void onImageLoadFail() {
+    if (_displaySnackBar) {
+      final snackBar = SnackBar(
+          duration: const Duration(seconds: 5),
+          content: const Text('Failed to retrieve map images. \n'
+              'Please check your internet connection.'),
+          action: SnackBarAction(
+            label: 'DISMISS',
+            onPressed: () {
+              suppressSnackBar(const Duration(seconds: 30));
+              ScaffoldMessenger.of(context).clearSnackBars();
+            },
+          ));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      suppressSnackBar(const Duration(seconds: 10)); // Reduce # messages
+    }
+  }
 
   @override
-  Widget build(BuildContext context) => !_hasInternet
-      ? const NoInternetWidget()
-      : Stack(
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        FlutterMap(
+          mapController: mapController,
+          options: MapOptions(
+            plugins: [MarkerClusterPlugin()],
+            center: widget.center,
+            zoom: 10.0,
+            minZoom: 7.0,
+            maxZoom: 15.0,
+            // allowPanningOnScrollingParent: false,
+            interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+            nePanBoundary: panBoundaryNE,
+            swPanBoundary: panBoundarySW,
+            // Hide popup when the map is tapped.
+            onTap: (_, __) => popupController.hideAllPopups(),
+          ),
           children: [
-            FlutterMap(
-              mapController: mapController,
-              options: MapOptions(
-                plugins: [MarkerClusterPlugin()],
-                center: widget.center,
-                zoom: 10.0,
-                minZoom: 7.0,
-                maxZoom: 15.0,
-                // allowPanningOnScrollingParent: false,
-                interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
-                nePanBoundary: panBoundaryNE,
-                swPanBoundary: panBoundarySW,
-                // Hide popup when the map is tapped.
-                onTap: (_, __) => popupController.hideAllPopups(),
-              ),
-              children: [
-                TileLayerWidget(
-                    options: TileLayerOptions(
-                  urlTemplate:
-                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                  subdomains: ['a', 'b', 'c'],
-                  tileProvider: CachedTileProvider(onError: onImageLoadFail),
-                  attributionBuilder: (_) => const AttributionCard(),
-                )),
-                MarkerClusterLayerWidget(
-                  options: MarkerClusterLayerOptions(
-                    animationsOptions: const AnimationsOptions(
-                        fitBound: Duration(milliseconds: 1000)),
-                    maxClusterRadius: 40,
-                    size: const Size(40, 40),
-                    showPolygon: false, // Hide triangle on cluster click
-                    markers: markers,
-                    // anchor: AnchorPos.align(AnchorAlign.left),
-                    builder: (context, markers) {
-                      return FloatingActionButton(
-                        mouseCursor: SystemMouseCursors.click,
-                        // backgroundColor: Colors.green, // Specify color of cluster
-                        child: Text(markers.length.toString()),
-                        onPressed: null,
-                      );
-                    },
-                    fitBoundsOptions: const FitBoundsOptions(
-                      maxZoom: 12.0, // Changes zoom of cluster click
-                      padding: EdgeInsets.all(50),
-                    ),
-                    popupOptions: PopupOptions(
-                        popupController: popupController,
-                        popupBuilder: (context, Marker marker) {
-                          // Get parking lot corresponding to marker index
-                          var index = markers.indexOf(marker);
-                          var loc = widget.locations[index];
-                          return ParkingMapPopup(
-                            marker: marker,
-                            location: loc,
-                            onTap: () => widget.onTap == null
-                                ? null
-                                : widget.onTap!(context, loc),
-                          );
-                        }),
-                  ),
-                )
-              ],
-            ),
-            ZoomButtons(mapController: mapController),
-            // Scroll up button
-            if (!kIsWeb)
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: FloatingActionButton.small(
-                      tooltip: 'Scroll up',
-                      onPressed: widget.scrollUp,
-                      child: const Icon(Icons.keyboard_arrow_up)),
+            TileLayerWidget(
+                options: TileLayerOptions(
+              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              subdomains: ['a', 'b', 'c'],
+              tileProvider: CachedTileProvider(onError: onImageLoadFail),
+              attributionBuilder: (_) => const AttributionCard(),
+            )),
+            MarkerClusterLayerWidget(
+              options: MarkerClusterLayerOptions(
+                animationsOptions: const AnimationsOptions(
+                    fitBound: Duration(milliseconds: 1000)),
+                maxClusterRadius: 40,
+                size: const Size(40, 40),
+                showPolygon: false,
+                // Hide triangle on cluster click
+                markers: markers,
+                // anchor: AnchorPos.align(AnchorAlign.left),
+                builder: (context, markers) {
+                  return FloatingActionButton(
+                    mouseCursor: SystemMouseCursors.click,
+                    // backgroundColor: Colors.green, // Specify color of cluster
+                    child: Text(markers.length.toString()),
+                    onPressed: null,
+                  );
+                },
+                fitBoundsOptions: const FitBoundsOptions(
+                  maxZoom: 12.0, // Changes zoom of cluster click
+                  padding: EdgeInsets.all(50),
                 ),
-              )
+                popupOptions: PopupOptions(
+                    popupController: popupController,
+                    popupBuilder: (context, Marker marker) {
+                      // Get parking lot corresponding to marker index
+                      var index = markers.indexOf(marker);
+                      var loc = widget.locations[index];
+                      return ParkingMapPopup(
+                        marker: marker,
+                        location: loc,
+                        onTap: () => widget.onTap == null
+                            ? null
+                            : widget.onTap!(context, loc),
+                      );
+                    }),
+              ),
+            )
           ],
-        );
+        ),
+        // Map Buttons
+        if (widget.maximizeToggle != null)
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FullscreenButton(maximizeToggle: widget.maximizeToggle),
+            ),
+          ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 60, 8, 40),
+          child: Align(
+            alignment: kIsWeb ? Alignment.topLeft : Alignment.bottomRight,
+            child: ZoomButtons(mapController: mapController),
+          ),
+        )
+      ],
+    );
+  }
 }
