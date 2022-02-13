@@ -45,7 +45,7 @@ class Counties {
               lat: 44.632795,
               lng: -123.281928),
           RecreationArea('Cardwell Hill',
-              address: 'Cardwell Hill Dr', // Philomath
+              address: 'Cardwell Hill Dr, Philomath, OR 97370', // Philomath
               lat: 44.601518,
               lng: -123.423991),
         ]),
