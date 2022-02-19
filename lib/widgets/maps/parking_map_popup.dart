@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+
 import '../../models/parking_lot.dart';
 
 class ParkingMapPopup extends StatelessWidget {

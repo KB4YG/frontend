@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/launch_url.dart';
 
 class AttributionCard extends StatelessWidget {

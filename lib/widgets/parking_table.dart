@@ -4,7 +4,6 @@ import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
-import '../models/parking_lot.dart';
 import '../models/recreation_area.dart';
 
 class ParkingTable extends StatefulWidget {
