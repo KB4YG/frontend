@@ -1,12 +1,9 @@
 import 'package:beamer/beamer.dart' show Beamer;
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/county.dart';
-import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
-import 'package:kb4yg/utilities/screen_arguments.dart';
-import 'package:kb4yg/widgets/fire_safety.dart';
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/maps/parking_map.dart';
 import 'package:kb4yg/widgets/parking_table.dart';
@@ -88,7 +85,6 @@ class _CountyScreenState extends State<CountyScreen> {
                             children: [
                               Center(
                                   child: ParkingTable(county: snapshot.data!)),
-                              // FireSafety(county: widget.county),
                             ],
                             // ),
                           ),
