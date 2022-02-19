@@ -3,6 +3,8 @@ import 'package:kb4yg/models/recreation_area.dart';
 
 class County {
   final String name;
+  final double lat = 44.5646;
+  final double lng = 123.2620;
   final List<RecreationArea> recreationAreas;
   late final List<ParkingLot> parkingLots;
 
