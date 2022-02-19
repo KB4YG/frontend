@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:kb4yg/models/recreation_area.dart';
+import 'package:kb4yg/models/parking_lot.dart';
 import 'package:kb4yg/widgets/maps/zoom_buttons.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -13,8 +13,8 @@ import 'package:kb4yg/widgets/maps/fullscreen_button.dart';
 
 class ParkingMap extends StatefulWidget {
   final LatLng center;
-  final List<RecreationArea> locations;
-  final void Function(BuildContext, RecreationArea)? onTap;
+  final List<ParkingLot> locations;
+  final void Function(BuildContext, ParkingLot)? onTap;
   // final void Function()? scrollUp;
   final void Function()? maximizeToggle;
   const ParkingMap(
