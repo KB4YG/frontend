@@ -91,7 +91,7 @@ class _CountyScreenState extends State<CountyScreen> {
                         ),
                         Expanded(
                           child: ParkingMap(
-                            center: LatLng(snapshot.data!.lat, -123.2620), // Corvallis
+                            center: LatLng(snapshot.data!.lat, snapshot.data!.lng), // Corvallis
                             locations: snapshot.data!.parkingLots,
                             onTap: (BuildContext context, ParkingLot loc) {
                               String route = constants.routeLocations;

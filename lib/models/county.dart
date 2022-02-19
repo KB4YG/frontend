@@ -3,8 +3,7 @@ import 'package:kb4yg/models/recreation_area.dart';
 
 class County {
   final String name;
-  // TODO remove placeholders & connect to county_screen.dart for FlutterMap()
-  final double lat = 44.5646;
+  final double lat = 44.5646;   // TODO remove placeholders
   final double lng = -123.2620;
   final List<RecreationArea> recreationAreas;
   late final List<ParkingLot> parkingLots;
