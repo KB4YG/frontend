@@ -4,6 +4,8 @@ import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
+import '../models/recreation_area.dart';
+
 class ParkingTable extends StatefulWidget {
   final County county;
   const ParkingTable({Key? key, required this.county}) : super(key: key);
@@ -13,8 +15,16 @@ class ParkingTable extends StatefulWidget {
 }
 
 class _ParkingTableState extends State<ParkingTable> {
+  // late final List<ParkingLot> locations;
+  List<RecreationArea> get locations => widget.county.recreationAreas;
   int _columnIndex = 0;
   bool _isAscending = true;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   locations = widget.locations.parkingLots; // Todo: deep copy or undo sort
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +65,7 @@ class _ParkingTableState extends State<ParkingTable> {
             ))
         ],
         rows: [
-          for (var loc in widget.county.locs)
+          for (var loc in locations)
             DataRow(
               onSelectChanged: (bool? selected) {
                 if (selected == true) {
@@ -85,18 +95,18 @@ class _ParkingTableState extends State<ParkingTable> {
     switch (columnIndex) {
       case 0:
         isAscending == true
-          ? widget.county.locs.sort((loc1, loc2) => loc1.name.compareTo(loc2.name))
-          : widget.county.locs.sort((loc1, loc2) => loc2.name.compareTo(loc1.name));
+          ? locations.sort((loc1, loc2) => loc1.name.compareTo(loc2.name))
+          : locations.sort((loc1, loc2) => loc2.name.compareTo(loc1.name));
         break;
       case 1:
         isAscending == true
-          ? widget.county.locs.sort((loc1, loc2) => loc1.spots.compareTo(loc2.spots))
-          : widget.county.locs.sort((loc1, loc2) => loc2.spots.compareTo(loc1.spots));
+          ? locations.sort((loc1, loc2) => loc1.spots.compareTo(loc2.spots))
+          : locations.sort((loc1, loc2) => loc2.spots.compareTo(loc1.spots));
         break;
       case 2:
         isAscending == true
-          ? widget.county.locs.sort((loc1, loc2) => loc1.handicap.compareTo(loc2.handicap))
-          : widget.county.locs.sort((loc1, loc2) => loc2.handicap.compareTo(loc1.handicap));
+          ? locations.sort((loc1, loc2) => loc1.handicap.compareTo(loc2.handicap))
+          : locations.sort((loc1, loc2) => loc2.handicap.compareTo(loc1.handicap));
         break;
     }
     setState(() {

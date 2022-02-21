@@ -19,6 +19,7 @@ class _FullscreenButtonState extends State<FullscreenButton> {
   Widget build(BuildContext context) {
     return FloatingActionButton.small(
         tooltip: 'Toggle fullscreen',
+        heroTag: 'fullscreen',
         onPressed: () {
           // Doesn't call set state since maximizeToggle() is assumed to do so
           _iconIndex = _iconIndex == 0 ? 1 : 0;

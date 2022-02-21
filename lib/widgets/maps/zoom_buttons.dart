@@ -10,9 +10,9 @@ class ZoomButtons extends StatefulWidget {
   State<ZoomButtons> createState() => _ZoomButtonsState();
 }
 
+// Extend with ticker for vsync of AnimationController
 class _ZoomButtonsState extends State<ZoomButtons>
     with TickerProviderStateMixin {
-  // Extend with ticker for vsync of AnimationController
   get mapController => widget.mapController;
 
   // Animate zooming with buttons -- adapted from:
@@ -56,6 +56,7 @@ class _ZoomButtonsState extends State<ZoomButtons>
           child: FloatingActionButton.small(
               child: const Icon(Icons.add),
               tooltip: 'Zoom in',
+              heroTag: 'zoom in',
               onPressed: () {
                 var zoom = mapController.zoom + 0.75;
                 animatedMapZoom(zoom);
@@ -64,6 +65,7 @@ class _ZoomButtonsState extends State<ZoomButtons>
         FloatingActionButton.small(
             child: const Icon(Icons.remove),
             tooltip: 'Zoom Out',
+            heroTag: 'zoom out',
             onPressed: () {
               var zoom = mapController.zoom - 0.75;
               animatedMapZoom(zoom);

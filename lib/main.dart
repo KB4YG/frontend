@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/models/county_list.dart';
+import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/providers/theme.dart';
 import 'package:kb4yg/widgets/app.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +15,6 @@ void main() async {
 
   // Get preferences of user (used for theme and county parking info)
   final prefs = await SharedPreferences.getInstance();
-  // Get list of counties from API
-  final counties = await Counties.create();
-  // await Future.delayed(const Duration(seconds: 2));
 
   // Run application
   return runApp(
@@ -25,7 +22,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider<ThemeProvider>(create: (context) => ThemeProvider(prefs: prefs)),
         Provider<SharedPreferences>(create: (context) => prefs),
-        Provider<Counties>(create: (context) => counties)
+        Provider<BackendProvider>(create: (context) => BackendProvider())
       ],
       // child: MyApp()),
       child: App(prefs: prefs))

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:kb4yg/models/recreation_area.dart';
+
+import '../../models/parking_lot.dart';
 
 class ParkingMapPopup extends StatelessWidget {
   final Marker marker;
-  final RecreationArea location;
+  final ParkingLot location;
   final void Function()? onTap;
   const ParkingMapPopup(
       {required this.marker,

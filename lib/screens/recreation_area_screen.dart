@@ -1,24 +1,39 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/recreation_area.dart';
+import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
-class RecreationAreaScreen extends StatelessWidget {
-  final RecreationArea location;
-  const RecreationAreaScreen({Key? key, required this.location}) : super(key: key);
+import '../models/parking_lot.dart';
+import '../widgets/error_card.dart';
 
-  static const List<String> urls = [
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
-  ];
+class RecreationAreaScreen extends StatefulWidget {
+  final String recreationAreaUrl;
+  const RecreationAreaScreen(this.recreationAreaUrl, {Key? key})
+      : super(key: key);
 
-  void launchMap(BuildContext context) async {
+  @override
+  State<RecreationAreaScreen> createState() => _RecreationAreaScreenState();
+}
+
+class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
+  get recreationAreaUrl => widget.recreationAreaUrl;
+  late Future<RecreationArea> futureRecreationArea;
+
+  @override
+  void initState() {
+    super.initState();
+    futureRecreationArea =
+        BackendProvider.of(context).getRecreationArea(recreationAreaUrl);
+  }
+
+  void launchMap(BuildContext context, ParkingLot location) async {
     try {
-      bool status = await MapsLauncher.launchQuery(location.address);
+      bool status =
+          await MapsLauncher.launchQuery(location.address);
       if (status == false) {
         throw Error();
       }
@@ -32,18 +47,12 @@ class RecreationAreaScreen extends StatelessWidget {
   }
 
   // Future _pullRefresh() async {
-  //   // TODO: update once connected to backend
-  //   // await Future.delayed(Duration(seconds: 2));
-  //   await location.getParking();
-  //   setState(() {});
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Header(
         title: Text(
-          location.name,
+          recreationAreaUrl,
           style: const TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
@@ -51,102 +60,62 @@ class RecreationAreaScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            constraints: const BoxConstraints(maxWidth: 1000),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 25.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const RecreationAreaCarousel(images: urls),
-                      const SizedBox(height: 30),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          shape: BoxShape.rectangle,
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: const [
-                            Text('About',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                            SizedBox(height: 10),
-                            SelectableText(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit,'
-                              ' sed do eiusmod tempor incididunt ut labore et dolore '
-                              'magna aliqua. Ut enim ad minim veniam, quis nostrud '
-                              'exercitation ullamco laboris nisi ut aliquip ex ea '
-                              'commodo consequat. Duis aute irure dolor in '
-                              'reprehenderit in voluptate velit esse cillum dolore eu '
-                              'fugiat nulla pariatur. Excepteur sint occaecat cupidatat '
-                              'non proident, sunt in culpa qui officia deserunt mollit '
-                              'anim id est laborum.'),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          shape: BoxShape.rectangle,
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          children: [
-                            const Text(
-                              'Location',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 10),
-                            TextButton.icon(
-                              onPressed: () => launchMap(context),
-                              icon:
-                                  const Icon(Icons.place, color: Colors.red),
-                              label: const Text('Maps',
-                                  textAlign: TextAlign.center),
-                              style: ButtonStyle(
-                                  foregroundColor:
-                                      MaterialStateProperty.all(Colors.white),
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.blue)),
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          shape: BoxShape.rectangle,
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            const Text(
-                              'Parking Info',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SelectableText(
-                              '${constants.bullet} General Parking: ${location.spots}\n'
-                              '${constants.bullet} Handicap Parking: ${location.handicap}\n'
-                              '${constants.bullet} Temperature: 54° F\n'
-                              '${constants.bullet} Time: 11:00 A.M\n'
-                              '${constants.bullet} Date: 01/16/2022',
-                              style: const TextStyle(height: 2),
-                              //TODO: style text
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
+              constraints: const BoxConstraints(maxWidth: 1000),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 25.0),
+                    child: FutureBuilder<RecreationArea>(
+                        future: futureRecreationArea,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                RecreationAreaCarousel(
+                                    images: snapshot.data!.imageUrls),
+                                const SizedBox(height: 30),
+                                RecreationAreaInfo(snapshot.data!.info),
+                                const SizedBox(height: 30),
+                                const RecreationAreaParking(),
+                                const SizedBox(height: 30),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    children: [
+                                      const Text(
+                                        'Parking Info',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SelectableText(
+                                        '${constants.bullet} General Parking: ${snapshot.data!.spots}\n'
+                                        '${constants.bullet} Handicap Parking: ${snapshot.data!.handicap}\n'
+                                        '${constants.bullet} Temperature: 54° F\n'
+                                        '${constants.bullet} Time: 11:00 A.M\n'
+                                        '${constants.bullet} Date: 01/16/2022',
+                                        style: const TextStyle(height: 2),
+                                        //TODO: style text
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else if (snapshot.hasError) {
+                            return ErrorCard(message: snapshot.error.toString());
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        }),
                   ),
-                ),
-              ],
-            )),
+                ],
+              )),
         ),
       ),
     );
@@ -177,6 +146,72 @@ class RecreationAreaCarousel extends StatelessWidget {
                   ),
                 ),
               )),
+    );
+  }
+}
+
+class RecreationAreaInfo extends StatelessWidget {
+  final String description;
+  const RecreationAreaInfo(this.description, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        shape: BoxShape.rectangle,
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          const Text('About',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          SelectableText(description),
+        ],
+      ),
+    );
+  }
+}
+
+class RecreationAreaParking extends StatelessWidget {
+
+  const RecreationAreaParking({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        shape: BoxShape.rectangle,
+      ),
+      padding: const EdgeInsets.all(10),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        children: [
+          const Text(
+            'Location',
+            style: TextStyle(
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          TextButton.icon(
+            onPressed: () => {},//launchMap(context, ), //TODO
+            icon: const Icon(Icons.place,
+                color: Colors.red),
+            label: const Text('Maps',
+                textAlign: TextAlign.center),
+            style: ButtonStyle(
+                foregroundColor:
+                MaterialStateProperty.all(
+                    Colors.white),
+                backgroundColor:
+                MaterialStateProperty.all(
+                    Colors.blue)),
+          )
+        ],
+      ),
     );
   }
 }
