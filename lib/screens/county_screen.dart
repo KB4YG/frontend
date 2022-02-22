@@ -23,9 +23,7 @@ class CountyScreen extends StatefulWidget {
 }
 
 class _CountyScreenState extends State<CountyScreen> {
-  bool _isFullscreen = false;
   late Future<County> futureCounty;
-  get countyName => widget.countyName;
 
   @override
   void initState() {
@@ -34,17 +32,7 @@ class _CountyScreenState extends State<CountyScreen> {
   }
 
   Future<void> _fetchCounty(BuildContext context) async =>
-    futureCounty = BackendProvider.of(context).getCounty(countyName);
-
-  //   try {
-  //     // TODO: ensure responsive UX
-  //     //await Future.delayed(Duration(seconds: 2));
-  //     futureCounty = BackendProvider.of(context).getCounty(countyName);
-  //     setState(() {});
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+      futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +40,7 @@ class _CountyScreenState extends State<CountyScreen> {
       appBar: Header(
           title: TextButton.icon(
         icon: const Icon(Icons.edit_location),
-        label: Text('$countyName County',
+        label: Text('${widget.countyName} County',
             style: const TextStyle(color: Colors.white, fontSize: 20)),
         onPressed: () {
           Beamer.of(context).beamToNamed(constants.routeLocations);
@@ -62,7 +50,6 @@ class _CountyScreenState extends State<CountyScreen> {
       body: RefreshIndicator(
         onRefresh: () => _fetchCounty(context),
         child: SingleChildScrollView(
-          // controller: _scrollController,
           physics: const AlwaysScrollableScrollPhysics(),
           child: SizedBox(
             height: MediaQuery.of(context).size.height -
@@ -74,42 +61,11 @@ class _CountyScreenState extends State<CountyScreen> {
                 future: futureCounty,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ExpandedSection(
-                          expand: !_isFullscreen,
-                          child: Wrap(
-                            alignment: WrapAlignment.center,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              Center(
-                                  child: ParkingTable(county: snapshot.data!)),
-                            ],
-                            // ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ParkingMap(
-                            center: LatLng(snapshot.data!.lat, snapshot.data!.lng), // Corvallis
-                            locations: snapshot.data!.parkingLots,
-                            onTap: (BuildContext context, ParkingLot loc) {
-                              String route = constants.routeLocations;
-                              route += sanitizeUrl('/$countyName/${loc.name}');
-                              Beamer.of(context).beamToNamed(route);
-                            },
-                            maximizeToggle: () => setState(() {
-                              _isFullscreen = !_isFullscreen;
-                            }),
-                          ),
-                        ),
-                      ],
-                    );
+                    return CountyScreenContent(county: snapshot.data!);
                   } else if (snapshot.hasError) {
                     return ErrorCard(
-                      title: 'Failed to retrieve county information',
-                        message: snapshot.error.toString()
-                    );
+                        title: 'Failed to retrieve county information',
+                        message: snapshot.error.toString());
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
@@ -117,6 +73,46 @@ class _CountyScreenState extends State<CountyScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CountyScreenContent extends StatefulWidget {
+  final County county;
+  const CountyScreenContent({Key? key, required this.county}) : super(key: key);
+
+  @override
+  _CountyScreenContentState createState() => _CountyScreenContentState();
+}
+
+class _CountyScreenContentState extends State<CountyScreenContent> {
+  get county => widget.county;
+  bool _isFullscreen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ExpandedSection(
+          expand: !_isFullscreen,
+          child: Center(child: ParkingTable(county: widget.county)),
+        ),
+        Expanded(
+          child: ParkingMap(
+            center: LatLng(widget.county.lat, widget.county.lng), // Corvallis
+            locations: widget.county.parkingLots,
+            onTap: (BuildContext context, ParkingLot loc) {
+              String route = constants.routeLocations;
+              route += sanitizeUrl('/${widget.county.name}/${loc.name}');
+              Beamer.of(context).beamToNamed(route);
+            },
+            maximizeToggle: () => setState(() {
+              _isFullscreen = !_isFullscreen;
+            }),
+          ),
+        ),
+      ],
     );
   }
 }
