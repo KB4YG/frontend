@@ -25,7 +25,24 @@ class _CountyListScreenState extends State<CountyListScreen> {
   @override
   void initState() {
     super.initState();
-    _futureCountyList = BackendProvider.of(context).getCountyList();
+    _futureCountyList = Future<List<String>>.value([
+      'BAKER',
+      'BENTON',
+      'CLACKAMAS',
+      'CLATSOP',
+      'COOS',
+      'DESCHUTES',
+      'DOUGLAS',
+      'LANE',
+      'LINN',
+      'MARION',
+      'MULTNOMAH',
+      'POLK',
+      'UNION',
+      'WASCO',
+      'WASHINGTON',
+    ]);
+    // _futureCountyList = BackendProvider.of(context).getCountyList();
   }
 
   @override
@@ -100,21 +117,23 @@ class _CountyListState extends State<CountyList> {
                 editingController: _editingController,
                 onChanged: (value) => filterSearchResults(value)),
           Expanded(
-            child: ListView.builder(
-                itemCount: _displayedCounties.length,
-                itemBuilder: (context, index) {
-                  String county = _displayedCounties[index];
-                  return Card(
-                      margin: const EdgeInsets.all(8.0),
-                      child: TextButton(
-                          onPressed: () => viewCountyDetails(context, county),
-                          child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                '${county.toUpperCase()} COUNTY',
-                                textScaleFactor: 1.3,
-                              ))));
-                }),
+            child: Scrollbar(
+              child: ListView.builder(
+                  itemCount: _displayedCounties.length,
+                  itemBuilder: (context, index) {
+                    String county = _displayedCounties[index];
+                    return Card(
+                        margin: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                            onPressed: () => viewCountyDetails(context, county),
+                            child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  '${county.toUpperCase()} COUNTY',
+                                  textScaleFactor: 1.3,
+                                ))));
+                  }),
+            ),
           ),
         ],
       ),
