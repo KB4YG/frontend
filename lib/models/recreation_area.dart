@@ -1,5 +1,7 @@
 import 'package:kb4yg/models/parking_lot.dart';
 
+import 'fire_danger.dart';
+
 class RecreationArea {
   final String name;
   final String info;
@@ -13,6 +15,8 @@ class RecreationArea {
       [for (var x in parkingLots) x.spots].fold(0, (p, c) => p + c);
   int get handicap =>
       [for (var x in parkingLots) x.handicap].fold(0, (p, c) => p + c);
+  late final FireDanger fireDanger = [for (var x in parkingLots) x.fireDanger]
+      .fold(parkingLots[0].fireDanger, (p, c) => p.level.index > c.level.index ? p : c);
 
   RecreationArea(this.name, this.info, this.parkingLots);
 
