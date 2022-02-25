@@ -1,7 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/extensions/string_extension.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/utilities/sanitize_url.dart';
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:provider/provider.dart' show Provider;
@@ -26,21 +26,9 @@ class _CountyListScreenState extends State<CountyListScreen> {
   void initState() {
     super.initState();
     _futureCountyList = Future<List<String>>.value([
-      'BAKER',
-      'BENTON',
-      'CLACKAMAS',
-      'CLATSOP',
-      'COOS',
-      'DESCHUTES',
-      'DOUGLAS',
-      'LANE',
-      'LINN',
-      'MARION',
-      'MULTNOMAH',
-      'POLK',
-      'UNION',
-      'WASCO',
-      'WASHINGTON',
+      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
+      'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
+      'WASCO', 'WASHINGTON',
     ]);
     // _futureCountyList = BackendProvider.of(context).getCountyList();
   }
@@ -87,7 +75,8 @@ class _CountyListState extends State<CountyList> {
     final prefs = Provider.of<SharedPreferences>(context, listen: false);
     prefs.setString(constants.prefCounty, county);
 
-    context.beamToNamed('${constants.routeLocations}/${county.capitalize()}');
+    final path = sanitizeUrl('${constants.routeLocations}/$county');
+    context.beamToNamed(path);
   }
 
   void filterSearchResults(String query) async {
