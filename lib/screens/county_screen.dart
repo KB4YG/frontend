@@ -9,7 +9,6 @@ import 'package:kb4yg/widgets/maps/parking_map.dart';
 import 'package:kb4yg/widgets/parking_table.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:latlong2/latlong.dart';
-
 import '../models/parking_lot.dart';
 import '../widgets/error_card.dart';
 import '../widgets/expanded_section.dart';
@@ -34,7 +33,7 @@ class _CountyScreenState extends State<CountyScreen> {
   }
 
   Future<void> _fetchCounty(BuildContext context) async =>
-    futureCounty = BackendProvider.of(context).getCounty(countyName);
+      futureCounty = BackendProvider.of(context).getCounty(countyName);
 
   //   try {
   //     // TODO: ensure responsive UX
@@ -91,7 +90,8 @@ class _CountyScreenState extends State<CountyScreen> {
                         ),
                         Expanded(
                           child: ParkingMap(
-                            center: LatLng(snapshot.data!.lat, snapshot.data!.lng), // Corvallis
+                            center: LatLng(snapshot.data!.lat,
+                                snapshot.data!.lng), // Corvallis
                             locations: snapshot.data!.parkingLots,
                             onTap: (BuildContext context, ParkingLot loc) {
                               String route = constants.routeLocations;
@@ -107,9 +107,8 @@ class _CountyScreenState extends State<CountyScreen> {
                     );
                   } else if (snapshot.hasError) {
                     return ErrorCard(
-                      title: 'Failed to retrieve county information',
-                        message: snapshot.error.toString()
-                    );
+                        title: 'Failed to retrieve county information',
+                        message: snapshot.error.toString());
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
