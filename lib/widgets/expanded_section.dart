@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
-// Author: Adam Jonsson
+// Original Author: Adam Jonsson
 // Source: https://stackoverflow.com/questions/49029841/how-to-animate-collapse-elements-in-flutter/54173729#54173729
 class ExpandedSection extends StatefulWidget {
   final Widget child;
   final bool expand;
-  const ExpandedSection({Key? key, this.expand = false, required this.child})
+  final bool collapseVertical;
+  const ExpandedSection(
+      {Key? key,
+      this.expand = false,
+      this.collapseVertical = true,
+      required this.child})
       : super(key: key);
 
   @override
@@ -56,6 +61,9 @@ class _ExpandedSectionState extends State<ExpandedSection>
   @override
   Widget build(BuildContext context) {
     return SizeTransition(
-        axisAlignment: 1.0, sizeFactor: animation, child: widget.child);
+        axis: widget.collapseVertical ? Axis.vertical : Axis.horizontal,
+        axisAlignment: 1.0,
+        sizeFactor: animation,
+        child: widget.child);
   }
 }
