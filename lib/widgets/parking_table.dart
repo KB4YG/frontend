@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart' show Beamer;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
@@ -34,19 +35,19 @@ class _ParkingTableState extends State<ParkingTable> {
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Container(
-          margin: const EdgeInsets.all(20),
           constraints: const BoxConstraints(minWidth: 200, maxWidth: 550),
           child: DataTable(
               sortColumnIndex: _columnIndex,
               sortAscending: _isAscending,
               showCheckboxColumn: false,
+              columnSpacing: 16,
               columns: [
                 DataColumn(
                     onSort: onSort,
                     tooltip: 'Name of recreation area',
                     label: const Expanded(
                       child: Text(
-                        'Recreation Area',
+                        kIsWeb ? 'Recreation Area' : 'Location',
                         textAlign: TextAlign.center,
                         textScaleFactor: 1.4,
                         // TODO: text style
