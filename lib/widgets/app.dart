@@ -2,12 +2,14 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:kb4yg/providers/theme.dart';
+import 'package:kb4yg/screens/introScreen.dart';
 import 'package:kb4yg/utilities/beam_locations.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
 import 'package:kb4yg/widgets/bottom_nav_bar.dart';
 import 'package:provider/provider.dart' show Provider;
-import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 class App extends StatefulWidget {
   final SharedPreferences prefs;
@@ -19,6 +21,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   late final BeamerDelegate routerDelegate;
+  late bool? firstTimeDownload;
 
   @override
   void initState() {
@@ -27,6 +30,8 @@ class _AppState extends State<App> {
     var landingPage = lastCounty == null || kIsWeb
         ? constants.routeHome
         : '${constants.routeLocations}/${sanitizeUrl(lastCounty)}';
+
+    firstTimeDownload = widget.prefs.getBool('firstTimeDownload');
 
     routerDelegate = BeamerDelegate(
       initialPath: landingPage,
@@ -61,15 +66,22 @@ class _AppState extends State<App> {
     // Get current theme (listening with ChangeNotifierProvider())
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    return MaterialApp.router(
-      title: constants.title,
-      themeMode: themeProvider.themeMode,
-      theme: Themes.lightTheme,
-      darkTheme: Themes.darkTheme,
-      debugShowCheckedModeBanner: false,
-      routerDelegate: routerDelegate,
-      routeInformationParser: BeamerParser(),
-      backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
-    );
+    return (firstTimeDownload == true || firstTimeDownload == null)
+        ? MaterialApp(
+            home: IntroScreen(
+              prefs: widget.prefs,
+            ),
+          )
+        : (MaterialApp.router(
+            title: constants.title,
+            themeMode: themeProvider.themeMode,
+            theme: Themes.lightTheme,
+            darkTheme: Themes.darkTheme,
+            debugShowCheckedModeBanner: false,
+            routerDelegate: routerDelegate,
+            routeInformationParser: BeamerParser(),
+            backButtonDispatcher:
+                BeamerBackButtonDispatcher(delegate: routerDelegate),
+          ));
   }
 }
