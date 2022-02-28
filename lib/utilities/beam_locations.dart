@@ -49,23 +49,22 @@ class CountyLocation extends BeamLocation<BeamState> {
     ];
 
     if (state.pathParameters.containsKey(routeCountyId)) {
-      var countyName =
-          sanitizeUrl(state.pathParameters[routeCountyId]!).capitalize();
+      var countyName = sanitizeUrl(state.pathParameters[routeCountyId]!);
       pages.add(BeamPage(
           key: ValueKey('county-$countyName'),
-          title: countyName,
+          title: countyName.capitalize(),
           type: BeamPageType.noTransition,
-          child: CountyScreen(countyName)));
+          child: CountyScreen(countyName.capitalize())));
     }
 
     if (state.pathParameters.containsKey(routeRecAreaId)) {
-      var recreationAreaPath =
-          Uri.parse(state.pathParameters[routeRecAreaId]!).toString();
+      var recreationAreaPath = sanitizeUrl(state.pathParameters[routeRecAreaId]!);
+      var recreationAreaName = recreationAreaPath.replaceAll('-', ' ').capitalizeAll();
       pages.add(BeamPage(
           key: ValueKey('rec-area-$recreationAreaPath'),
-          title: recreationAreaPath,
+          title: recreationAreaName,
           type: BeamPageType.noTransition,
-          child: RecreationAreaScreen(recreationAreaPath)));
+          child: RecreationAreaScreen(recreationAreaPath, recreationAreaName)));
     }
 
     return pages;

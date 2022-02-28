@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/extensions/string_extension.dart';
 import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
@@ -13,7 +12,8 @@ import '../widgets/error_card.dart';
 
 class RecreationAreaScreen extends StatefulWidget {
   final String recreationAreaUrl;
-  const RecreationAreaScreen(this.recreationAreaUrl, {Key? key})
+  final String recreationAreaName;
+  const RecreationAreaScreen(this.recreationAreaUrl, this.recreationAreaName, {Key? key})
       : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
     return Scaffold(
       appBar: Header(
         title: Text(
-          widget.recreationAreaUrl.replaceAll('-', ' ').capitalizeAll(),
+          widget.recreationAreaName,
           style: const TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
