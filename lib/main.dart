@@ -5,7 +5,6 @@ import 'package:kb4yg/providers/theme.dart';
 import 'package:kb4yg/widgets/app.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:kb4yg/screens/introScreen.dart';
 
 void main() async {
   // Wait for widget initialization
@@ -26,8 +25,6 @@ void main() async {
           Provider<SharedPreferences>(create: (context) => prefs),
           Provider<BackendProvider>(create: (context) => BackendProvider())
         ],
-        // child: MyApp()),
-
         child: App(prefs: prefs)),
   );
 }

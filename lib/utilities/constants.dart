@@ -5,6 +5,7 @@ const bullet = '\u2022 ';
 // Preferences
 const prefCounty = 'selectedCounty';
 const prefDark = 'isDark';
+const prefIntro = 'isFirstRun';
 
 // Navigation
 const routeRoot = '/';

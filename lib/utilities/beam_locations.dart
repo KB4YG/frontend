@@ -18,6 +18,7 @@ class HomeLocation extends BeamLocation<BeamState> {
   List<BeamPage> buildPages(context, state) => [HomeScreen.beamPage];
 }
 
+
 class HelpLocation extends BeamLocation<BeamState> {
   @override
   List<Pattern> get pathPatterns => [HelpScreen.path];
@@ -26,6 +27,7 @@ class HelpLocation extends BeamLocation<BeamState> {
   List<BeamPage> buildPages(context, state) => [HelpScreen.beamPage];
 }
 
+
 class AboutLocation extends BeamLocation<BeamState> {
   @override
   List<Pattern> get pathPatterns => [AboutScreen.path];
@@ -33,6 +35,7 @@ class AboutLocation extends BeamLocation<BeamState> {
   @override
   List<BeamPage> buildPages(context, state) => [AboutScreen.beamPage];
 }
+
 
 class CountyLocation extends BeamLocation<BeamState> {
   @override

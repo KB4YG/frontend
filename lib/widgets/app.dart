@@ -2,7 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:kb4yg/providers/theme.dart';
-import 'package:kb4yg/screens/introScreen.dart';
+import 'package:kb4yg/screens/intro_screen.dart';
 import 'package:kb4yg/utilities/beam_locations.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
@@ -20,19 +20,22 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  late final bool? isFirstRun;
   late final BeamerDelegate routerDelegate;
-  late bool? firstTimeDownload;
 
   @override
   void initState() {
     super.initState();
+
+    isFirstRun = widget.prefs.getBool(constants.prefIntro);
+
+    // Determine landing page (home or county screen)
     var lastCounty = widget.prefs.getString(constants.prefCounty);
     var landingPage = lastCounty == null || kIsWeb
         ? constants.routeHome
         : '${constants.routeLocations}/${sanitizeUrl(lastCounty)}';
 
-    firstTimeDownload = widget.prefs.getBool('firstTimeDownload');
-
+    // Initialize router delegate (widget that handles routing)
     routerDelegate = BeamerDelegate(
       initialPath: landingPage,
       locationBuilder: RoutesLocationBuilder(
@@ -66,13 +69,8 @@ class _AppState extends State<App> {
     // Get current theme (listening with ChangeNotifierProvider())
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    return (firstTimeDownload == true || firstTimeDownload == null)
-        ? MaterialApp(
-            home: IntroScreen(
-              prefs: widget.prefs,
-            ),
-          )
-        : (MaterialApp.router(
+    return isFirstRun == false || kIsWeb
+        ? MaterialApp.router(
             title: constants.title,
             themeMode: themeProvider.themeMode,
             theme: Themes.lightTheme,
@@ -82,6 +80,9 @@ class _AppState extends State<App> {
             routeInformationParser: BeamerParser(),
             backButtonDispatcher:
                 BeamerBackButtonDispatcher(delegate: routerDelegate),
-          ));
+          )
+        : const MaterialApp(
+            home: IntroScreen(),
+          );
   }
 }
