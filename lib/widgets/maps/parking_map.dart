@@ -15,14 +15,12 @@ class ParkingMap extends StatefulWidget {
   final LatLng center;
   final List<ParkingLot> locations;
   final void Function(BuildContext, ParkingLot)? onTap;
-  // final void Function()? scrollUp;
   final void Function()? maximizeToggle;
   const ParkingMap(
       {Key? key,
       required this.center,
       required this.locations,
       this.onTap,
-      // this.scrollUp,
       this.maximizeToggle})
       : super(key: key);
 

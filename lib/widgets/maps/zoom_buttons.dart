@@ -64,7 +64,7 @@ class _ZoomButtonsState extends State<ZoomButtons>
         ),
         FloatingActionButton.small(
             child: const Icon(Icons.remove),
-            tooltip: 'Zoom Out',
+            tooltip: 'Zoom out',
             heroTag: 'zoom out',
             onPressed: () {
               var zoom = mapController.zoom - 0.75;

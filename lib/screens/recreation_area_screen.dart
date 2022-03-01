@@ -12,7 +12,8 @@ import '../widgets/error_card.dart';
 
 class RecreationAreaScreen extends StatefulWidget {
   final String recreationAreaUrl;
-  const RecreationAreaScreen(this.recreationAreaUrl, {Key? key})
+  final String recreationAreaName;
+  const RecreationAreaScreen(this.recreationAreaUrl, this.recreationAreaName, {Key? key})
       : super(key: key);
 
   @override
@@ -32,8 +33,7 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
 
   void launchMap(BuildContext context, ParkingLot location) async {
     try {
-      bool status =
-          await MapsLauncher.launchQuery(location.address);
+      bool status = await MapsLauncher.launchQuery(location.address);
       if (status == false) {
         throw Error();
       }
@@ -46,13 +46,12 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
     }
   }
 
-  // Future _pullRefresh() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Header(
         title: Text(
-          recreationAreaUrl,
+          widget.recreationAreaName,
           style: const TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
@@ -107,7 +106,8 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
                               ],
                             );
                           } else if (snapshot.hasError) {
-                            return ErrorCard(message: snapshot.error.toString());
+                            return ErrorCard(
+                                message: snapshot.error.toString());
                           } else {
                             return const Center(
                                 child: CircularProgressIndicator());
@@ -164,9 +164,7 @@ class RecreationAreaInfo extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          const Text('About',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold)),
+          const Text('About', style: TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           SelectableText(description),
         ],
@@ -176,7 +174,6 @@ class RecreationAreaInfo extends StatelessWidget {
 }
 
 class RecreationAreaParking extends StatelessWidget {
-
   const RecreationAreaParking({Key? key}) : super(key: key);
 
   @override
@@ -192,23 +189,16 @@ class RecreationAreaParking extends StatelessWidget {
         children: [
           const Text(
             'Location',
-            style: TextStyle(
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
           TextButton.icon(
-            onPressed: () => {},//launchMap(context, ), //TODO
-            icon: const Icon(Icons.place,
-                color: Colors.red),
-            label: const Text('Maps',
-                textAlign: TextAlign.center),
+            onPressed: () => {}, //launchMap(context, ), //TODO
+            icon: const Icon(Icons.place, color: Colors.red),
+            label: const Text('Maps', textAlign: TextAlign.center),
             style: ButtonStyle(
-                foregroundColor:
-                MaterialStateProperty.all(
-                    Colors.white),
-                backgroundColor:
-                MaterialStateProperty.all(
-                    Colors.blue)),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+                backgroundColor: MaterialStateProperty.all(Colors.blue)),
           )
         ],
       ),

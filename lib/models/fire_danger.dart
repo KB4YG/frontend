@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart' show Colors, MaterialColor;
-enum Danger {low, moderate, high, extreme}
+import 'package:kb4yg/extensions/string_extension.dart';
+
+enum Danger {unknown, low, moderate, high, extreme}
 
 class FireDanger {
   final int lastUpdated;
   final String levelStr;
-  Danger? get level => levelFromStr(levelStr);
-  MaterialColor? get color => matchFireDangerColor(level);
+  late final Danger level = levelFromStr(levelStr);
+  late final MaterialColor color = matchFireDangerColor(level);
 
   FireDanger(this.lastUpdated, this.levelStr);
 
@@ -13,23 +15,26 @@ class FireDanger {
       : lastUpdated = json['LastUpdate'],
         levelStr = json['Level'];
 
-  Danger? levelFromStr(String levelStr) {
-    switch (levelStr) {
-      case 'low': return Danger.low;
-      case 'moderate': return Danger.moderate;
-      case 'high': return Danger.high;
-      case 'extreme': return Danger.extreme;
-      default: return null;
+  Danger levelFromStr(String levelStr) {
+    switch (levelStr.toLowerCase()) {
+      case 'low':       return Danger.low;
+      case 'moderate':  return Danger.moderate;
+      case 'high':      return Danger.high;
+      case 'extreme':   return Danger.extreme;
+      default:          return Danger.unknown;
     }
   }
+
+  @override
+  String toString() => levelStr.capitalize();
 }
 
 MaterialColor matchFireDangerColor(Danger? danger) {
   switch (danger) {
-    case (Danger.low): return Colors.green;
+    case (Danger.low):      return Colors.green;
     case (Danger.moderate): return Colors.blue;
-    case (Danger.high): return Colors.yellow;
-    case (Danger.extreme): return Colors.red;
-    default: return Colors.grey;
+    case (Danger.high):     return Colors.amber;
+    case (Danger.extreme):  return Colors.red;
+    default:                return Colors.grey;
   }
 }

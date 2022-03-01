@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class IconKeyTable extends StatelessWidget {
   const IconKeyTable({Key? key}) : super(key: key);
 
@@ -34,65 +33,40 @@ class IconKeyTable extends StatelessWidget {
             TableRow(children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.directions_car),
+                child: Icon(Icons.directions_car, color: Colors.blueGrey),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SelectableText(
-                    'General parking. The number of non-handicap '
-                    'spots currently available.'),
+                    'General parking. The number of non-handicap spots currently'
+                    ' available for all the parking lots of a recreation area or'
+                    ' individually.'),
               )
             ]),
             TableRow(children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.accessible),
+                child: Icon(Icons.accessible, color: Colors.lightBlue),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SelectableText(
-                    'Handicap parking. The number of handicap spots '
-                    'currently available.'),
+                    'Handicap parking. The number of handicap spots currently '
+                    'available.'),
               )
             ]),
             TableRow(children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.check_circle_outline, color: Colors.green),
+                child: Icon(Icons.whatshot),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SelectableText(
-                    'Fire danger low. According to our wildfire data '
-                    'source, there are no fires within 10 miles of a '
-                    'recreation area for a given county.'),
+                    'Fire danger level (low, moderate, high, extreme) for a region'
+                    ' as designated by the Oregon Department of Forestry (ODF).'),
               )
             ]),
-            TableRow(children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.warning_amber_rounded, color: Colors.amber),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: SelectableText('Fire danger medium. According to our '
-                    'wildfire data source, there is a fire within 10 '
-                    'miles of a recreation area for a given county.'),
-              )
-            ]),
-            TableRow(children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.warning, color: Colors.red),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: SelectableText(
-                    'Fire danger high. According to our wildfire data '
-                    'source, there is a fire within 5 miles of a '
-                    'recreation area for a given county.'),
-              )
-            ])
           ],
         ),
       ],

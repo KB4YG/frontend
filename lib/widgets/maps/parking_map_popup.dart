@@ -40,32 +40,44 @@ class ParkingMapPopup extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      location.name,
+                      location.recreationArea,
                       overflow: TextOverflow.fade,
                       softWrap: false,
-                      style: const TextStyle(
+                      style: TextStyle(
                         shadows: [
                           Shadow(
-                              color: Colors.lightBlueAccent,
-                              offset: Offset(0, -3))
+                              color: Theme.of(context).colorScheme.secondary,
+                              offset: const Offset(0, -3))
                         ], // Use shadow to create space above link underline
                         color: Colors.transparent,
                         decoration: TextDecoration.underline,
-                        decorationColor: Colors.lightBlueAccent,
+                        decorationColor: Theme.of(context).colorScheme.secondary,
                         decorationThickness: 3.0,
                         fontWeight: FontWeight.w500,
-                        fontSize: 15.0,
+                        fontSize: 16.0,
                       ),
                     ),
-                    const Padding(padding: EdgeInsets.symmetric(vertical: 4.0)),
+                    const SizedBox(height: 4),
                     Text(
-                      'General Parking: ${location.spots}',
+                      location.name,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      // style: const TextStyle(fontSize: 13.0),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'General Parking: ${location.spots == -1 ? 'n/a' : location.spots}',
                       style: const TextStyle(fontSize: 13.0),
                     ),
                     Text(
-                      'Handicap Parking: ${location.handicap}',
+                      'Handicap Parking: ${location.handicap == -1 ? 'n/a' : location.handicap}',
                       style: const TextStyle(fontSize: 13.0),
                     ),
+                    // const SizedBox(height: 8),
+                    // Text(
+                    //   'Fire Danger: ${location.fireDanger}',
+                    //   style: const TextStyle(fontSize: 12.0),
+                    // ),
                   ],
                 ),
               ),

@@ -7,10 +7,11 @@ class ParkingLot {
   final double lng; // Longitude of address, decimal degrees
   final int spots; // Number of general parking spots currently available
   final int handicap; // Number of handicap parking currently available
+  final String recreationArea; // Name of recreation area parking lot is in
   final FireDanger fireDanger; // ODF Term - low, moderate, high, or extreme
 
   ParkingLot(this.name, this.address, this.lat, this.lng, this.spots,
-      this.handicap, this.fireDanger);
+      this.handicap, this.fireDanger, this.recreationArea);
 
   ParkingLot.fromJson(Map<String, dynamic> json)
       : name = json['ParkingLotName'],
@@ -19,5 +20,6 @@ class ParkingLot {
         lng = json['Longitude'],
         spots = json['TotalGeneral'],
         handicap = json['TotalHandicap'],
+        recreationArea = json['RecreationArea'],
         fireDanger = FireDanger.fromJson(json['FireDanger']);
 }
