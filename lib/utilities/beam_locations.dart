@@ -1,5 +1,5 @@
 import 'package:beamer/beamer.dart';
-import 'package:flutter/material.dart' show BuildContext, ValueKey;
+import 'package:flutter/material.dart' show BuildContext, RouteInformation, ValueKey;
 import 'package:kb4yg/extensions/string_extension.dart';
 import 'package:kb4yg/screens/about_screen.dart';
 import 'package:kb4yg/screens/county_list_screen.dart';
@@ -38,6 +38,8 @@ class AboutLocation extends BeamLocation<BeamState> {
 
 
 class CountyLocation extends BeamLocation<BeamState> {
+  CountyLocation(RouteInformation routeInformation) : super(routeInformation);
+
   @override
   List<Pattern> get pathPatterns => [routeRecArea];
 
