@@ -38,7 +38,7 @@ class AboutLocation extends BeamLocation<BeamState> {
 
 
 class CountyLocation extends BeamLocation<BeamState> {
-  CountyLocation(RouteInformation routeInformation) : super(routeInformation);
+  // CountyLocation(RouteInformation routeInformation) : super(routeInformation);
 
   @override
   List<Pattern> get pathPatterns => [routeRecArea];

@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart' show BeamPage, Beamer;
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/header.dart';
@@ -17,15 +18,18 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         appBar: const Header(title: Text(constants.title)),
         endDrawer: const Settings(),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 130, 30),
-          child: FloatingActionButton.extended(
-              hoverColor: Colors.orange,
-              onPressed: () {
-                Beamer.of(context).beamToNamed(constants.routeLocations);
-              },
-              label: const Text('Let\'s begin')),
-        ),
+        floatingActionButton: !kIsWeb
+            ? null
+            : Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 130, 30),
+                child: FloatingActionButton.extended(
+                    hoverColor: Colors.orange,
+                    onPressed: () {
+                      Beamer.of(context, root: true)
+                          .beamToNamed(constants.routeLocations);
+                    },
+                    label: const Text('Let\'s begin')),
+              ),
         body: SingleChildScrollView(
             child: Center(
                 child: Container(
@@ -39,13 +43,19 @@ class HomeScreen extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: const SelectableText(
-                  'Welcome to the Know Before You Go App! '
-                  'To view parking availability for a natural recreation area, '
-                  'press the "Let\'s Begin" button below. Then select the county '
-                  'in which the natural area is located. Don\'t know which county '
-                  'a recreation area is in? No problem! Just select one from our map.',
+                  kIsWeb
+                      ? 'Welcome to the Know Before You Go App! '
+                          'To view parking availability for a natural recreation area, '
+                          'press the "Let\'s Begin" button below. Then select the county '
+                          'in which the natural area is located. Don\'t know which county '
+                          'a recreation area is in? No problem! Just select one from our map.'
+                      : 'Welcome to the Know Before You Go App! '
+                          'To view parking availability for a natural recreation area, '
+                          'press the car icon on the bottom navbar below.\n\nThen select the county '
+                          'in which the natural area is located. Don\'t know which county '
+                          'a recreation area is in? No problem! Just select one from our map.',
                   style: TextStyle(
-                      fontSize: 18.0, height: 1.3, letterSpacing: 0.5),
+                      fontSize: 17.0, height: 1.3, letterSpacing: 0.5),
                 ),
               )
             ],
@@ -81,35 +91,34 @@ class HomeScreenCarousel extends StatelessWidget {
             enlargeCenterPage: true,
           ),
           itemCount: urls.length,
-          itemBuilder: (BuildContext context, int itemIndex,
-              int pageViewIndex) =>
-              Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 0),
-                        borderRadius: BorderRadius.circular(16.0),
-                        image: DecorationImage(
-                          alignment: Alignment.topCenter,
-                          fit: BoxFit.fitWidth,
-                          image: NetworkImage(urls[itemIndex]),
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) =>
+                  Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 0),
+                            borderRadius: BorderRadius.circular(16.0),
+                            image: DecorationImage(
+                              alignment: Alignment.topCenter,
+                              fit: BoxFit.fitWidth,
+                              image: NetworkImage(urls[itemIndex]),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    padding:
-                    const EdgeInsets.only(right: 20, left: 20),
-                    child: Text(
-                      carouselText[itemIndex],
-                      style: const TextStyle(
-                          fontSize: 17, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              )),
+                      const SizedBox(height: 15),
+                      Container(
+                        padding: const EdgeInsets.only(right: 20, left: 20),
+                        child: Text(
+                          carouselText[itemIndex],
+                          style: const TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  )),
     );
   }
 }
