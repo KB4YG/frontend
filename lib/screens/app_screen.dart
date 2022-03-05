@@ -59,6 +59,9 @@ class _AppScreenState extends State<AppScreen> {
             beamLocations: [AboutLocation()],
           )),
     ];
+
+    // Mark all as inactive initially for accurate web titles
+    for (var element in _routerDelegates) {element.active = false;}
   }
 
   @override
@@ -66,6 +69,7 @@ class _AppScreenState extends State<AppScreen> {
     super.didChangeDependencies();
     final uriString = Beamer.of(context).configuration.location!;
     _navbarIndex = getNavbarIndex(uriString);
+    _routerDelegates[_navbarIndex].active = true;
   }
 
   int getNavbarIndex(String uri) {
@@ -103,6 +107,10 @@ class _AppScreenState extends State<AppScreen> {
         ],
         onTap: (index) {
           if (index != _navbarIndex) {
+            // Toggle active delegate for accurate web page titles
+            _routerDelegates[_navbarIndex].active = false;
+            _routerDelegates[index].active = true;
+
             setState(() => _navbarIndex = index);
             _routerDelegates[_navbarIndex].update(rebuild: false);
           }
