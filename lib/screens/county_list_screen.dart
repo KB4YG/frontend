@@ -25,12 +25,12 @@ class _CountyListScreenState extends State<CountyListScreen> {
   @override
   void initState() {
     super.initState();
-    _futureCountyList = Future<List<String>>.value([
-      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
-      'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
-      'WASCO', 'WASHINGTON',
-    ]);
-    // _futureCountyList = BackendProvider.of(context).getCountyList();
+    // _futureCountyList = Future<List<String>>.value([
+    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
+    //   'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
+    //   'WASCO', 'WASHINGTON',
+    // ]);
+    _futureCountyList = BackendProvider.of(context).getCountyList();
   }
 
   @override

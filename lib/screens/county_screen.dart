@@ -33,22 +33,22 @@ class _CountyScreenState extends State<CountyScreen> {
   }
 
   Future<void> _fetchCounty(BuildContext context) async {
-    futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
-    // futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
+    // futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
+    futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Header(
-          title: TextButton.icon(
-        icon: const Icon(Icons.edit_location),
-        label: Text('${widget.countyName} County',
-            style: const TextStyle(color: Colors.white, fontSize: 20)),
-        onPressed: () {
-          Beamer.of(context).beamToNamed(constants.routeLocations);
-        },
-      )),
+        title: TextButton(
+          child: Text('${widget.countyName} County',
+          style: const TextStyle(color: Colors.white, fontSize: 20)),
+          onPressed: () {
+            Beamer.of(context).beamToNamed(constants.routeLocations);
+          },
+        )
+      ),
       endDrawer: const Settings(),
       body: FutureBuilder<County>(
           future: futureCounty,
@@ -97,53 +97,58 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
                 : Column(
                     // mainAxisSize: MainAxisSize.min,
                     children: [
-                      ExpandedSection(
-                        expand: !_isFullscreen,
-                        collapseVertical: !isWideScreen,
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxHeight: isWideScreen // Limit height if not widescreen
-                                    ? double.infinity
-                                    : MediaQuery.of(context).size.height / 2),
-                            child: Scrollbar(
-                              isAlwaysShown: true,
-                              thickness: 6,
-                              child: ParkingTable(
-                                  county: _county,
-                                  onRefresh: () async {
-                                    final updatedCounty =
-                                    await BackendProvider.of(context).getCounty(_county.name);
+                        ExpandedSection(
+                          expand: !_isFullscreen,
+                          collapseVertical: !isWideScreen,
+                          child: Center(
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxHeight:
+                                      isWideScreen // Limit height if not widescreen
+                                          ? double.infinity
+                                          : MediaQuery.of(context).size.height /
+                                              2),
+                              child: Scrollbar(
+                                isAlwaysShown: true,
+                                thickness: 6,
+                                child: ParkingTable(
+                                    county: _county,
+                                    onRefresh: () async {
+                                      final updatedCounty =
+                                          await BackendProvider.of(context)
+                                              .getCounty(_county.name);
 
-                                    setState(() {
-                                      _county.recreationAreas = updatedCounty.recreationAreas;
-                                      _county.parkingLots = updatedCounty.parkingLots;
-                                      _parkingLots = _county.parkingLots;
-                                    });
-                                    print(_parkingLots);
-                                  }),
+                                      setState(() {
+                                        _county.recreationAreas =
+                                            updatedCounty.recreationAreas;
+                                        _county.parkingLots =
+                                            updatedCounty.parkingLots;
+                                        _parkingLots = _county.parkingLots;
+                                      });
+                                      print(_parkingLots);
+                                    }),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(minHeight: 300),
-                          child: ParkingMap(
-                            center: LatLng(_county.lat, _county.lng),
-                            locations: _parkingLots,
-                            onTap: (BuildContext context, ParkingLot loc) {
-                              String path = sanitizeUrl(
-                                  '${constants.routeLocations}/${_county.name}/${loc.recreationArea}');
-                              Beamer.of(context).beamToNamed(path);
-                            },
-                            maximizeToggle: () => setState(() {
-                              _isFullscreen = !_isFullscreen;
-                            }),
+                        Expanded(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(minHeight: 300),
+                            child: ParkingMap(
+                              center: LatLng(_county.lat, _county.lng),
+                              locations: _parkingLots,
+                              onTap: (BuildContext context, ParkingLot loc) {
+                                String path = sanitizeUrl(
+                                    '${constants.routeLocations}/${_county.name}/${loc.recreationArea}');
+                                Beamer.of(context).beamToNamed(path);
+                              },
+                              maximizeToggle: () => setState(() {
+                                _isFullscreen = !_isFullscreen;
+                              }),
+                            ),
                           ),
-                        ),
-                      )
-                    ]));
+                        )
+                      ]));
   }
 
   List<Widget> getContent(context) {

@@ -21,14 +21,13 @@ class RecreationAreaScreen extends StatefulWidget {
 }
 
 class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
-  get recreationAreaUrl => widget.recreationAreaUrl;
   late Future<RecreationArea> futureRecreationArea;
 
   @override
   void initState() {
     super.initState();
     futureRecreationArea =
-        BackendProvider.of(context).getRecreationArea(recreationAreaUrl);
+        BackendProvider.of(context).getRecreationArea(widget.recreationAreaUrl);
   }
 
   void launchMap(BuildContext context, ParkingLot location) async {
@@ -56,67 +55,63 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
         ),
       ),
       endDrawer: const Settings(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-              constraints: const BoxConstraints(maxWidth: 1000),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 25.0),
-                    child: FutureBuilder<RecreationArea>(
-                        future: futureRecreationArea,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                RecreationAreaCarousel(
-                                    images: snapshot.data!.imageUrls),
-                                const SizedBox(height: 30),
-                                RecreationAreaInfo(snapshot.data!.info),
-                                const SizedBox(height: 30),
-                                const RecreationAreaParking(),
-                                const SizedBox(height: 30),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    shape: BoxShape.rectangle,
+      body: Center(
+        child: Container(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 25.0),
+              child: FutureBuilder<RecreationArea>(
+                  future: futureRecreationArea,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            RecreationAreaCarousel(
+                                images: snapshot.data!.imageUrls),
+                            const SizedBox(height: 30),
+                            RecreationAreaInfo(snapshot.data!.info),
+                            const SizedBox(height: 30),
+                            const RecreationAreaParking(),
+                            const SizedBox(height: 30),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                shape: BoxShape.rectangle,
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    'Parking Info',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    children: [
-                                      const Text(
-                                        'Parking Info',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SelectableText(
-                                        '${constants.bullet} General Parking: ${snapshot.data!.spots}\n'
-                                        '${constants.bullet} Handicap Parking: ${snapshot.data!.handicap}\n'
-                                        '${constants.bullet} Temperature: 54° F\n'
-                                        '${constants.bullet} Time: 11:00 A.M\n'
-                                        '${constants.bullet} Date: 01/16/2022',
-                                        style: const TextStyle(height: 2),
-                                        //TODO: style text
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          } else if (snapshot.hasError) {
-                            return ErrorCard(
-                                message: snapshot.error.toString());
-                          } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                        }),
-                  ),
-                ],
-              )),
-        ),
+                                  SelectableText(
+                                    '${constants.bullet} General Parking: ${snapshot.data!.spots}\n'
+                                    '${constants.bullet} Handicap Parking: ${snapshot.data!.handicap}\n'
+                                    '${constants.bullet} Temperature: 54° F\n'
+                                    '${constants.bullet} Time: 11:00 A.M\n'
+                                    '${constants.bullet} Date: 01/16/2022',
+                                    style: const TextStyle(height: 2),
+                                    //TODO: style text
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return ErrorCard(
+                          message: snapshot.error.toString());
+                    } else {
+                      return const Center(
+                          child: CircularProgressIndicator());
+                    }
+                  }),
+            )),
       ),
     );
   }
