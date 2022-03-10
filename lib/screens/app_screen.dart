@@ -1,7 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
-import 'package:kb4yg/widgets/settings.dart';
 
 import '../utilities/beam_locations.dart';
 
@@ -20,7 +19,7 @@ class _AppScreenState extends State<AppScreen> {
     constants.routeAbout
   ];
   late final List<BeamerDelegate> _routerDelegates;
-  late int _navbarIndex;
+  int _navbarIndex = 0;
 
   @override
   void initState() {
@@ -35,10 +34,11 @@ class _AppScreenState extends State<AppScreen> {
     //     : '${constants.routeLocations}/${sanitizeUrl(lastCounty)}';
 
     // Initialize router delegates (widgets that handle routing)
+    // Using multiple Beamers and a BeamerDelegate for each allows us to save
+    // nested state (e.g., user can return to county details rather than list)
     _routerDelegates = [
       BeamerDelegate(
           initialPath: routes[0],
-          // locationBuilder:
           locationBuilder: BeamerLocationBuilder(
             beamLocations: [HomeLocation()],
           )),
@@ -61,13 +61,17 @@ class _AppScreenState extends State<AppScreen> {
     ];
 
     // Mark all as inactive initially for accurate web titles
-    for (var element in _routerDelegates) {element.active = false;}
+    for (var element in _routerDelegates) {
+      element.active = false;
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final uriString = Beamer.of(context).configuration.location!;
+    // Toggle active beamer delegate
+    _routerDelegates[_navbarIndex].active = false;
     _navbarIndex = getNavbarIndex(uriString);
     _routerDelegates[_navbarIndex].active = true;
   }
@@ -83,39 +87,27 @@ class _AppScreenState extends State<AppScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      endDrawer: const Settings(),
-      body: IndexedStack(
-        index: _navbarIndex,
-        children: [
-          Beamer(routerDelegate: _routerDelegates[0]),
-          Beamer(routerDelegate: _routerDelegates[1]),
-          Beamer(routerDelegate: _routerDelegates[2]),
-          Beamer(routerDelegate: _routerDelegates[3]),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.orangeAccent,
-        unselectedItemColor: Colors.blueGrey,
-        currentIndex: _navbarIndex,
-        items: const [
-          BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-          BottomNavigationBarItem(
-              label: 'Parking', icon: Icon(Icons.drive_eta)),
-          BottomNavigationBarItem(label: 'Help', icon: Icon(Icons.help)),
-          BottomNavigationBarItem(label: 'About', icon: Icon(Icons.info)),
-        ],
-        onTap: (index) {
-          if (index != _navbarIndex) {
-            // Toggle active delegate for accurate web page titles
-            _routerDelegates[_navbarIndex].active = false;
-            _routerDelegates[index].active = true;
-
-            setState(() => _navbarIndex = index);
-            _routerDelegates[_navbarIndex].update(rebuild: false);
-          }
-        },
-      ),
-    );
+    return DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          body: TabBarView(
+            children: [
+              Beamer(routerDelegate: _routerDelegates[0]),
+              Beamer(routerDelegate: _routerDelegates[1]),
+              Beamer(routerDelegate: _routerDelegates[2]),
+              Beamer(routerDelegate: _routerDelegates[3])
+            ],
+          ),
+          bottomSheet: const TabBar(
+            labelColor: Colors.green,
+            unselectedLabelColor: Colors.blueGrey,
+            tabs: [
+              Tab(icon: Icon(Icons.home)),
+              Tab(icon: Icon(Icons.directions_car)),
+              Tab(icon: Icon(Icons.help)),
+              Tab(icon: Icon(Icons.info))
+            ],
+          ),
+        ));
   }
 }
