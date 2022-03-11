@@ -30,7 +30,7 @@ class ThemeProvider extends ChangeNotifier {
 class Themes {
   // TODO: add themes
   static final lightTheme = ThemeData(
-    // primarySwatch: Colors.green,
+    primarySwatch: Colors.green,
     scaffoldBackgroundColor: Colors.white,
     // primaryColor: Colors.whit  e,
     // colorScheme: const ColorScheme.light(),
