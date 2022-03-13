@@ -45,7 +45,7 @@ class _ParkingTableState extends State<ParkingTable> {
                 DataColumn(
                     onSort: onSort,
                     tooltip: 'Name of recreation area',
-                    label: const Expanded(
+                    label: Expanded(
                       child: Text(
                         kIsWeb ? 'Recreation Area' : 'Location',
                         textAlign: TextAlign.center,
