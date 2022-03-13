@@ -29,13 +29,15 @@ class _CountyScreenState extends State<CountyScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchCounty(context);
+    futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
+    // futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
+    // _fetchCounty(context);
   }
 
-  Future<void> _fetchCounty(BuildContext context) async {
-    // futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
-    futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
-  }
+  // Future<void> _fetchCounty(BuildContext context) async {
+  //   futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
+  //   futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
+  // }
 
   @override
   Widget build(BuildContext context) {
