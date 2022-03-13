@@ -9,7 +9,7 @@ class ThemeSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return SwitchListTile(
         visualDensity: VisualDensity.compact,
         title: Text('${isDark(context) ? 'Dark' : 'Light'} Mode'),

@@ -14,7 +14,7 @@ class IntroScreen extends StatelessWidget {
     await prefs.setBool(constants.prefIntro, false);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => App(prefs: prefs)),
+      MaterialPageRoute(builder: (context) => const App()),
     );
   }
 

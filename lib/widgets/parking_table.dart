@@ -86,8 +86,7 @@ class _ParkingTableState extends State<ParkingTable> {
                       onSelectChanged: (bool? selected) {
                         if (selected == true) {
                           String route = constants.routeLocations;
-                          route +=
-                              sanitizeUrl('/${widget.county.name}/${loc.name}');
+                          route += sanitizeUrl(loc.parkingLotUrl);
                           Beamer.of(context).beamToNamed(route);
                         }
                       },

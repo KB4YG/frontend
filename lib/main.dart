@@ -18,13 +18,11 @@ void main() async {
 
   // Run application
   return runApp(
-    MultiProvider(
-        providers: [
-          ChangeNotifierProvider<ThemeProvider>(
-              create: (context) => ThemeProvider(prefs: prefs)),
-          Provider<SharedPreferences>(create: (context) => prefs),
-          Provider<BackendProvider>(create: (context) => BackendProvider())
-        ],
-        child: App(prefs: prefs)),
+    MultiProvider(providers: [
+      ChangeNotifierProvider<ThemeProvider>(
+          create: (context) => ThemeProvider(prefs: prefs)),
+      Provider<SharedPreferences>(create: (context) => prefs),
+      Provider<BackendProvider>(create: (context) => BackendProvider())
+    ], child: const App()),
   );
 }

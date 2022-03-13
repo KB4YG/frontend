@@ -1,5 +1,5 @@
 import 'package:beamer/beamer.dart';
-import 'package:flutter/material.dart' show BuildContext, ValueKey;
+import 'package:flutter/material.dart' show BuildContext, RouteInformation, ValueKey;
 import 'package:kb4yg/extensions/string_extension.dart';
 import 'package:kb4yg/screens/about_screen.dart';
 import 'package:kb4yg/screens/county_list_screen.dart';
@@ -38,6 +38,8 @@ class AboutLocation extends BeamLocation<BeamState> {
 
 
 class CountyLocation extends BeamLocation<BeamState> {
+  // CountyLocation(RouteInformation routeInformation) : super(routeInformation);
+
   @override
   List<Pattern> get pathPatterns => [routeRecArea];
 
@@ -61,13 +63,17 @@ class CountyLocation extends BeamLocation<BeamState> {
     }
 
     if (state.pathParameters.containsKey(routeRecAreaId)) {
-      var recreationAreaPath = sanitizeUrl(state.pathParameters[routeRecAreaId]!);
-      var recreationAreaName = recreationAreaPath.replaceAll('-', ' ').capitalizeAll();
+      var recreationAreaUrl = sanitizeUrl('/' +
+          state.pathParameters[routeCountyId]! + '/' +
+          state.pathParameters[routeRecAreaId]!);
+      // Guess the recreation area name based on url
+      var recreationAreaName = sanitizeUrl(state.pathParameters[routeRecAreaId]!)
+          .replaceAll('-', ' ').capitalizeAll();
       pages.add(BeamPage(
-          key: ValueKey('rec-area-$recreationAreaPath'),
+          key: ValueKey('rec-area-$recreationAreaUrl'),
           title: recreationAreaName,
           type: BeamPageType.noTransition,
-          child: RecreationAreaScreen(recreationAreaPath, recreationAreaName)));
+          child: RecreationAreaScreen(recreationAreaUrl, recreationAreaName)));
     }
 
     return pages;

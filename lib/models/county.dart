@@ -6,21 +6,20 @@ import 'fire_danger.dart';
 
 class County {
   final String name;
-  final double lat = 44.5646;   // TODO remove placeholders
-  final double lng = -123.2620;
+  final double lat;
+  final double lng;
   List<RecreationArea> recreationAreas;
   late List<ParkingLot> parkingLots;
   late final FireDanger fireDanger = [for (var x in recreationAreas) x.fireDanger]
       .fold(recreationAreas[0].fireDanger, (p, c) => p.level.index > c.level.index ? p : c);
 
-  County(this.name, this.recreationAreas);
-
   County.fromJson(Map<String, dynamic> json)
       : name = json['County'],
+        lat = json['Latitude'],
+        lng = json['Longitude'],
         recreationAreas = [
-          for (var item in json['List'])
-            RecreationArea.fromJson(
-                List<Map<String, dynamic>>.from(item['List']))
+          for (var recArea in json['List'])
+            RecreationArea.fromJson(recArea)
         ] {
     parkingLots = [for (var recArea in recreationAreas) ...recArea.parkingLots];
   }

@@ -1,5 +1,7 @@
 const bentonCountyJson = {
   "County": "Benton",
+  "Longitude": -123.370791,
+  "Latitude": 44.576171,
   "List": [
     // {
     //   "RecreationArea": "Fitton Green Natural Area",
@@ -290,6 +292,8 @@ const bentonCountyJson = {
     // },
     {
       "RecreationArea": "Fitton Green Natural Area",
+      "About": "information here",
+      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
       "List": [
         {
           "FireDanger": {"LastUpdate": 1643363148104, "Level": "low"},
@@ -303,15 +307,15 @@ const bentonCountyJson = {
           "RecreationArea": "Fitton Green",
           "TotalGeneral": 12,
           "CountyURL": "/benton",
-          "About": "information here",
           "Id": "15751bba-ff7a-4f12-b52c-9bf1db0ac5ab",
-          "Images": "imageUrlHere",
           "LocationURL": "/benton/fitton-green/fitton-green-trailhead"
         }
       ]
     },
     {
       "RecreationArea": "Bald Hill Farm",
+      "About": "information here",
+      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
       "List": [
         {
           "Address": "6460 NW Oak Creek Dr",
@@ -325,15 +329,15 @@ const bentonCountyJson = {
           "RecreationArea": "Bald Hill Farm",
           "TotalGeneral": 11,
           "CountyURL": "/benton",
-          "About": "information here",
           "Id": "15751bba-ff7a-4f12-b52c-9bf1db0ac5aa",
-          "Images": "imageUrlHere",
           "LocationURL": "/benton/bald-hill-farm/bald-hill-farm-1"
         }
       ]
     },
     {
       "RecreationArea": "Bald Hill Park",
+      "About": "information here",
+      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
       "List": [
         {
           "Address": "6460 NW Oak Creek Dr",
@@ -347,15 +351,15 @@ const bentonCountyJson = {
           "RecreationArea": "Bald Hill Park",
           "TotalGeneral": 11,
           "CountyURL": "/benton",
-          "About": "information here",
           "Id": "15751bba-ff7a-4f12-b52c-9bf1db0ac5aa",
-          "Images": "imageUrlHere",
           "LocationURL": "/benton/bald-hill-park/bald-hill-park-1"
         }
       ]
     },
     {
       "RecreationArea": "McDonald-Dunn Forest",
+      "About": "information here",
+      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
       "List": [
         {
           "FireDanger": {"LastUpdate": 1643363148104, "Level": "low"},
@@ -367,8 +371,6 @@ const bentonCountyJson = {
           "TotalHandicap": 2,
           "RecreationArea": "McDonald-Dunn Forest",
           "ParkingLotName": "Baker Creek Bridge Trail",
-          "About": "information here",
-          "Images": "imageUrlHere",
           "CountyURL": "/benton",
           "ParkURL": "/benton/mcdonald-dunn-forest",
           "LocationURL": "/benton/mcdonald-dunn-forest/baker-creek-bridge-trail",
@@ -384,8 +386,6 @@ const bentonCountyJson = {
           "TotalHandicap": 2,
           "RecreationArea": "McDonald-Dunn Forest",
           "ParkingLotName": "Lewisburg Saddle Trailhead",
-          "About": "information here",
-          "Images": "imageUrlHere",
           "CountyURL": "/benton",
           "ParkURL": "/benton/mcdonald-dunn-forest",
           "LocationURL": "/benton/mcdonald-dunn-forest/lewisburg-saddle-trailhead",
@@ -401,8 +401,6 @@ const bentonCountyJson = {
           "TotalHandicap": 2,
           "RecreationArea": "McDonald-Dunn Forest",
           "ParkingLotName": "Oak Creek Access",
-          "About": "information here",
-          "Images": "imageUrlHere",
           "CountyURL": "/benton",
           "ParkURL": "/benton/mcdonald-dunn-forest",
           "LocationURL": "/benton/mcdonald-dunn-forest/oak-creek-access",
@@ -412,6 +410,8 @@ const bentonCountyJson = {
     },
     {
       "RecreationArea": "Cardwell Hill",
+      "About": "information here",
+      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
       "List": [
         {
           "FireDanger": {"LastUpdate": 1643363148104, "Level": "extreme"},
@@ -425,9 +425,7 @@ const bentonCountyJson = {
           "RecreationArea": "Cardwell Hill",
           "TotalGeneral": 11,
           "CountyURL": "/benton",
-          "About": "information here",
           "Id": "15751bba-ff7a-4f12-b52c-9bf1db0ac5aa",
-          "Images": "imageUrlHere",
           "LocationURL": "/benton/cardwell-hill/cardwell-hill-1"
         }
       ]

@@ -22,14 +22,13 @@ class RecreationAreaScreen extends StatefulWidget {
 }
 
 class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
-  get recreationAreaUrl => widget.recreationAreaUrl;
   late Future<RecreationArea> futureRecreationArea;
 
   @override
   void initState() {
     super.initState();
     futureRecreationArea =
-        BackendProvider.of(context).getRecreationArea(recreationAreaUrl);
+        BackendProvider.of(context).getRecreationArea(widget.recreationAreaUrl);
   }
 
   void launchMap(BuildContext context, ParkingLot location) async {
@@ -175,36 +174,3 @@ class RecreationAreaInfo extends StatelessWidget {
     );
   }
 }
-
-// class RecreationAreaParking extends StatelessWidget {
-//   const RecreationAreaParking({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: BoxDecoration(
-//         border: Border.all(color: Colors.black),
-//         shape: BoxShape.rectangle,
-//       ),
-//       padding: const EdgeInsets.all(10),
-//       width: MediaQuery.of(context).size.width,
-//       child: Column(
-//         children: [
-//           const Text(
-//             'Location',
-//             style: TextStyle(fontWeight: FontWeight.bold),
-//           ),
-//           const SizedBox(height: 10),
-//           TextButton.icon(
-//             onPressed: () => {}, //launchMap(context, ), //TODO
-//             icon: const Icon(Icons.place, color: Colors.red),
-//             label: const Text('Maps', textAlign: TextAlign.center),
-//             style: ButtonStyle(
-//                 foregroundColor: MaterialStateProperty.all(Colors.white),
-//                 backgroundColor: MaterialStateProperty.all(Colors.blue)),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
