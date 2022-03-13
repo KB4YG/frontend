@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart' show BeamPage, Beamer;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kb4yg/utilities/beam_locations.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
@@ -25,8 +26,7 @@ class HomeScreen extends StatelessWidget {
                 child: FloatingActionButton.extended(
                     hoverColor: Colors.orange,
                     onPressed: () {
-                      Beamer.of(context, root: true)
-                          .beamToNamed(constants.routeLocations);
+                      Beamer.of(context).beamTo(CountyLocation());
                     },
                     label: const Text('Let\'s begin')),
               ),
@@ -67,10 +67,10 @@ class HomeScreen extends StatelessWidget {
 class HomeScreenCarousel extends StatelessWidget {
   const HomeScreenCarousel({Key? key}) : super(key: key);
 
-  static const List<String> urls = [
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
+  static const List<AssetImage> images = [
+    AssetImage('assets/images/fitton-green-1.jpg'),
+    AssetImage('assets/images/fitton-green-2.jpg'),
+    AssetImage('assets/images/fitton-green-3.jpg')
   ];
   static const List<String> carouselText = [
     'Fitton Green',
@@ -82,15 +82,15 @@ class HomeScreenCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 30),
-      constraints: const BoxConstraints(maxWidth: 600),
+      constraints: const BoxConstraints(maxWidth: 1000),
       child: CarouselSlider.builder(
           options: CarouselOptions(
-            height: MediaQuery.of(context).size.height / 3,
+            aspectRatio: 16 / 9,
             autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 10),
+            autoPlayInterval: const Duration(seconds: 16),
             enlargeCenterPage: true,
           ),
-          itemCount: urls.length,
+          itemCount: images.length,
           itemBuilder:
               (BuildContext context, int itemIndex, int pageViewIndex) =>
                   Column(
@@ -101,9 +101,9 @@ class HomeScreenCarousel extends StatelessWidget {
                             border: Border.all(width: 0),
                             borderRadius: BorderRadius.circular(16.0),
                             image: DecorationImage(
-                              alignment: Alignment.topCenter,
-                              fit: BoxFit.fitWidth,
-                              image: NetworkImage(urls[itemIndex]),
+                              alignment: Alignment.center,
+                              fit: BoxFit.fill,
+                              image: images[itemIndex]
                             ),
                           ),
                         ),
