@@ -129,6 +129,7 @@ class _ParkingMapState extends State<ParkingMap> {
                 // anchor: AnchorPos.align(AnchorAlign.left),
                 builder: (context, markers) {
                   return FloatingActionButton(
+                    heroTag: markers.length.toString(),
                     mouseCursor: SystemMouseCursors.click,
                     // backgroundColor: Colors.green, // Specify color of cluster
                     child: Text(markers.length.toString()),
