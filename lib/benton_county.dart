@@ -1,5 +1,7 @@
 const bentonCountyJson = {
   "County": "Benton",
+  "Longitude": -123.370791,
+  "Latitude": 44.576171,
   "List": [
     // {
     //   "RecreationArea": "Fitton Green Natural Area",
