@@ -70,7 +70,7 @@ class _AppScreenState extends State<AppScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final uriString = Beamer.of(context).configuration.location!;
-    // Toggle active beamer delegate
+    // Toggle active beamer delegate TODO: fix for web or don't
     _routerDelegates[_navbarIndex].active = false;
     _navbarIndex = getNavbarIndex(uriString);
     _routerDelegates[_navbarIndex].active = true;
@@ -98,7 +98,7 @@ class _AppScreenState extends State<AppScreen> {
               Beamer(routerDelegate: _routerDelegates[3])
             ],
           ),
-          bottomSheet: const TabBar(
+          bottomNavigationBar: const TabBar(
             labelColor: Colors.green,
             unselectedLabelColor: Colors.blueGrey,
             tabs: [
