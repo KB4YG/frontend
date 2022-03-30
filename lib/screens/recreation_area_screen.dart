@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/recreation_area.dart';
-import 'package:kb4yg/widgets/parkinglot_table.dart';
+import 'package:kb4yg/widgets/parking_lot_table.dart';
 import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/settings.dart';
