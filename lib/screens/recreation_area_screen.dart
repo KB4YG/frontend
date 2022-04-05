@@ -1,14 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/recreation_area.dart';
-import 'package:kb4yg/widgets/parking_lot_table.dart';
 import 'package:kb4yg/providers/backend.dart';
-import 'package:kb4yg/widgets/header.dart';
-import 'package:kb4yg/widgets/settings.dart';
+import 'package:kb4yg/widgets/parking_lot_table.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
 import '../models/parking_lot.dart';
 import '../widgets/error_card.dart';
+import '../widgets/screen_template.dart';
 
 class RecreationAreaScreen extends StatefulWidget {
   final String recreationAreaUrl;
@@ -22,12 +22,12 @@ class RecreationAreaScreen extends StatefulWidget {
 }
 
 class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
-  late Future<RecreationArea> futureRecreationArea;
+  late Future<RecreationArea> recreationArea;
 
   @override
   void initState() {
     super.initState();
-    futureRecreationArea =
+    recreationArea =
         BackendProvider.of(context).getRecreationArea(widget.recreationAreaUrl);
   }
 
@@ -48,71 +48,49 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: Header(
-        title: Text(
-          widget.recreationAreaName,
-          style: const TextStyle(color: Colors.white, fontSize: 20),
-        ),
+    return ScreenTemplate(
+      title: Text(
+        widget.recreationAreaName,
+        style: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      endDrawer: const Settings(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-              constraints: const BoxConstraints(maxWidth: 1000),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 25.0),
-                    child: FutureBuilder<RecreationArea>(
-                        future: futureRecreationArea,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  RecreationAreaCarousel(
-                                      images: snapshot.data!.imageUrls),
-                                  const SizedBox(height: 30),
-                                  Container(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 10, 0),
-                                      child: RecreationAreaInfo(
-                                          snapshot.data!.info)),
-                                  const SizedBox(height: 30),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(children: [
-                                      ParkingLotTable(
-                                          parkingLots:
-                                              snapshot.data!.parkingLots),
-                                      const SizedBox(height: 7),
-                                      const Text(
-                                        'Last update: today at 2:10 pm',
-                                        style: TextStyle(
-                                            fontStyle: FontStyle.italic,
-                                            fontSize: 12),
-                                      )
-                                    ]),
-                                  )
-                                ]);
-                          } else if (snapshot.hasError) {
-                            return ErrorCard(
-                                message: snapshot.error.toString());
-                          } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                        }),
-                  ),
-                ],
-              )),
-        ),
-      ),
+      child: Container(
+          constraints: const BoxConstraints(maxWidth: 1000),
+          padding: const EdgeInsets.symmetric(vertical: 25.0),
+          child: FutureBuilder<RecreationArea>(
+              future: recreationArea,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(mainAxisSize: MainAxisSize.min, children: [
+                    RecreationAreaCarousel(images: snapshot.data!.imageUrls),
+                    const SizedBox(height: 30),
+                    Container(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: RecreationAreaInfo(snapshot.data!.info)),
+                    const SizedBox(height: 30),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                        shape: BoxShape.rectangle,
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Column(children: [
+                        ParkingLotTable(
+                            parkingLots: snapshot.data!.parkingLots),
+                        const SizedBox(height: 7),
+                        const Text(
+                          'Last update: today at 2:10 pm',
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 12),
+                        )
+                      ]),
+                    )
+                  ]);
+                } else if (snapshot.hasError) {
+                  return ErrorCard(message: snapshot.error.toString());
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              })),
     );
   }
 }
@@ -127,20 +105,26 @@ class RecreationAreaCarousel extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxHeight: 400),
       child: CarouselSlider.builder(
-          options: CarouselOptions(
-            autoPlay: true,
-            enlargeCenterPage: true,
+        options: CarouselOptions(
+          autoPlay: true,
+          enlargeCenterPage: true,
+        ),
+        itemCount: images.length,
+        itemBuilder: (context, itemIndex, pageViewIndex) => CachedNetworkImage(
+          imageUrl: images[itemIndex],
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: imageProvider,
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.fitWidth),
+            ),
           ),
-          itemCount: images.length,
-          itemBuilder: (context, itemIndex, pageViewIndex) => Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.fitWidth,
-                    image: NetworkImage(images[itemIndex]),
-                  ),
-                ),
-              )),
+          placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+      ),
     );
   }
 }
