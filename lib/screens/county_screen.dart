@@ -1,11 +1,13 @@
 import 'package:beamer/beamer.dart' show Beamer;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
-import 'package:kb4yg/widgets/header.dart';
 import 'package:kb4yg/widgets/maps/parking_map.dart';
+import 'package:kb4yg/widgets/mobile_app_bar.dart';
+import 'package:kb4yg/widgets/navbar.dart';
 import 'package:kb4yg/widgets/parking_table.dart';
 import 'package:kb4yg/widgets/settings.dart';
 import 'package:latlong2/latlong.dart';
@@ -42,29 +44,34 @@ class _CountyScreenState extends State<CountyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Header(
-        title: TextButton(
-          child: Text('${widget.countyName} County',
-          style: const TextStyle(color: Colors.white, fontSize: 20)),
-          onPressed: () {
-            Beamer.of(context).beamToNamed(constants.routeLocations);
-          },
-        )
+      appBar: kIsWeb ? null : MobileAppBar(title: TextButton(
+        child: Text('${widget.countyName} County',
+            style: const TextStyle(color: Colors.white, fontSize: 20)),
+        onPressed: () {
+          Beamer.of(context).beamToNamed(constants.routeLocations);
+        },
+      ),),
+      endDrawer: kIsWeb ? null : const Settings(),
+      body: Column(
+        children: [
+          if (kIsWeb) const Navbar(),
+          Expanded(
+            child: FutureBuilder<County>(
+                future: futureCounty,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return CountyScreenContent(county: snapshot.data!);
+                  } else if (snapshot.hasError) {
+                    return ErrorCard(
+                        title: 'Failed to retrieve county information',
+                        message: snapshot.error.toString());
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
+          ),
+        ],
       ),
-      endDrawer: const Settings(),
-      body: FutureBuilder<County>(
-          future: futureCounty,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return CountyScreenContent(county: snapshot.data!);
-            } else if (snapshot.hasError) {
-              return ErrorCard(
-                  title: 'Failed to retrieve county information',
-                  message: snapshot.error.toString());
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          }),
     );
   }
 }
