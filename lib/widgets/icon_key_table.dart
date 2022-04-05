@@ -7,9 +7,10 @@ class IconKeyTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 20.0),
-          child: SelectableText('Icon Key Table'),
+        Padding(
+          padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
+          child: SelectableText('Icon Key Table',
+              style: Theme.of(context).textTheme.headline6),
         ),
         Table(
           border: TableBorder.symmetric(
@@ -58,7 +59,7 @@ class IconKeyTable extends StatelessWidget {
             TableRow(children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.whatshot),
+                child: Icon(Icons.local_fire_department),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
