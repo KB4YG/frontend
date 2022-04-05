@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Header extends StatelessWidget implements PreferredSizeWidget {
+class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
-  const Header({Key? key, required this.title}) : super(key: key);
+  final PreferredSizeWidget? bottom;
+  const MobileAppBar({Key? key, required this.title, this.bottom})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,6 +12,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
         title: title,
         centerTitle: true,
+        bottom: bottom,
         leading: (!(scaffold.isEndDrawerOpen) &&
                 (ModalRoute.of(context)?.canPop ?? false))
             ? const BackButton()
@@ -24,5 +27,6 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
+  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height +
+      (bottom == null ? 0.0 : bottom!.preferredSize.height));
 }

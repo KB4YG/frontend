@@ -18,11 +18,18 @@ class BackendProvider {
     var response = await http.get(url, headers: {'Accept': 'application/json'});
     print(response.statusCode);
     // print(response.body);
-    if (response.statusCode   == 200) {
+    if (response.statusCode == 200) {
       return response;
     } else {
       throw Exception('Failed to fetch location data from API');
     }
+  }
+
+  Future<List<ParkingLot>> fetchParkingLots() async {
+    var response = await queryBackend(null);
+    var jsonObj = json.decode(response.body);
+    var parkingLots = [for (var item in jsonObj) ParkingLot.fromJson(item)];
+    return parkingLots;
   }
 
   Future<ParkingLot> getParkingLot(String parkingLotName) async {

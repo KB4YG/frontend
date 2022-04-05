@@ -45,7 +45,7 @@ class _ParkingTableState extends State<ParkingTable> {
                 DataColumn(
                     onSort: onSort,
                     tooltip: 'Name of recreation area',
-                    label: Expanded(
+                    label: const Expanded(
                       child: Text(
                         kIsWeb ? 'Recreation Area' : 'Location',
                         textAlign: TextAlign.center,
@@ -76,7 +76,7 @@ class _ParkingTableState extends State<ParkingTable> {
                     tooltip: 'ODF Designated Fire Danger Level',
                     label: Padding(
                       padding: const EdgeInsets.only(right: 14.0),
-                      child: Icon(Icons.whatshot,
+                      child: Icon(Icons.local_fire_department,
                           color: widget.county.fireDanger.color),
                     ))
               ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kb4yg/models/parking_lot.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
 class ParkingLotTable extends StatefulWidget {
@@ -74,9 +73,9 @@ class _ParkingLotTableState extends State<ParkingLotTable> {
                 icon: const Icon(
                   Icons.assistant_direction,
                 ),
-                label: Container(child: Text("Map")),
+                label: Container(child: const Text("Map")),
                 style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(fontSize: 11),
+                  textStyle: const TextStyle(fontSize: 11),
                 )),
           )),
         ],

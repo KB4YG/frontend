@@ -13,6 +13,7 @@ import 'package:latlong2/latlong.dart';
 
 class ParkingMap extends StatefulWidget {
   final LatLng center;
+  final double zoom;
   final List<ParkingLot> locations;
   final void Function(BuildContext, ParkingLot)? onTap;
   final void Function()? maximizeToggle;
@@ -20,6 +21,7 @@ class ParkingMap extends StatefulWidget {
       {Key? key,
       required this.center,
       required this.locations,
+      this.zoom = 10.0,
       this.onTap,
       this.maximizeToggle})
       : super(key: key);
@@ -99,8 +101,8 @@ class _ParkingMapState extends State<ParkingMap> {
           options: MapOptions(
             plugins: [MarkerClusterPlugin()],
             center: widget.center,
-            zoom: 10.0,
-            minZoom: 7.0,
+            zoom: widget.zoom,
+            minZoom: kIsWeb ? 7.0 : 6.5,
             maxZoom: 15.0,
             // allowPanningOnScrollingParent: false,
             interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,

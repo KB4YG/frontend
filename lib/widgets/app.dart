@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:kb4yg/providers/theme.dart';
 import 'package:kb4yg/screens/intro_screen.dart';
+import 'package:kb4yg/utilities/beam_locations.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:provider/provider.dart' show Provider;
 import 'package:shared_preferences/shared_preferences.dart'
@@ -29,14 +30,26 @@ class _AppState extends State<App> {
     // Determine whether to display intro/tutorial screen
     _isFirstRun = prefs.getBool(constants.prefIntro);
 
-    _routerDelegate = BeamerDelegate(
-      initialPath: constants.routeHome,
-      locationBuilder: RoutesLocationBuilder(
-        routes: {
-          '*': (context, state, data) => const AppScreen(),
-        },
-      ),
-    );
+    if (kIsWeb) {
+      _routerDelegate = BeamerDelegate(
+          initialPath: constants.routeHome,
+          // notFoundPage: ,
+          locationBuilder: BeamerLocationBuilder(beamLocations: [
+            HomeLocation(),
+            CountyLocation(),
+            HelpLocation(),
+            AboutLocation(),
+          ]));
+    } else {
+      _routerDelegate = BeamerDelegate(
+        initialPath: constants.routeHome,
+        locationBuilder: RoutesLocationBuilder(
+          routes: {
+            '*': (context, state, data) => const AppScreen(),
+          },
+        ),
+      );
+    }
   }
 
   @override
@@ -56,8 +69,6 @@ class _AppState extends State<App> {
             backButtonDispatcher:
                 BeamerBackButtonDispatcher(delegate: _routerDelegate),
           )
-        : const MaterialApp(
-            home: IntroScreen(),
-          );
+        : const MaterialApp(home: IntroScreen());
   }
 }

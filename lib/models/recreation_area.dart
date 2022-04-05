@@ -6,11 +6,7 @@ class RecreationArea {
   final String name;
   final String info;
   final String parkingLotUrl;
-  // final List<String> imageUrls;
-  final List<String> imageUrls = [
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
-    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'];
+  final List<String> imageUrls;
   final List<ParkingLot> parkingLots;
   late final int spots =
       [for (var x in parkingLots) x.spots].fold(0, (p, c) => p + c);
@@ -23,6 +19,6 @@ class RecreationArea {
       : name = json['RecreationArea'],
         info = json['About'],
         parkingLotUrl = json['List'][0]['ParkURL'],
-        // imageUrls = json['Images'],
+        imageUrls = List<String>.from(json['Images']),
         parkingLots = [for (var item in json['List']) ParkingLot.fromJson(item)];
 }

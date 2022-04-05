@@ -1,11 +1,18 @@
 // General
 const title = 'Know Before You Go';
+const appVersion = '1.0';
 const bullet = '\u2022 ';
 
 // Preferences
 const prefCounty = 'selectedCounty';
 const prefDark = 'isDark';
 const prefIntro = 'isFirstRun';
+
+// Navbar page names
+const pageHome = 'Home';
+const pageLocations = 'Locations';
+const pageHelp = 'Help';
+const pageAbout = 'About';
 
 // Navigation
 const routeRoot = '/';
