@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:maps_launcher/maps_launcher.dart';
 import '../models/parking_lot.dart';
 import '../widgets/error_card.dart';
 import '../widgets/screen_template.dart';
+import 'home_screen.dart';
 
 class RecreationAreaScreen extends StatefulWidget {
   final String recreationAreaUrl;
@@ -102,30 +105,7 @@ class RecreationAreaCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(maxHeight: 400),
-      child: CarouselSlider.builder(
-        options: CarouselOptions(
-          autoPlay: true,
-          enlargeCenterPage: true,
-        ),
-        itemCount: images.length,
-        itemBuilder: (context, itemIndex, pageViewIndex) => CachedNetworkImage(
-          imageUrl: images[itemIndex],
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: imageProvider,
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.fitWidth),
-            ),
-          ),
-          placeholder: (context, url) =>
-              const Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-        ),
-      ),
-    );
+    return const HomeScreenCarousel();
   }
 }
 
@@ -135,25 +115,40 @@ class RecreationAreaInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-        shape: BoxShape.rectangle,
+    return Card(
+      color: Colors.green,
+      elevation: 10.0,
+      shadowColor: Colors.grey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
       ),
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: const [
-          Text('About', style: TextStyle(fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
-          SelectableText(
-              'Fitton Green park is named after Elsie Fitton Rose,'
-              ' married to her husband, Charles Ross, who funded the acquirement'
-              ' of this 308-acre natural land space in partnership with Greenbelt'
-              ' Land Trust, of which they were the founder. Fitton Green has been'
-              ' open to the public since the Fall of 2003. ',
-              style:
-                  TextStyle(fontSize: 15.0, height: 1.3, letterSpacing: 0.5)),
-        ],
+      child: Container(
+        padding: const EdgeInsets.only(top: 10),
+        child: Column(
+          children: [
+            const Text(
+              'About',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              color: Colors.grey[100],
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: SelectableText(
+                  'Fitton Green park is named after Elsie Fitton Rose,'
+                  ' married to her husband, Charles Ross, who funded the acquirement'
+                  ' of this 308-acre natural land space in partnership with Greenbelt'
+                  ' Land Trust, of which they were the founder. Fitton Green has been'
+                  ' open to the public since the Fall of 2003. ',
+                  style: TextStyle(
+                      fontSize: 15.0, height: 1.3, letterSpacing: 0.5),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

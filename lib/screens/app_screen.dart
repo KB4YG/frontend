@@ -100,12 +100,29 @@ class _AppScreenState extends State<AppScreen> {
           ),
           bottomNavigationBar: const TabBar(
             labelColor: Colors.green,
-            unselectedLabelColor: Colors.blueGrey,
+            unselectedLabelColor: Colors.black54,
+            indicatorColor: Colors.transparent,
             tabs: [
-              Tab(icon: Icon(Icons.home)),
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.help)),
-              Tab(icon: Icon(Icons.info))
+              Tab(
+                icon: Icon(Icons.home),
+                iconMargin: EdgeInsets.only(bottom: 1.0),
+                text: 'Home',
+              ),
+              Tab(
+                icon: Icon(Icons.directions_car),
+                iconMargin: EdgeInsets.only(bottom: 1.0),
+                text: 'Location',
+              ),
+              Tab(
+                icon: Icon(Icons.help),
+                iconMargin: EdgeInsets.only(bottom: 1.0),
+                text: 'Help',
+              ),
+              Tab(
+                icon: Icon(Icons.info),
+                iconMargin: EdgeInsets.only(bottom: 1.0),
+                text: 'Info',
+              )
             ],
           ),
         ));

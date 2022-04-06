@@ -69,10 +69,11 @@ class WebScreenTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: hasScrollbar
-            ? SingleChildScrollView(
-                child: Column(children: [const Navbar(), child]))
-            : Column(children: [const Navbar(), Expanded(child: child)]));
+    return SizedBox();
+    // return Scaffold(
+    //     body: hasScrollbar
+    //         ? SingleChildScrollView( //undo
+    //             child: Column(children: [const Navbar(), child]))
+    //         : Column(children: [const Navbar(), Expanded(child: child)]));
   }
 }

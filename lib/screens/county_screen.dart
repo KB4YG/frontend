@@ -44,17 +44,21 @@ class _CountyScreenState extends State<CountyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: kIsWeb ? null : MobileAppBar(title: TextButton(
-        child: Text('${widget.countyName} County',
-            style: const TextStyle(color: Colors.white, fontSize: 20)),
-        onPressed: () {
-          Beamer.of(context).beamToNamed(constants.routeLocations);
-        },
-      ),),
+      appBar: kIsWeb
+          ? null
+          : MobileAppBar(
+              title: TextButton(
+                child: Text('${widget.countyName} County',
+                    style: const TextStyle(color: Colors.white, fontSize: 20)),
+                onPressed: () {
+                  Beamer.of(context).beamToNamed(constants.routeLocations);
+                },
+              ),
+            ),
       endDrawer: kIsWeb ? null : const Settings(),
       body: Column(
         children: [
-          if (kIsWeb) const Navbar(),
+          //if (kIsWeb) const Navbar(), //undo
           Expanded(
             child: FutureBuilder<County>(
                 future: futureCounty,

@@ -182,9 +182,9 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
         length: 2,
         child: ScreenTemplate(
             hasScrollbar: false,
-            title: const Text('Select a Location'),
+            title: const Text('Select Location'),
             bottom: const TabBar(
-              tabs: [Tab(text: 'County List'), Tab(text: 'Explore by Map')],
+              tabs: [Tab(text: 'County List'), Tab(text: 'Explore')],
             ),
             child: TabBarView(
               children: [
@@ -296,16 +296,26 @@ class _CountyListState extends State<CountyList> {
                   itemCount: _displayedCounties.length,
                   itemBuilder: (context, index) {
                     String county = _displayedCounties[index];
-                    return Card(
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: Card(
+                        elevation: 3.0,
+                        color: Colors.grey[200],
                         margin: const EdgeInsets.all(8.0),
-                        child: TextButton(
+                        child: Column(children: [
+                          TextButton(
                             onPressed: () => viewCountyDetails(context, county),
                             child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  '${county.toUpperCase()} COUNTY',
-                                  textScaleFactor: 1.3,
-                                ))));
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                              child: Text(
+                                '${county.toUpperCase()} COUNTY',
+                                textScaleFactor: 1.2,
+                              ),
+                            ),
+                          )
+                        ]),
+                      ),
+                    );
                   }),
             ),
           ),

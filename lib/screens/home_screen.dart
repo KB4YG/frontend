@@ -24,8 +24,9 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const HomeScreenCarousel(),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
                 child: SelectableText(
                   kIsWeb
                       ? 'Welcome to Know Before You Go! '
@@ -38,8 +39,8 @@ class HomeScreen extends StatelessWidget {
                           'press the car icon on the bottom navigation bar and select the county '
                           'where the natural area is located.\n\nDon\'t know which county '
                           'a recreation area is in? No problem! Just select one from our map.',
-                  style:
-                      TextStyle(fontSize: 17.0, height: 1.3, letterSpacing: 0.5),
+                  style: const TextStyle(
+                      fontSize: 17.0, height: 1.3, letterSpacing: 0.5),
                 ),
               ),
               if (kIsWeb)
