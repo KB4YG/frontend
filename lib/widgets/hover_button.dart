@@ -27,6 +27,7 @@ class _HoverButtonState extends State<HoverButton> {
             : null,
       ),
       child: InkWell(
+        onTap: () {},
         onHover: (hovered) {
           setState(() {
             showBorder = widget.inverted ? !hovered : hovered;
