@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/utilities/constants.dart';
 
 import 'hover_button.dart';
 
@@ -38,36 +38,23 @@ class DesktopNavbar extends StatelessWidget {
           children: <Widget>[
             TextButton(
               child: const Text(
-                constants.title,
+                title,
                 style: TextStyle(
                     // fontWeight: FontWeight.bold,
                     color: Colors.white,
                     fontSize: 30),
               ),
-              onPressed: () =>
-                  Beamer.of(context).beamToNamed(constants.routeHome),
+              onPressed: () => Beamer.of(context).beamToNamed(routeHome),
             ),
             Row(
               children: const <Widget>[
-                NavbarButton(
-                  route: constants.routeHome,
-                  page: constants.pageHome,
-                ),
-                SizedBox(width: 20),
-                NavbarButton(
-                  route: constants.routeLocations,
-                  page: constants.pageLocations,
-                ),
-                SizedBox(width: 20),
-                NavbarButton(
-                  route: constants.routeHelp,
-                  page: constants.pageHelp,
-                ),
-                SizedBox(width: 20),
-                NavbarButton(
-                  route: constants.routeAbout,
-                  page: constants.pageAbout,
-                ),
+                NavbarButton(route: routeHome, page: pageHome),
+                SizedBox(width: 10),
+                NavbarButton(route: routeLocations, page: pageLocations),
+                SizedBox(width: 10),
+                NavbarButton(route: routeHelp, page: pageHelp),
+                SizedBox(width: 10),
+                NavbarButton(route: routeAbout, page: pageAbout),
                 SizedBox(width: 20),
               ],
             )
@@ -94,7 +81,7 @@ class MobileNavbar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
         child: Column(children: <Widget>[
           const Text(
-            constants.title,
+            title,
             style: TextStyle(
                 // fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -105,25 +92,13 @@ class MobileNavbar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const <Widget>[
-                NavbarButton(
-                  route: constants.routeHome,
-                  page: constants.pageHome,
-                ),
+                NavbarButton(route: routeHome, page: pageHome),
                 SizedBox(width: 10),
-                NavbarButton(
-                  route: constants.routeLocations,
-                  page: constants.pageLocations,
-                ),
+                NavbarButton(route: routeLocations, page: pageLocations),
                 SizedBox(width: 10),
-                NavbarButton(
-                  route: constants.routeHelp,
-                  page: constants.pageHelp,
-                ),
+                NavbarButton(route: routeHelp, page: pageHelp),
                 SizedBox(width: 10),
-                NavbarButton(
-                  route: constants.routeAbout,
-                  page: constants.pageAbout,
-                ),
+                NavbarButton(route: routeAbout, page: pageAbout),
               ],
             ),
           )
@@ -133,22 +108,34 @@ class MobileNavbar extends StatelessWidget {
   }
 }
 
-class NavbarButton extends StatelessWidget {
+class NavbarButton extends StatefulWidget {
   final String route;
   final String page;
   const NavbarButton({Key? key, required this.route, required this.page})
       : super(key: key);
 
   @override
+  State<NavbarButton> createState() => _NavbarButtonState();
+}
+
+class _NavbarButtonState extends State<NavbarButton> {
+  bool _isCurrentPage = false;
+
+  Widget child() => TextButton(
+      onPressed: () => Beamer.of(context).beamToNamed(widget.route),
+      child: Text(widget.page, style: const TextStyle(color: Colors.white)));
+
+  @override
   Widget build(BuildContext context) {
-    return HoverButton(
-        child: TextButton(
-            onPressed: () {
-              Beamer.of(context).beamToNamed(route);
-            },
-            child: Text(
-              page,
-              style: const TextStyle(color: Colors.white),
-            )));
+    String? uri = Beamer.of(context).configuration.location;
+    if (uri != null) _isCurrentPage = uri.contains(widget.route);
+    return _isCurrentPage
+        ? DecoratedBox(
+            decoration: const BoxDecoration(
+                border: Border(
+              bottom: BorderSide(color: Colors.white, width: 2),
+            )),
+            child: child())
+        : HoverButton(child: child());
   }
 }
