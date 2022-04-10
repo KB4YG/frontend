@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/providers/backend.dart';
@@ -66,27 +62,31 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
                   return Column(mainAxisSize: MainAxisSize.min, children: [
                     RecreationAreaCarousel(images: snapshot.data!.imageUrls),
                     const SizedBox(height: 30),
+                    Card(
+                      elevation: 10.0,
+                      shadowColor: Colors.white,
+                      clipBehavior: Clip.hardEdge,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(children: [
+                          ParkingLotTable(
+                              parkingLots: snapshot.data!.parkingLots),
+                          const SizedBox(height: 7),
+                          const Text(
+                            'Last update: today at 2:10 pm',
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic, fontSize: 12),
+                          )
+                        ]),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
                     Container(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: RecreationAreaInfo(snapshot.data!.info)),
-                    const SizedBox(height: 30),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        shape: BoxShape.rectangle,
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: Column(children: [
-                        ParkingLotTable(
-                            parkingLots: snapshot.data!.parkingLots),
-                        const SizedBox(height: 7),
-                        const Text(
-                          'Last update: today at 2:10 pm',
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 12),
-                        )
-                      ]),
-                    )
                   ]);
                 } else if (snapshot.hasError) {
                   return ErrorCard(message: snapshot.error.toString());
@@ -116,39 +116,41 @@ class RecreationAreaInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.green,
       elevation: 10.0,
-      shadowColor: Colors.grey,
+      shadowColor: Colors.white,
+      clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      child: Container(
-        padding: const EdgeInsets.only(top: 10),
-        child: Column(
-          children: [
-            const Text(
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(10, 15, 10, 5),
+            child: const Text(
               'About',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
-            Container(
-              color: Colors.grey[100],
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: SelectableText(
-                  'Fitton Green park is named after Elsie Fitton Rose,'
-                  ' married to her husband, Charles Ross, who funded the acquirement'
-                  ' of this 308-acre natural land space in partnership with Greenbelt'
-                  ' Land Trust, of which they were the founder. Fitton Green has been'
-                  ' open to the public since the Fall of 2003. ',
-                  style: TextStyle(
-                      fontSize: 15.0, height: 1.3, letterSpacing: 0.5),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            )
-          ],
-        ),
+          ),
+          const Divider(
+            thickness: 1.6,
+            indent: 0,
+            endIndent: 0,
+            color: Colors.black12,
+          ),
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+            child: const SelectableText(
+              'Fitton Green park is named after Elsie Fitton Rose,'
+              ' married to her husband, Charles Ross, who funded the acquirement'
+              ' of this 308-acre natural land space in partnership with Greenbelt'
+              ' Land Trust, of which they were the founder. Fitton Green has been'
+              ' open to the public since the Fall of 2003. ',
+              style: TextStyle(fontSize: 15.0, height: 1.3, letterSpacing: 0.5),
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
       ),
     );
   }

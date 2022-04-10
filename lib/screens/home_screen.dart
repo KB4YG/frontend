@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/screen_template.dart';
+import 'package:kb4yg/widgets/carousel.dart';
 
 class HomeScreen extends StatelessWidget {
   static const path = constants.routeHome;
@@ -79,44 +80,6 @@ class HomeScreenCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 30),
-      constraints: const BoxConstraints(maxWidth: 1000),
-      child: CarouselSlider.builder(
-          options: CarouselOptions(
-            aspectRatio: 16 / 9,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 15),
-            enlargeCenterPage: true,
-          ),
-          itemCount: images.length,
-          itemBuilder:
-              (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 0),
-                            borderRadius: BorderRadius.circular(16.0),
-                            image: DecorationImage(
-                                alignment: Alignment.center,
-                                fit: BoxFit.fill,
-                                image: images[itemIndex]),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Container(
-                        padding: const EdgeInsets.only(right: 20, left: 20),
-                        child: Text(
-                          carouselText[itemIndex],
-                          style: const TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  )),
-    );
+    return Carousel(images: images, carouselText: carouselText);
   }
 }
