@@ -102,10 +102,26 @@ class _AppScreenState extends State<AppScreen> {
             labelColor: Colors.green,
             unselectedLabelColor: Colors.blueGrey,
             tabs: [
-              Tab(icon: Icon(Icons.home)),
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.help)),
-              Tab(icon: Icon(Icons.info))
+              Tab(
+                text: constants.pageHome,
+                icon: Icon(Icons.home),
+                iconMargin: EdgeInsets.only(bottom: 4.0),
+              ),
+              Tab(
+                text: constants.pageLocations,
+                icon: Icon(Icons.directions_car),
+                iconMargin: EdgeInsets.only(bottom: 4.0),
+              ),
+              Tab(
+                text: constants.pageHelp,
+                icon: Icon(Icons.help),
+                iconMargin: EdgeInsets.only(bottom: 4.0),
+              ),
+              Tab(
+                text: constants.pageAbout,
+                icon: Icon(Icons.info),
+                iconMargin: EdgeInsets.only(bottom: 4.0),
+              )
             ],
           ),
         ));
