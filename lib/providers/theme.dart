@@ -13,10 +13,16 @@ class ThemeProvider extends ChangeNotifier {
   ThemeProvider({required this.prefs}) {
     if (kDebugMode) print('Initialized Theme Provider');
     final darkPref = prefs.getBool(constants.prefDark);
-    themeMode = darkPref == true ? ThemeMode.dark : ThemeMode.light;
+    // Use dark theme if user selected preference or system theme is dark
+    themeMode = darkPref == true ||
+            WidgetsBinding.instance!.window.platformBrightness ==
+                Brightness.dark
+        ? ThemeMode.dark
+        : ThemeMode.light;
   }
 
-  void toggleTheme(bool isDark) {
+  void toggleTheme(bool? isDark) {
+    isDark = isDark ?? !this.isDark; // If parameter left null check mode
     if (kDebugMode) print('Toggled Theme to ${isDark ? 'Dark' : 'Light'}');
     prefs.setBool(constants.prefDark, isDark);
     themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
@@ -30,6 +36,7 @@ class ThemeProvider extends ChangeNotifier {
 class Themes {
   // TODO: add themes
   static final lightTheme = ThemeData(
+    fontFamily: 'OpenSans',
     primarySwatch: Colors.green,
     scaffoldBackgroundColor: const Color(0xFFF6F7F9),
     primaryColor: Colors.white,
