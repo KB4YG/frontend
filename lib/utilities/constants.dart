@@ -1,12 +1,14 @@
 // General
 const title = 'Know Before You Go';
-const appVersion = '1.0';
+const appVersion = '1.0'; // Used in showAboutDialog() on AboutScreen()
 const bullet = '\u2022 ';
+const oregonLat = 43.8041; // Oregon lat lng coordinates to center ParkingMap()
+const oregonLng = -120.5542;
 
 // Preferences
 const prefCounty = 'selectedCounty';
-const prefDark = 'isDark';
-const prefIntro = 'isFirstRun';
+const prefDark = 'isDark'; // Save selected theme
+const prefIntro = 'isFirstRun'; // Mobile - store whether to show intro screen
 
 // Navbar page names
 const pageHome = 'Home';
