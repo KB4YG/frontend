@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
     return ScreenTemplate(
         title: const Text(constants.title),
         child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 30.0),
           constraints: const BoxConstraints(maxWidth: 1000),
           child: Column(
             children: [
@@ -79,7 +80,6 @@ class HomeScreenCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 30),
       constraints: const BoxConstraints(maxWidth: 1000),
       child: CarouselSlider.builder(
           options: CarouselOptions(

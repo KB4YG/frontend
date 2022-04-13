@@ -67,18 +67,26 @@ class AboutScreen extends StatelessWidget {
                     ),
               ),
             ),
-            TextButton(
-              child: const Text(
-                'License Information',
-                textScaleFactor: 1.2,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: ElevatedButton(
+                child: const Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                  child: Text(
+                    'License Information',
+                    textScaleFactor: 1.1,
+                  ),
+                ),
+                onPressed: () => showAboutDialog(
+                    context: context,
+                    applicationVersion: appVersion,
+                    // TODO: add KB4YG icon
+                    // TODO: pick license
+                    applicationIcon: const Icon(Icons.directions_car_filled),
+                    applicationLegalese:
+                        'Know Before You Go is licensed under the X license.'),
               ),
-              onPressed: () => showAboutDialog(
-                  context: context,
-                  applicationVersion: appVersion,
-                  // TODO: add KB4YG icon
-                  applicationIcon: const Icon(Icons.directions_car_filled),
-                  applicationLegalese:
-                      'Know Before You Go is licensed under the X license.'),
             ),
           ],
         ),

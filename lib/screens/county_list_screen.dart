@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
+import 'package:kb4yg/widgets/custom_loading_indicator.dart';
 import 'package:kb4yg/widgets/screen_template.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart' show Provider;
@@ -22,8 +23,8 @@ class CountyListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 1000) {
-        return const WebCountyListScreen();
+      if (constraints.maxWidth > 900) {
+        return const DesktopCountyListScreen();
       } else {
         return const MobileCountyListScreen();
       }
@@ -31,14 +32,15 @@ class CountyListScreen extends StatelessWidget {
   }
 }
 
-class WebCountyListScreen extends StatefulWidget {
-  const WebCountyListScreen({Key? key}) : super(key: key);
+class DesktopCountyListScreen extends StatefulWidget {
+  const DesktopCountyListScreen({Key? key}) : super(key: key);
 
   @override
-  State<WebCountyListScreen> createState() => _WebCountyListScreenState();
+  State<DesktopCountyListScreen> createState() =>
+      _DesktopCountyListScreenState();
 }
 
-class _WebCountyListScreenState extends State<WebCountyListScreen> {
+class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
   late Future<List<String>> _futureCountyList;
   late Future<List<ParkingLot>> _parkingLots;
   bool _isFullscreen = false;
@@ -57,99 +59,55 @@ class _WebCountyListScreenState extends State<WebCountyListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWideScreen = MediaQuery.of(context).size.width > 1000;
     return ScreenTemplate(
         hasScrollbar: false,
         child: Row(
           children: [
+            // County list
             ExpandedSection(
               expand: !_isFullscreen,
-              collapseVertical: !isWideScreen,
+              collapseVertical: false,
               child: Center(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: isWideScreen // Limit height if not widescreen
-                          ? double.infinity
-                          : MediaQuery.of(context).size.height / 2),
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.search,
-                          size: 45,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('Search by county',
-                              style: Theme.of(context).textTheme.headline4),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: FutureBuilder<List<String>>(
-                          future: _futureCountyList,
-                          builder: (context, snapshot) => snapshot.hasData
-                              ? CountyList(countyList: snapshot.data!)
-                              : snapshot.hasError
-                                  ? ErrorCard(
-                                      title: 'Failed to retrieve county list',
-                                      message: snapshot.error.toString())
-                                  : const Center(
-                                      child: CircularProgressIndicator())),
-                    ),
-                  ]),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.map_outlined,
-                        size: 45,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Explore by map',
-                            style: Theme.of(context).textTheme.headline4),
-                      ),
-                    ],
+                child: Column(children: [
+                  // County list header
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Search by County',
+                        style: Theme.of(context).textTheme.headline4),
                   ),
+                  // County list
                   Expanded(
-                    child: FutureBuilder<List<ParkingLot>>(
-                        future: _parkingLots,
+                    child: FutureBuilder<List<String>>(
+                        future: _futureCountyList,
                         builder: (context, snapshot) => snapshot.hasData
-                            ? ParkingLotMap(
-                                parkingLots: snapshot.data!,
-                                maximizeToggle: () => setState(() {
-                                      _isFullscreen = !_isFullscreen;
-                                    }))
+                            ? CountyList(countyList: snapshot.data!)
                             : snapshot.hasError
                                 ? ErrorCard(
-                                    title:
-                                        'Failed to retrieve list of parking lots',
+                                    title: 'Failed to retrieve county list',
                                     message: snapshot.error.toString())
-                                : const Center(
-                                    child: CircularProgressIndicator())),
+                                : const CustomLoadingIndicator()),
                   ),
-                ],
+                ]),
               ),
+            ),
+            // Statewide parking lot map
+            Expanded(
+              child: FutureBuilder<List<ParkingLot>>(
+                  future: _parkingLots,
+                  builder: (context, snapshot) => snapshot.hasData
+                      ? ParkingLotMap(
+                          parkingLots: snapshot.data!,
+                          maximizeToggle: () => setState(() {
+                                _isFullscreen = !_isFullscreen;
+                              }))
+                      : snapshot.hasError
+                          ? ErrorCard(
+                              title: 'Failed to retrieve list of parking lots',
+                              message: snapshot.error.toString())
+                          : const CustomLoadingIndicator()),
             )
           ],
-        )
-        //   } else {
-        //   }
-        // },
-        // ),
-        // ],
-        // ),
-        );
+        ));
   }
 }
 
@@ -168,7 +126,7 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    // _futureCountyList = Future<List<String>>.value([
+    // _countyList = Future<List<String>>.value([
     //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
     //   'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
     //   'WASCO', 'WASHINGTON',
@@ -179,11 +137,12 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: kIsWeb ? 1 : 2,
         child: ScreenTemplate(
             hasScrollbar: false,
             title: const Text('Select a Location'),
             bottom: const TabBar(
+              labelColor: Colors.white,
               tabs: [Tab(text: 'County List'), Tab(text: 'Explore by Map')],
             ),
             child: TabBarView(
@@ -196,16 +155,17 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
                             ? ErrorCard(
                                 title: 'Failed to retrieve county list',
                                 message: snapshot.error.toString())
-                            : const Center(child: CircularProgressIndicator())),
-                FutureBuilder<List<ParkingLot>>(
-                    future: _parkingLots,
-                    builder: (context, snapshot) => snapshot.hasData
-                        ? ParkingLotMap(parkingLots: snapshot.data!)
-                        : snapshot.hasError
-                            ? ErrorCard(
-                                title: 'Failed to retrieve county list',
-                                message: snapshot.error.toString())
-                            : const Center(child: CircularProgressIndicator()))
+                            : const CustomLoadingIndicator()),
+                if (!kIsWeb)
+                  FutureBuilder<List<ParkingLot>>(
+                      future: _parkingLots,
+                      builder: (context, snapshot) => snapshot.hasData
+                          ? ParkingLotMap(parkingLots: snapshot.data!)
+                          : snapshot.hasError
+                              ? ErrorCard(
+                                  title: 'Failed to retrieve county list',
+                                  message: snapshot.error.toString())
+                              : const CustomLoadingIndicator())
               ],
             )));
   }
@@ -223,15 +183,21 @@ class ParkingLotMap extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 300),
       child: ParkingMap(
-          zoom: kIsWeb ? 7.0 : 6.0,
-          center: LatLng(43.8041, -120.5542),
-          locations: parkingLots,
-          onTap: (BuildContext context, ParkingLot loc) {
-            // String route = sanitizeUrl(
-            //     '${constants.routeLocations}/${loc.county}/${loc.recreationArea}');
-            // Beamer.of(context).beamToNamed(route);
-          },
-          maximizeToggle: maximizeToggle),
+        zoom: kIsWeb ? 7.0 : 6.0,
+        center: LatLng(constants.oregonLat, constants.oregonLng), // Oregon
+        locations: parkingLots,
+        maximizeToggle: maximizeToggle,
+        onTap: (BuildContext context, ParkingLot loc) {
+          // Beamer.of(context).beamToNamed(loc.links.recreationArea);
+        },
+        title: !kIsWeb
+            ? null
+            : Text('Explore by Map',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontSize: Theme.of(context).textTheme.headline4?.fontSize)),
+      ),
     );
   }
 }
@@ -293,15 +259,18 @@ class _CountyListState extends State<CountyList> {
           Expanded(
             child: Scrollbar(
               child: ListView.builder(
+                  padding: const EdgeInsets.all(8),
                   itemCount: _displayedCounties.length,
                   itemBuilder: (context, index) {
                     String county = _displayedCounties[index];
                     return Card(
-                        margin: const EdgeInsets.all(8.0),
+                        elevation: 1.5,
+                        margin: const EdgeInsets.symmetric(vertical: 4.0),
                         child: TextButton(
                             onPressed: () => viewCountyDetails(context, county),
                             child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12.0),
                                 child: Text(
                                   '${county.toUpperCase()} COUNTY',
                                   textScaleFactor: 1.3,

@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/providers/backend.dart';
+import 'package:kb4yg/widgets/custom_loading_indicator.dart';
 import 'package:kb4yg/widgets/parking_lot_table.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
@@ -86,9 +87,11 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
                     )
                   ]);
                 } else if (snapshot.hasError) {
-                  return ErrorCard(message: snapshot.error.toString());
+                  return ErrorCard(
+                      title: 'Failed to retrieve recreation area information',
+                      message: snapshot.error.toString());
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const CustomLoadingIndicator();
                 }
               })),
     );
@@ -121,7 +124,7 @@ class RecreationAreaCarousel extends StatelessWidget {
             ),
           ),
           placeholder: (context, url) =>
-              const Center(child: CircularProgressIndicator()),
+              const CustomLoadingIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),

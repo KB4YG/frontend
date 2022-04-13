@@ -18,6 +18,7 @@ class HelpScreen extends StatelessWidget {
     return ScreenTemplate(
       title: const Text('Help'),
       child: Container(
+        padding: const EdgeInsets.all(20.0),
         constraints: const BoxConstraints(maxWidth: 700),
         child: const IconKeyTable(),
       ),
