@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart';
+import 'package:kb4yg/widgets/theme_icon_button.dart';
 
 import 'hover_button.dart';
 
@@ -25,13 +26,14 @@ class DesktopNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
+      decoration: BoxDecoration(
+          gradient: const LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [Colors.green, Colors.lightGreen]),
-          border:
-              Border(bottom: BorderSide(color: Colors.white70, width: 5.0))),
+          border: Border(
+              bottom:
+                  BorderSide(color: Colors.lightGreen.shade200, width: 5.0))),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
         child: Row(
@@ -57,6 +59,7 @@ class DesktopNavbar extends StatelessWidget {
                 SizedBox(width: 20),
                 NavbarButton(route: routeAbout, page: pageAbout),
                 SizedBox(width: 20),
+                ThemeIconButton()
               ],
             )
           ],
