@@ -26,34 +26,35 @@ class DesktopNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Colors.green, Colors.lightGreen]),
-      ),
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Colors.green, Colors.lightGreen]),
+          border:
+              Border(bottom: BorderSide(color: Colors.white70, width: 5.0))),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+        padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             TextButton(
-              child: const Text(
+              child: Text(
                 title,
                 style: TextStyle(
-                    // fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: 30),
+                    fontSize: Theme.of(context).textTheme.headline5?.fontSize),
               ),
               onPressed: () => Beamer.of(context).beamToNamed(routeHome),
             ),
             Row(
               children: const <Widget>[
+                SizedBox(width: 20),
                 NavbarButton(route: routeHome, page: pageHome),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 NavbarButton(route: routeLocations, page: pageLocations),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 NavbarButton(route: routeHelp, page: pageHelp),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 NavbarButton(route: routeAbout, page: pageAbout),
                 SizedBox(width: 20),
               ],
@@ -123,7 +124,8 @@ class _NavbarButtonState extends State<NavbarButton> {
 
   Widget child() => TextButton(
       onPressed: () => Beamer.of(context).beamToNamed(widget.route),
-      child: Text(widget.page, style: const TextStyle(color: Colors.white)));
+      child: Text(widget.page.toUpperCase(),
+          style: const TextStyle(color: Colors.white, letterSpacing: 1.8)));
 
   @override
   Widget build(BuildContext context) {
