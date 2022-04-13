@@ -195,7 +195,7 @@ class ParkingLotMap extends StatelessWidget {
             : Text('Explore by Map',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.grey.shade700,
+                    color: Colors.grey.shade200,
                     fontSize: Theme.of(context).textTheme.headline4?.fontSize)),
       ),
     );
