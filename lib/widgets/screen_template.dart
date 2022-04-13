@@ -49,13 +49,10 @@ class MobileScreenTemplate extends StatelessWidget {
       body: hasScrollbar
           ? Scrollbar(
               child: SingleChildScrollView(
-                child: Container(
-                    constraints: const BoxConstraints(maxWidth: 1000),
-                    child: child),
+                child: child,
               ),
             )
-          : Container(
-              constraints: const BoxConstraints(maxWidth: 1000), child: child),
+          : child,
     );
   }
 }
@@ -72,7 +69,12 @@ class WebScreenTemplate extends StatelessWidget {
     return Scaffold(
         body: hasScrollbar
             ? SingleChildScrollView(
-                child: Column(children: [const Navbar(), child]))
+                child: Column(children: [
+                const Navbar(),
+                Card(
+                    margin: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: child)
+              ]))
             : Column(children: [const Navbar(), Expanded(child: child)]));
   }
 }
