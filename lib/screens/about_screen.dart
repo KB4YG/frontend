@@ -40,14 +40,13 @@ class AboutScreen extends StatelessWidget {
                           'More locations will be added in the future with additional funding.\n\n'
                           'KB4YG was the senior capstone project of eight students at '
                           'Oregon State University during 2021-2022.\n\n'),
-                  //TODO: get accuracy of backend algorithm
                   TextSpan(
                       text: '\nHow accurate are the parking spot counts?\n\n',
                       style: Theme.of(context).textTheme.headline6),
                   const TextSpan(
                       text:
                           'The method we use to determine available parking (see "How do '
-                          'we get this data?") has a X% error rate.\n\n'),
+                          'we get this data?") is approximately 60-70% accurate. \n\n'),
                   TextSpan(
                       text: '\nHow do we get this data?\n\n',
                       style: Theme.of(context).textTheme.headline6),
@@ -61,10 +60,10 @@ class AboutScreen extends StatelessWidget {
                         'our cloud database. The KB4YG application and website draw from '
                         'the most recent entries of this database to display up-to-date '
                         'parking information.',
-                  )
-                ]
-                    // textScaleFactor: 1.3,
-                    ),
+                  ),
+                ],
+                  style: Theme.of(context).textTheme.bodyText1
+                ),
               ),
             ),
             Padding(

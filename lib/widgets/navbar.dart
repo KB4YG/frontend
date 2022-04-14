@@ -27,13 +27,16 @@ class DesktopNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Colors.green, Colors.lightGreen]),
+              colors: [
+                Theme.of(context).primaryColor,
+                Theme.of(context).colorScheme.tertiary
+              ]),
           border: Border(
-              bottom:
-                  BorderSide(color: Colors.lightGreen.shade200, width: 5.0))),
+              bottom: BorderSide(
+                  color: Theme.of(context).primaryColorLight, width: 5.0))),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
         child: Row(

@@ -25,24 +25,32 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const HomeScreenCarousel(),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-                child: SelectableText(
-                  kIsWeb
-                      ? 'Welcome to Know Before You Go! '
-                          'To view parking availability for a natural recreation area, '
-                          'press the "View Locations" button below and select the county '
-                          'where the natural area is located.\n\nDon\'t know which county '
-                          'a recreation area is in? No problem! Just select one from our map.'
-                      : 'Welcome to the Know Before You Go App!\n\n'
-                          'To view parking availability for a natural recreation area, '
-                          'press the car icon on the bottom navigation bar and select the county '
-                          'where the natural area is located.\n\nDon\'t know which county '
-                          'a recreation area is in? No problem! Just select one from our map.',
-                  style:
-                      TextStyle(fontSize: 17.0, height: 1.3, letterSpacing: 0.5),
-                ),
-              ),
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                  child: SelectableText.rich(
+                    TextSpan(children: [
+                      TextSpan(
+                          text: 'Welcome to Know Before You Go!\n\n',
+                          style: kIsWeb
+                              ? Theme.of(context).textTheme.headline4
+                              : Theme.of(context).textTheme.headline6),
+                      const TextSpan(
+                          text: 'To view parking availability for a natural '
+                              'recreation area, press the '),
+                      kIsWeb
+                          ? const TextSpan(
+                              text: '"View Locations" button below ')
+                          : const TextSpan(
+                              text: 'car icon on the bottom navigation bar '),
+                      const TextSpan(
+                          text:
+                              'and select the county where the natural area is '
+                              'located.\n\nDon\'t know which county a '
+                              'recreation area is in? No problem! Just '
+                              'select one from our map.'),
+                    ], style: Theme.of(context).textTheme.bodyText1),
+                  )),
               if (kIsWeb)
                 ElevatedButton(
                   child: const Padding(
@@ -67,8 +75,8 @@ class HomeScreenCarousel extends StatelessWidget {
   const HomeScreenCarousel({Key? key}) : super(key: key);
 
   static const List<AssetImage> images = [
-    AssetImage('assets/images/fitton-green-1.jpg'),
     AssetImage('assets/images/fitton-green-2.jpg'),
+    AssetImage('assets/images/fitton-green-1.jpg'),
     AssetImage('assets/images/fitton-green-3.jpg')
   ];
   static const List<String> carouselText = [
@@ -85,7 +93,7 @@ class HomeScreenCarousel extends StatelessWidget {
           options: CarouselOptions(
             aspectRatio: 16 / 9,
             autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 15),
+            autoPlayInterval: const Duration(seconds: 20),
             enlargeCenterPage: true,
           ),
           itemCount: images.length,
@@ -106,13 +114,11 @@ class HomeScreenCarousel extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Container(
-                        padding: const EdgeInsets.only(right: 20, left: 20),
-                        child: Text(
-                          carouselText[itemIndex],
-                          style: const TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.bold),
-                        ),
+                      SelectableText(
+                        carouselText[itemIndex],
+                        style: TextStyle(
+                            fontSize:
+                                Theme.of(context).textTheme.caption?.fontSize),
                       ),
                     ],
                   )),
