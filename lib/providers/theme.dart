@@ -35,19 +35,24 @@ class ThemeProvider extends ChangeNotifier {
 
 class Themes {
   // TODO: add themes
-  static final lightTheme = ThemeData(
-    fontFamily: 'OpenSans',
-    primarySwatch: Colors.green,
-    scaffoldBackgroundColor: const Color(0xFFF6F7F9),
-    primaryColor: Colors.white,
-    // colorScheme: const ColorScheme.light(),
-    // iconTheme: const IconThemeData(color: Colors.lightGreen, opacity: 0.8),
+  static const textTheme = TextTheme(
+    headline6: TextStyle(fontWeight: FontWeight.bold),
+    bodyText1: TextStyle(fontSize: 16.0, height: 1.75),
   );
 
-  static final darkTheme = ThemeData.dark(
-      // scaffoldBackgroundColor: Colors.grey.shade900,
-      // primaryColor: Colors.black,
-      // colorScheme: const ColorScheme.dark(),
-      // iconTheme: const IconThemeData(color: Colors.lightGreen, opacity: 0.8),
-      );
+  static final lightTheme = ThemeData(
+      fontFamily: 'OpenSans',
+      textTheme: textTheme,
+      scaffoldBackgroundColor: const Color(0xFFF6F7F9),
+      primarySwatch: Colors.green,
+      colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
+          .copyWith(tertiary: Colors.lightGreen));
+
+  static final darkTheme = ThemeData(
+      fontFamily: 'OpenSans',
+      textTheme: textTheme,
+      colorScheme: ColorScheme.fromSwatch(
+              brightness: Brightness.dark, primarySwatch: Colors.blue)
+          .copyWith(
+              tertiary: Colors.grey.shade800, secondary: Colors.lightBlue));
 }
