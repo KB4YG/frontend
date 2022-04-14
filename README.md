@@ -45,6 +45,8 @@ For help getting started with Flutter, view the [online documentation](https://f
 
 ### How to Deploy Website
 
+Running <code>git push</code> triggers a GitHub action that deploys the site with Firebase. See https://www.youtube.com/watch?v=xJo7Mqse960 and the related [repo](https://github.com/JohannesMilke/flutter_firebase_hosting/blob/master/.github/workflows/main.yml) for more information.
+
 ### How to Deploy Mobile App
 
 
