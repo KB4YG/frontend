@@ -36,12 +36,10 @@ dependencies:
   carousel_slider: ^4.0.0
   latlong2: ^0.8.1
   beamer: ^1.2.0
- 
   maps_launcher: ^2.0.1
   flutter_map: ^0.14.0
   flutter_map_marker_cluster: 0.4.4
   cached_network_image: ^3.2.0
-  flutter_launcher_icons: 
   introduction_screen: ^3.0.0
   
 
