@@ -18,7 +18,7 @@ class _ThemeIconButtonState extends State<ThemeIconButton> {
         tooltip: 'Toggle theme',
         onPressed: () => themeProvider.toggleTheme(null),
         icon: themeProvider.isDark
-            ? const Icon(Icons.dark_mode, color: Colors.white)
-            : const Icon(Icons.light_mode, color: Colors.white));
+            ? const Icon(Icons.dark_mode_outlined, color: Colors.white)
+            : const Icon(Icons.light_mode_outlined, color: Colors.white));
   }
 }
