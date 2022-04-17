@@ -5,11 +5,13 @@ import 'package:kb4yg/providers/theme.dart';
 import 'package:kb4yg/screens/intro_screen.dart';
 import 'package:kb4yg/utilities/beam_locations.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/widgets/screen_template.dart';
 import 'package:provider/provider.dart' show Provider;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 
 import '../screens/app_screen.dart';
+import '../screens/not_found_screen.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -33,7 +35,7 @@ class _AppState extends State<App> {
     if (kIsWeb) {
       _routerDelegate = BeamerDelegate(
           initialPath: constants.routeHome,
-          // notFoundPage: ,
+          notFoundPage: NotFoundScreen.beamPage,
           locationBuilder: BeamerLocationBuilder(beamLocations: [
             HomeLocation(),
             CountyLocation(),
