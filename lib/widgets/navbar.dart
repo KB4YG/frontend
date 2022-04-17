@@ -27,13 +27,10 @@ class DesktopNavbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).colorScheme.tertiary
-              ]),
+          gradient: LinearGradient(colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).colorScheme.tertiary
+          ]),
           border: Border(
               bottom: BorderSide(
                   color: Theme.of(context).primaryColorLight, width: 5.0))),
@@ -78,12 +75,11 @@ class MobileNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Colors.green, Colors.lightGreen]),
-      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+        Theme.of(context).primaryColor,
+        Theme.of(context).colorScheme.tertiary
+      ])),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
         child: Column(children: <Widget>[
