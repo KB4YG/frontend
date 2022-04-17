@@ -6,6 +6,7 @@ import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
 import '../models/recreation_area.dart';
+import '../utilities/hyperlink.dart';
 
 class ParkingTable extends StatefulWidget {
   final County county;
@@ -36,80 +37,127 @@ class _ParkingTableState extends State<ParkingTable> {
         physics: const AlwaysScrollableScrollPhysics(),
         child: Container(
           constraints: const BoxConstraints(minWidth: 200, maxWidth: 550),
-          child: DataTable(
-              sortColumnIndex: _columnIndex,
-              sortAscending: _isAscending,
-              showCheckboxColumn: false,
-              columnSpacing: 16,
-              columns: [
-                DataColumn(
-                    onSort: onSort,
-                    tooltip: 'Name of recreation area',
-                    label: const Expanded(
-                      child: Text(
-                        kIsWeb ? 'Recreation Area' : 'Location',
-                        textAlign: TextAlign.center,
-                        textScaleFactor: 1.4,
-                        // TODO: text style
-                      ),
-                    )),
-                DataColumn(
-                    onSort: onSort,
-                    numeric: true,
-                    tooltip: 'General parking spots currently available',
-                    label: const Padding(
-                      padding: EdgeInsets.only(right: 14.0),
-                      child: Icon(Icons.directions_car, color: Colors.blueGrey),
-                    )),
-                DataColumn(
-                    onSort: onSort,
-                    numeric: true,
-                    tooltip:
-                        'Handicap-accessible parking spots currently available',
-                    label: const Padding(
-                      padding: EdgeInsets.only(right: 14.0),
-                      child: Icon(Icons.accessible, color: Colors.lightBlue),
-                    )),
-                DataColumn(
-                    onSort: onSort,
-                    numeric: true,
-                    tooltip: 'ODF Designated Fire Danger Level',
-                    label: Padding(
-                      padding: const EdgeInsets.only(right: 14.0),
-                      child: Icon(Icons.local_fire_department,
-                          color: widget.county.fireDanger.color),
-                    ))
-              ],
-              rows: [
-                for (var loc in locations)
-                  DataRow(
-                      onSelectChanged: (bool? selected) {
-                        if (selected == true) {
-                          String route = constants.routeLocations;
-                          route += sanitizeUrl(loc.parkingLotUrl);
-                          Beamer.of(context).beamToNamed(route);
-                        }
-                      },
-                      cells: [
-                        DataCell(Text(loc.name, textScaleFactor: 1.25)),
-                        DataCell(Center(
-                          child: Text(
-                              loc.spots == -1 ? 'n/a' : loc.spots.toString(),
-                              textAlign: TextAlign.center),
-                        )),
-                        DataCell(Center(
-                          child: Text(
-                              loc.handicap == -1
-                                  ? 'n/a'
-                                  : loc.handicap.toString(),
-                              textAlign: TextAlign.center),
-                        )),
-                        DataCell(Center(
-                            child: Text(loc.fireDanger.toString(),
-                                style: TextStyle(color: loc.fireDanger.color),
-                                textAlign: TextAlign.center))),
-                      ]),
-              ]),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 20), // Fire danger info
+                child: DataTable(
+                    sortColumnIndex: _columnIndex,
+                    sortAscending: _isAscending,
+                    showCheckboxColumn: false,
+                    columnSpacing: 16,
+                    columns: [
+                      DataColumn(
+                          onSort: onSort,
+                          tooltip: 'Name of recreation area',
+                          label: const Expanded(
+                            child: Text(
+                              kIsWeb ? 'Recreation Area' : 'Location',
+                              textAlign: TextAlign.center,
+                              textScaleFactor: 1.4,
+                              // TODO: text style
+                            ),
+                          )),
+                      DataColumn(
+                          onSort: onSort,
+                          numeric: true,
+                          tooltip: 'General parking spots currently available',
+                          label: const Padding(
+                            padding: EdgeInsets.only(right: 14.0),
+                            child: Icon(Icons.directions_car,
+                                color: Colors.blueGrey),
+                          )),
+                      DataColumn(
+                          onSort: onSort,
+                          numeric: true,
+                          tooltip:
+                              'Handicap-accessible parking spots currently available',
+                          label: const Padding(
+                            padding: EdgeInsets.only(right: 14.0),
+                            child:
+                                Icon(Icons.accessible, color: Colors.lightBlue),
+                          )),
+                      DataColumn(
+                          onSort: onSort,
+                          numeric: true,
+                          tooltip: 'ODF Designated Fire Danger Level',
+                          label: Padding(
+                            padding: const EdgeInsets.only(right: 14.0),
+                            child: Icon(Icons.local_fire_department,
+                                color: widget.county.fireDanger.color),
+                          ))
+                    ],
+                    rows: [
+                      for (var loc in locations)
+                        DataRow(
+                            onSelectChanged: (bool? selected) {
+                              if (selected == true) {
+                                String route = constants.routeLocations;
+                                route += sanitizeUrl(loc.parkingLotUrl);
+                                Beamer.of(context).beamToNamed(route);
+                              }
+                            },
+                            cells: [
+                              DataCell(Text(loc.name, textScaleFactor: 1.25)),
+                              DataCell(Center(
+                                child: Text(
+                                    loc.spots == -1
+                                        ? 'n/a'
+                                        : loc.spots.toString(),
+                                    textAlign: TextAlign.center),
+                              )),
+                              DataCell(Center(
+                                child: Text(
+                                    loc.handicap == -1
+                                        ? 'n/a'
+                                        : loc.handicap.toString(),
+                                    textAlign: TextAlign.center),
+                              )),
+                              DataCell(Center(
+                                  child: Text(loc.fireDanger.toString(),
+                                      style:
+                                          TextStyle(color: loc.fireDanger.color),
+                                      textAlign: TextAlign.center))),
+                            ]),
+                    ]),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.info_outline, color: Colors.blue),
+                  onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('About Fire Danger Level'),
+                      content: SelectableText.rich(TextSpan(children: [
+                        const TextSpan(
+                            text:
+                                'The displayed fire danger level is designated by the '),
+                        Hyperlink(
+                            text: 'Oregon Department of Forestry (ODF)',
+                            url:
+                                'https://gisapps.odf.oregon.gov/firerestrictions/PFR.html'),
+                        const TextSpan(
+                            text:
+                                '.\n\nTo sign up for real-time alerts or stay informed about Oregon wildfire, visit '),
+                        Hyperlink(text: 'https://wildfire.oregon.gov/'),
+                        const TextSpan(text: '.')
+                      ])),
+                      actions: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
