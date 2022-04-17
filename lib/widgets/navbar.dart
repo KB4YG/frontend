@@ -39,8 +39,14 @@ class DesktopNavbar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            TextButton(
-              child: Text(
+            TextButton.icon(
+              icon: const Icon(Icons.drive_eta, color: Colors.white,
+              // Image.asset(
+                // 'assets/launcher/kb4yg.png',
+                // width: 50,
+                // height: 50,
+              ),
+              label: Text(
                 title,
                 style: TextStyle(
                     color: Colors.white,

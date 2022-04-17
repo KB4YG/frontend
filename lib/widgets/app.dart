@@ -5,7 +5,6 @@ import 'package:kb4yg/providers/theme.dart';
 import 'package:kb4yg/screens/intro_screen.dart';
 import 'package:kb4yg/utilities/beam_locations.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
-import 'package:kb4yg/widgets/screen_template.dart';
 import 'package:provider/provider.dart' show Provider;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;

@@ -69,12 +69,14 @@ class WebScreenTemplate extends StatelessWidget {
     return Scaffold(
         body: hasScrollbar
             ? SingleChildScrollView(
+                primary: true,
                 child: Column(children: [
-                const Navbar(),
-                Card(
-                    margin: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: child)
-              ]))
+                  const Navbar(),
+                  Card(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 4.0),
+                      child: child)
+                ]))
             : Column(children: [const Navbar(), Expanded(child: child)]));
   }
 }

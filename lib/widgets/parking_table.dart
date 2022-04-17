@@ -52,10 +52,10 @@ class _ParkingTableState extends State<ParkingTable> {
                           tooltip: 'Name of recreation area',
                           label: const Expanded(
                             child: Text(
-                              kIsWeb ? 'Recreation Area' : 'Location',
+                              kIsWeb ? 'Recreation Area' : 'Location', // Allow more room on smaller screens
                               textAlign: TextAlign.center,
                               textScaleFactor: 1.4,
-                              // TODO: text style
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           )),
                       DataColumn(
@@ -124,11 +124,12 @@ class _ParkingTableState extends State<ParkingTable> {
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
+                  tooltip: 'Fire Danger Info',
                   icon: const Icon(Icons.info_outline, color: Colors.blue),
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('About Fire Danger Level'),
+                      title: const Text('Fire Danger Level'),
                       content: SelectableText.rich(TextSpan(children: [
                         const TextSpan(
                             text:

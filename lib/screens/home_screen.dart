@@ -26,15 +26,19 @@ class HomeScreen extends StatelessWidget {
             children: [
               const HomeScreenCarousel(),
               Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: (MediaQuery.of(context).size.width > 600)
+                          ? 40.0
+                          : 12.0,
+                      vertical: 30),
                   child: SelectableText.rich(
                     TextSpan(children: [
                       TextSpan(
                           text: 'Welcome to Know Before You Go!\n\n',
-                          style: kIsWeb
-                              ? Theme.of(context).textTheme.headline4
-                              : Theme.of(context).textTheme.headline6),
+                          style:
+                              kIsWeb && MediaQuery.of(context).size.width > 600
+                                  ? Theme.of(context).textTheme.headline4
+                                  : Theme.of(context).textTheme.headline5),
                       const TextSpan(
                           text: 'To view parking availability for a natural '
                               'recreation area, press the '),
