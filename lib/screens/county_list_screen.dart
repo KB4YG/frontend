@@ -49,12 +49,12 @@ class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    // _futureCountyList = Future<List<String>>.value([
-    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
-    //   'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
-    //   'WASCO', 'WASHINGTON',
-    // ]);
-    _futureCountyList = BackendProvider.of(context).getCountyList();
+    _futureCountyList = Future<List<String>>.value([
+      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
+      'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
+      'WASCO', 'WASHINGTON',
+    ]);
+    // _futureCountyList = BackendProvider.of(context).getCountyList();
   }
 
   @override
@@ -126,12 +126,12 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    // _countyList = Future<List<String>>.value([
-    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
-    //   'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
-    //   'WASCO', 'WASHINGTON',
-    // ]);
-    _countyList = BackendProvider.of(context).getCountyList();
+    _countyList = Future<List<String>>.value([
+      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES',
+      'DOUGLAS', 'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION',
+      'WASCO', 'WASHINGTON',
+    ]);
+    // _countyList = BackendProvider.of(context).getCountyList();
   }
 
   @override
@@ -142,7 +142,6 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
             hasScrollbar: false,
             title: const Text('Select a Location'),
             bottom: const TabBar(
-              labelColor: Colors.white,
               tabs: [Tab(text: 'County List'), Tab(text: 'Explore by Map')],
             ),
             child: TabBarView(
@@ -263,10 +262,12 @@ class _CountyListState extends State<CountyList> {
                   itemCount: _displayedCounties.length,
                   itemBuilder: (context, index) {
                     String county = _displayedCounties[index];
-                    return Card(
-                        elevation: 1.5,
-                        margin: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: TextButton(
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 20.0),
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 200),
+                        child: ElevatedButton(
                             onPressed: () => viewCountyDetails(context, county),
                             child: Padding(
                                 padding:
@@ -274,7 +275,9 @@ class _CountyListState extends State<CountyList> {
                                 child: Text(
                                   '${county.toUpperCase()} COUNTY',
                                   textScaleFactor: 1.3,
-                                ))));
+                                ))),
+                      ),
+                    );
                   }),
             ),
           ),
