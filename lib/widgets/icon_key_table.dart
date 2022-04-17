@@ -28,7 +28,8 @@ class IconKeyTable extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: SelectableText('Description', textAlign: TextAlign.center),
+                child:
+                    SelectableText('Description', textAlign: TextAlign.center),
               )
             ]),
             TableRow(children: [
@@ -68,6 +69,18 @@ class IconKeyTable extends StatelessWidget {
                     ' as designated by the Oregon Department of Forestry (ODF).'),
               )
             ]),
+            TableRow(children: [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.pin_drop, color: Colors.red),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SelectableText(
+                    'Location indicator. Represents a parking lot / recreation '
+                    'area access point if on a map.'),
+              )
+            ])
           ],
         ),
       ],
