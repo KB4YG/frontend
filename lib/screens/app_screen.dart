@@ -98,31 +98,34 @@ class _AppScreenState extends State<AppScreen> {
               Beamer(routerDelegate: _routerDelegates[3])
             ],
           ),
-          bottomNavigationBar: const TabBar(
-            labelColor: Colors.green,
-            unselectedLabelColor: Colors.blueGrey,
-            tabs: [
-              Tab(
-                text: constants.pageHome,
-                icon: Icon(Icons.home),
-                iconMargin: EdgeInsets.only(bottom: 4.0),
-              ),
-              Tab(
-                text: constants.pageLocations,
-                icon: Icon(Icons.directions_car),
-                iconMargin: EdgeInsets.only(bottom: 4.0),
-              ),
-              Tab(
-                text: constants.pageHelp,
-                icon: Icon(Icons.help),
-                iconMargin: EdgeInsets.only(bottom: 4.0),
-              ),
-              Tab(
-                text: constants.pageAbout,
-                icon: Icon(Icons.info),
-                iconMargin: EdgeInsets.only(bottom: 4.0),
-              )
-            ],
+          bottomNavigationBar: Material(
+            type: MaterialType.card,
+            child: TabBar(
+              labelColor: Theme.of(context).colorScheme.primary,
+              unselectedLabelColor: Colors.blueGrey,
+              tabs: const [
+                Tab(
+                  text: constants.pageHome,
+                  icon: Icon(Icons.home),
+                  iconMargin: EdgeInsets.only(bottom: 4.0),
+                ),
+                Tab(
+                  text: constants.pageLocations,
+                  icon: Icon(Icons.directions_car),
+                  iconMargin: EdgeInsets.only(bottom: 4.0),
+                ),
+                Tab(
+                  text: constants.pageHelp,
+                  icon: Icon(Icons.help),
+                  iconMargin: EdgeInsets.only(bottom: 4.0),
+                ),
+                Tab(
+                  text: constants.pageAbout,
+                  icon: Icon(Icons.info),
+                  iconMargin: EdgeInsets.only(bottom: 4.0),
+                )
+              ],
+            ),
           ),
         ));
   }
