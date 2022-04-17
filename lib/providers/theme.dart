@@ -15,8 +15,9 @@ class ThemeProvider extends ChangeNotifier {
     final darkPref = prefs.getBool(constants.prefDark);
     // Use dark theme if user selected preference or system theme is dark
     themeMode = darkPref == true ||
-            WidgetsBinding.instance!.window.platformBrightness ==
-                Brightness.dark
+            (darkPref != null &&
+                WidgetsBinding.instance!.window.platformBrightness ==
+                    Brightness.dark)
         ? ThemeMode.dark
         : ThemeMode.light;
   }
@@ -34,7 +35,6 @@ class ThemeProvider extends ChangeNotifier {
 }
 
 class Themes {
-  // TODO: add themes
   static const textTheme = TextTheme(
     headline6: TextStyle(fontWeight: FontWeight.bold),
     bodyText1: TextStyle(fontSize: 16.0, height: 1.75),
