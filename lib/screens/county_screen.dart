@@ -89,65 +89,84 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
   @override
   Widget build(BuildContext context) {
     bool isWideScreen = MediaQuery.of(context).size.width > 1000;
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) =>
-            constraints.maxWidth > 1000
-                ? Row(children: getContent(context))
-                : Column(
-                    // mainAxisSize: MainAxisSize.min,
-                    children: [
-                        ExpandedSection(
-                          expand: !_isFullscreen,
-                          collapseVertical: !isWideScreen,
-                          child: Center(
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  maxHeight:
-                                      isWideScreen // Limit height if not widescreen
-                                          ? double.infinity
-                                          : MediaQuery.of(context).size.height /
-                                              2),
-                              child: Scrollbar(
-                                isAlwaysShown: true,
-                                thickness: 6,
-                                child: ParkingTable(
-                                    county: _county,
-                                    onRefresh: () async {
-                                      final updatedCounty =
-                                          await BackendProvider.of(context)
-                                              .getCounty(_county.name);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Card(
+          elevation: 10.0,
+          shadowColor: Colors.grey,
+          clipBehavior: Clip.hardEdge,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) =>
+                constraints.maxWidth > 1000
+                    ? Row(children: getContent(context))
+                    : Column(
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                            ExpandedSection(
+                              expand: !_isFullscreen,
+                              collapseVertical: !isWideScreen,
+                              child: Center(
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      maxHeight:
+                                          isWideScreen // Limit height if not widescreen
+                                              ? double.infinity
+                                              : MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  2),
+                                  child: Scrollbar(
+                                    isAlwaysShown: true,
+                                    thickness: 6,
+                                    child: ParkingTable(
+                                        county: _county,
+                                        onRefresh: () async {
+                                          final updatedCounty =
+                                              await BackendProvider.of(context)
+                                                  .getCounty(_county.name);
 
-                                      setState(() {
-                                        _county.recreationAreas =
-                                            updatedCounty.recreationAreas;
-                                        _county.parkingLots =
-                                            updatedCounty.parkingLots;
-                                        _parkingLots = _county.parkingLots;
-                                      });
-                                      print(_parkingLots);
-                                    }),
+                                          setState(() {
+                                            _county.recreationAreas =
+                                                updatedCounty.recreationAreas;
+                                            _county.parkingLots =
+                                                updatedCounty.parkingLots;
+                                            _parkingLots = _county.parkingLots;
+                                          });
+                                          print(_parkingLots);
+                                        }),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(minHeight: 300),
-                            child: ParkingMap(
-                              center: LatLng(_county.lat, _county.lng),
-                              locations: _parkingLots,
-                              onTap: (BuildContext context, ParkingLot loc) {
-                                String path = sanitizeUrl(
-                                    '${constants.routeLocations}/${_county.name}/${loc.recreationArea}');
-                                Beamer.of(context).beamToNamed(path);
-                              },
-                              maximizeToggle: () => setState(() {
-                                _isFullscreen = !_isFullscreen;
-                              }),
-                            ),
-                          ),
-                        )
-                      ]));
+                            Expanded(
+                              child: ConstrainedBox(
+                                constraints:
+                                    const BoxConstraints(minHeight: 300),
+                                child: ParkingMap(
+                                  center: LatLng(_county.lat, _county.lng),
+                                  locations: _parkingLots,
+                                  onTap:
+                                      (BuildContext context, ParkingLot loc) {
+                                    String path = sanitizeUrl(
+                                        '${constants.routeLocations}/${_county.name}/${loc.recreationArea}');
+                                    Beamer.of(context).beamToNamed(path);
+                                  },
+                                  maximizeToggle: () => setState(() {
+                                    _isFullscreen = !_isFullscreen;
+                                  }),
+                                ),
+                              ),
+                            )
+                          ]),
+          ),
+        ),
+      ),
+    );
   }
 
   List<Widget> getContent(context) {

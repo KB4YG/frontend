@@ -37,7 +37,6 @@ class _ParkingTableState extends State<ParkingTable> {
         child: Container(
           constraints: const BoxConstraints(minWidth: 200, maxWidth: 550),
           child: Column(children: [
-            Container(child: Text('** Rows in the table are clickable **')),
             DataTable(
                 sortColumnIndex: _columnIndex,
                 sortAscending: _isAscending,
@@ -96,11 +95,23 @@ class _ParkingTableState extends State<ParkingTable> {
                           }
                         },
                         cells: [
-                          DataCell(Text(loc.name, textScaleFactor: 1.25)),
+                          DataCell(Text(
+                            loc.name,
+                            textScaleFactor: 1.25,
+                            style: const TextStyle(
+                                shadows: [
+                                  Shadow(
+                                      color: Colors.blue, offset: Offset(0, -2))
+                                ],
+                                color: Colors.transparent,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.blue),
+                          )),
                           DataCell(Center(
                             child: Text(
-                                loc.spots == -1 ? 'n/a' : loc.spots.toString(),
-                                textAlign: TextAlign.center),
+                              loc.spots == -1 ? 'n/a' : loc.spots.toString(),
+                              textAlign: TextAlign.center,
+                            ),
                           )),
                           DataCell(Center(
                             child: Text(
