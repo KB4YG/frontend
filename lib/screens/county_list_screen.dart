@@ -8,7 +8,6 @@ import 'package:kb4yg/widgets/screen_template.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart' show Provider;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/parking_lot.dart';
 import '../providers/backend.dart';
 import '../widgets/error_card.dart';
@@ -16,6 +15,7 @@ import '../widgets/expanded_section.dart';
 import '../widgets/maps/parking_map.dart';
 import '../widgets/search_bar.dart';
 
+// Mobile app: use the location tab to get to this screen
 class CountyListScreen extends StatelessWidget {
   static const path = constants.routeLocations; // Beamer url path pattern
   const CountyListScreen({Key? key}) : super(key: key);
@@ -140,9 +140,9 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
         length: kIsWeb ? 1 : 2,
         child: ScreenTemplate(
             hasScrollbar: false,
-            title: const Text('Select a Location'),
+            title: const Text('Select Location'),
             bottom: const TabBar(
-              tabs: [Tab(text: 'County List'), Tab(text: 'Explore by Map')],
+              tabs: [Tab(text: 'County List'), Tab(text: 'Explore')],
             ),
             child: TabBarView(
               children: [
@@ -246,6 +246,7 @@ class _CountyListState extends State<CountyList> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(10),
       constraints: const BoxConstraints(minWidth: 200, maxWidth: 500),
       child: Column(
         children: [
@@ -280,9 +281,11 @@ class _CountyListState extends State<CountyList> {
                     );
                   }),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+
+  all(MaterialColor amber) {}
 }

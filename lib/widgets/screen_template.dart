@@ -44,6 +44,7 @@ class MobileScreenTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: MobileAppBar(title: title, bottom: bottom),
       endDrawer: const Settings(),
       body: hasScrollbar

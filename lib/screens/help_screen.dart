@@ -20,7 +20,15 @@ class HelpScreen extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20.0),
         constraints: const BoxConstraints(maxWidth: 700),
-        child: const IconKeyTable(),
+        child: Card(
+          elevation: 10.0,
+          shadowColor: Colors.white,
+          clipBehavior: Clip.hardEdge,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: const IconKeyTable(),
+        ),
       ),
     );
   }

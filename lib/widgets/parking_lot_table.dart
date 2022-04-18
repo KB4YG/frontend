@@ -39,12 +39,14 @@ class _ParkingLotTableState extends State<ParkingLotTable> {
           color: Colors.blue,
         ),
       ),
-      const DataColumn(
-        label: Icon(
+      DataColumn(
+          label: Row(children: const [
+        Text('       '),
+        Icon(
           Icons.place,
           color: Colors.red,
         ),
-      ),
+      ])),
     ];
 
     return dataColumns;
@@ -60,20 +62,20 @@ class _ParkingLotTableState extends State<ParkingLotTable> {
             Text(lot.name),
             onDoubleTap: () {},
           ),
-          DataCell(Text(lot.spots.toString())),
-          DataCell(Text(lot.handicap.toString())),
-          DataCell(SizedBox(
+          DataCell(Text(" ${lot.spots.toString()}")),
+          DataCell(Text("  ${lot.handicap.toString()}")),
+          DataCell(Container(
             width: 85,
             height: 30,
+            alignment: Alignment.bottomRight,
             child: ElevatedButton.icon(
                 onPressed: () {
-                  MapsLauncher.launchQuery(
-                      'gisdata/Boundaries/BoundarySHPs.zip, Correct boundaries for Benton County Parks - https://gis.co, OR');
+                  MapsLauncher.launchQuery(lot.address);
                 },
                 icon: const Icon(
                   Icons.assistant_direction,
                 ),
-                label: Container(child: const Text("Map")),
+                label: const Text("Map"),
                 style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 11),
                 )),

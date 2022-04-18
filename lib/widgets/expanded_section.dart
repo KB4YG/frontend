@@ -34,7 +34,7 @@ class _ExpandedSectionState extends State<ExpandedSection>
         vsync: this, duration: const Duration(milliseconds: 500));
     animation = CurvedAnimation(
       parent: expandController,
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.bounceOut,
     );
   }
 

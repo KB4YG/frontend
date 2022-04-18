@@ -1,7 +1,6 @@
 import 'package:beamer/beamer.dart' show BeamPage, BeamPageType;
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart' show routeAbout, appVersion;
-
 import '../widgets/screen_template.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -16,6 +15,7 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTemplate(
+      hasScrollbar: false,
       title: const Text('About'),
       child: Container(
         constraints: const BoxConstraints(maxWidth: 1000),
@@ -87,7 +87,7 @@ class AboutScreen extends StatelessWidget {
                         'Know Before You Go is licensed under the X license.'),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
