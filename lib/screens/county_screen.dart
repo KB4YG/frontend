@@ -11,6 +11,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../benton_county.dart';
 import '../models/parking_lot.dart';
+import '../widgets/custom_loading_indicator.dart';
 import '../widgets/error_card.dart';
 import '../widgets/expanded_section.dart';
 
@@ -30,13 +31,7 @@ class _CountyScreenState extends State<CountyScreen> {
     super.initState();
     futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
     // futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
-    // _fetchCounty(context);
   }
-
-  // Future<void> _fetchCounty(BuildContext context) async {
-  //   futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
-  //   futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +54,7 @@ class _CountyScreenState extends State<CountyScreen> {
                   title: 'Failed to retrieve county information',
                   message: snapshot.error.toString());
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return const CustomLoadingIndicator();
             }
           }),
     );
@@ -88,88 +83,14 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWideScreen = MediaQuery.of(context).size.width > 1000;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Card(
-          elevation: 10.0,
-          shadowColor: Colors.grey,
-          clipBehavior: Clip.hardEdge,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) =>
-                constraints.maxWidth > 1000
-                    ? Row(children: getContent(context))
-                    : Column(
-                        // mainAxisSize: MainAxisSize.min,
-                        children: [
-                            ExpandedSection(
-                              expand: !_isFullscreen,
-                              collapseVertical: !isWideScreen,
-                              child: Center(
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                      maxHeight:
-                                          isWideScreen // Limit height if not widescreen
-                                              ? double.infinity
-                                              : MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  2),
-                                  child: Scrollbar(
-                                    isAlwaysShown: true,
-                                    thickness: 6,
-                                    child: ParkingTable(
-                                        county: _county,
-                                        onRefresh: () async {
-                                          final updatedCounty =
-                                              await BackendProvider.of(context)
-                                                  .getCounty(_county.name);
-
-                                          setState(() {
-                                            _county.recreationAreas =
-                                                updatedCounty.recreationAreas;
-                                            _county.parkingLots =
-                                                updatedCounty.parkingLots;
-                                            _parkingLots = _county.parkingLots;
-                                          });
-                                          print(_parkingLots);
-                                        }),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: ConstrainedBox(
-                                constraints:
-                                    const BoxConstraints(minHeight: 300),
-                                child: ParkingMap(
-                                  center: LatLng(_county.lat, _county.lng),
-                                  locations: _parkingLots,
-                                  onTap:
-                                      (BuildContext context, ParkingLot loc) {
-                                    String path = sanitizeUrl(
-                                        '${constants.routeLocations}/${_county.name}/${loc.recreationArea}');
-                                    Beamer.of(context).beamToNamed(path);
-                                  },
-                                  maximizeToggle: () => setState(() {
-                                    _isFullscreen = !_isFullscreen;
-                                  }),
-                                ),
-                              ),
-                            )
-                          ]),
-          ),
-        ),
-      ),
-    );
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) =>
+            constraints.maxWidth > 1000
+                ? Row(children: getContent(context))
+                : Column(children: getContent(context)));
   }
 
-  List<Widget> getContent(context) {
+  List<Widget> getContent(BuildContext context) {
     bool isWideScreen = MediaQuery.of(context).size.width > 1000;
     return [
       ExpandedSection(
@@ -181,20 +102,27 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
                 maxHeight: isWideScreen // Limit height if not widescreen
                     ? double.infinity
                     : MediaQuery.of(context).size.height / 2),
-            child: ParkingTable(
-                county: _county,
-                onRefresh: () async {
-                  // TODO: Fix bug where parking map is not updated here
-                  final updatedCounty =
-                      await BackendProvider.of(context).getCounty(_county.name);
+            child: Card(
+              margin: const EdgeInsets.all(8.0),
+              child: Scrollbar(
+                isAlwaysShown: true,
+                thickness: 6,
+                child: ParkingTable(
+                    county: _county,
+                    onRefresh: () async {
+                      // TODO: Fix bug where parking map is not updated here
+                      final updatedCounty = await BackendProvider.of(context)
+                          .getCounty(_county.name);
 
-                  setState(() {
-                    _county.recreationAreas = updatedCounty.recreationAreas;
-                    _county.parkingLots = updatedCounty.parkingLots;
-                    _parkingLots = _county.parkingLots;
-                  });
-                  print(_parkingLots);
-                }),
+                      setState(() {
+                        _county.recreationAreas = updatedCounty.recreationAreas;
+                        _county.parkingLots = updatedCounty.parkingLots;
+                        _parkingLots = _county.parkingLots;
+                      });
+                      print(_parkingLots);
+                    }),
+              ),
+            ),
           ),
         ),
       ),
@@ -208,6 +136,8 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
               String route = sanitizeUrl(
                   '${constants.routeLocations}/${_county.name}/${loc.name}');
               Beamer.of(context).beamToNamed(route);
+              // TODO: Add links to parking loc
+              // Beamer.of(context).beamToNamed(loc.links.recreationArea);
             },
             maximizeToggle: () => setState(() {
               _isFullscreen = !_isFullscreen;

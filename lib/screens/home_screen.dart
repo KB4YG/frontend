@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
         hasScrollbar: false,
         title: const Text(constants.title), // Screen title
         child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 30.0),
           constraints: const BoxConstraints(maxWidth: 1000),
           child: Column(
             children: [
@@ -67,11 +68,11 @@ class HomeScreen extends StatelessWidget {
 // Send data to the carousel widget
 class HomeScreenCarousel extends StatelessWidget {
   const HomeScreenCarousel({Key? key}) : super(key: key);
-  // Asset images
-  static const List<String?> assetImageList = [
-    'assets/images/fitton-green-1.jpg',
-    'assets/images/fitton-green-2.jpg',
-    'assets/images/fitton-green-3.jpg'
+
+  static const List<AssetImage> images = [
+    AssetImage('assets/images/fitton-green-2.jpg'),
+    AssetImage('assets/images/fitton-green-1.jpg'),
+    AssetImage('assets/images/fitton-green-3.jpg')
   ];
   // images label
   static List<String?> urlImageList = [];

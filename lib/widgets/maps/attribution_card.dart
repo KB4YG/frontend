@@ -1,6 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/utilities/launch_url.dart';
+
+import '../../utilities/hyperlink.dart';
 
 class AttributionCard extends StatelessWidget {
   static const attributionLink = 'https://www.openstreetmap.org/copyright';
@@ -16,12 +16,7 @@ class AttributionCard extends StatelessWidget {
           child: Text.rich(
             TextSpan(children: [
               const TextSpan(text: '© '),
-              TextSpan(
-                  style: const TextStyle(color: Colors.blue),
-                  text: 'OpenStreetMap',
-                  mouseCursor: SystemMouseCursors.click,
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => launchURL(attributionLink)),
+              Hyperlink(text: 'OpenStreetMap', url: attributionLink),
               const TextSpan(text: ' contributors')
             ]),
           ),

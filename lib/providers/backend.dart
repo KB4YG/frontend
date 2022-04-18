@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show BuildContext;
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -13,10 +14,14 @@ class BackendProvider {
   BackendProvider();
 
   Future<http.Response> queryBackend(Map<String, String>? parameters) async {
-    print('API CALL - parameters: $parameters');
+    if (kDebugMode) {
+      print('API CALL - parameters: $parameters');
+    }
     var url = Uri.https(domain, '/location', parameters);
     var response = await http.get(url, headers: {'Accept': 'application/json'});
-    print(response.statusCode);
+    if (kDebugMode) {
+      print(response.statusCode);
+    }
     // print(response.body);
     if (response.statusCode == 200) {
       return response;

@@ -15,6 +15,7 @@ class ParkingMap extends StatefulWidget {
   final LatLng center;
   final double zoom;
   final List<ParkingLot> locations;
+  final Widget? title;
   final void Function(BuildContext, ParkingLot)? onTap;
   final void Function()? maximizeToggle;
   const ParkingMap(
@@ -22,6 +23,7 @@ class ParkingMap extends StatefulWidget {
       required this.center,
       required this.locations,
       this.zoom = 10.0,
+      this.title,
       this.onTap,
       this.maximizeToggle})
       : super(key: key);
@@ -160,6 +162,35 @@ class _ParkingMapState extends State<ParkingMap> {
             )
           ],
         ),
+        // Title
+        if (widget.title != null)
+          Align(
+            alignment: Alignment.topCenter,
+            child: Row(
+              children: [
+                Expanded(
+                  child: ShaderMask(
+                    blendMode: BlendMode.dstOver,
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: <Color>[
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.4),
+                          Colors.black.withOpacity(0.4),
+                          Colors.black.withOpacity(0.4),
+                          Colors.transparent,
+                        ],
+                        stops: const [0.1, 0.3, 0.5, 0.7, 0.9],
+                      ).createShader(bounds);
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: widget.title),
+                  ),
+                ),
+              ],
+            ),
+          ),
         // Map Buttons
         if (widget.maximizeToggle != null)
           Align(
