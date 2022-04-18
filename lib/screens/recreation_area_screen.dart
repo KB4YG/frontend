@@ -3,11 +3,10 @@ import 'package:kb4yg/models/recreation_area.dart';
 import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/widgets/parking_lot_table.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-
+import 'package:kb4yg/widgets/carousel.dart';
 import '../models/parking_lot.dart';
 import '../widgets/error_card.dart';
 import '../widgets/screen_template.dart';
-import 'home_screen.dart';
 
 class RecreationAreaScreen extends StatefulWidget {
   final String recreationAreaUrl;
@@ -60,33 +59,16 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Column(mainAxisSize: MainAxisSize.min, children: [
-                    RecreationAreaCarousel(images: snapshot.data!.imageUrls),
-                    const SizedBox(height: 30),
-                    Card(
-                      elevation: 10.0,
-                      shadowColor: Colors.white,
-                      clipBehavior: Clip.hardEdge,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(children: [
-                          ParkingLotTable(
-                              parkingLots: snapshot.data!.parkingLots),
-                          const SizedBox(height: 7),
-                          const Text(
-                            'Last update: today at 2:10 pm',
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic, fontSize: 12),
-                          )
-                        ]),
-                      ),
-                    ),
+                    RecreationAreaCarousel(
+                        urlImageList: snapshot.data!.imageUrls,
+                        areaName: snapshot.data!.name),
+                    const SizedBox(height: 20),
+                    RecParkingLot(parkingLots: snapshot.data!.parkingLots),
                     const SizedBox(height: 20),
                     Container(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: RecreationAreaInfo(snapshot.data!.info)),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: RecreationAreaInfo(snapshot.data!.info),
+                    ),
                   ]);
                 } else if (snapshot.hasError) {
                   return ErrorCard(message: snapshot.error.toString());
@@ -99,13 +81,38 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
 }
 
 class RecreationAreaCarousel extends StatelessWidget {
-  final List<String> images;
-  const RecreationAreaCarousel({Key? key, required this.images})
-      : super(key: key);
+  final List<String?> urlImageList;
+  final List<String?> assetImageList = [];
+  final List<String?> areaNameList = [];
+  final String? areaName;
+
+  RecreationAreaCarousel({
+    Key? key,
+    required this.urlImageList,
+    required this.areaName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const HomeScreenCarousel();
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Card(
+          elevation: 10.0,
+          shadowColor: Colors.white,
+          clipBehavior: Clip.hardEdge,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Column(children: [
+            SizedBox(height: 15),
+            Carousel(
+                urlImageList: urlImageList,
+                assetImageList: assetImageList,
+                areaNameList: areaNameList,
+                areaName: areaName),
+            SizedBox(height: 15),
+          ])),
+    );
   }
 }
 
@@ -140,17 +147,53 @@ class RecreationAreaInfo extends StatelessWidget {
           Container(
             color: Colors.white,
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: const SelectableText(
-              'Fitton Green park is named after Elsie Fitton Rose,'
-              ' married to her husband, Charles Ross, who funded the acquirement'
-              ' of this 308-acre natural land space in partnership with Greenbelt'
-              ' Land Trust, of which they were the founder. Fitton Green has been'
-              ' open to the public since the Fall of 2003. ',
-              style: TextStyle(fontSize: 15.0, height: 1.3, letterSpacing: 0.5),
-              textAlign: TextAlign.center,
+            child: SelectableText(
+              description,
+              style: const TextStyle(
+                  fontSize: 15.0, height: 1.3, letterSpacing: 0.5),
+              textAlign: TextAlign.left,
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class RecParkingLot extends StatefulWidget {
+  const RecParkingLot({Key? key, required this.parkingLots}) : super(key: key);
+
+  final List parkingLots;
+
+  @override
+  State<RecParkingLot> createState() => _RecParkingLotState();
+}
+
+class _RecParkingLotState extends State<RecParkingLot> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Card(
+        elevation: 10.0,
+        shadowColor: Colors.white,
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          child: Column(children: [
+            Container(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: ParkingLotTable(parkingLots: widget.parkingLots)),
+            const SizedBox(height: 7),
+            const Text(
+              'Last update: today at 2:10 pm',
+              style: TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
+            )
+          ]),
+        ),
       ),
     );
   }

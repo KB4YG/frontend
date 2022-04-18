@@ -18,8 +18,17 @@ class HelpScreen extends StatelessWidget {
     return ScreenTemplate(
       title: const Text('Help'),
       child: Container(
+        padding: const EdgeInsets.all(10),
         constraints: const BoxConstraints(maxWidth: 700),
-        child: const IconKeyTable(),
+        child: Card(
+          elevation: 10.0,
+          shadowColor: Colors.white,
+          clipBehavior: Clip.hardEdge,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: const IconKeyTable(),
+        ),
       ),
     );
   }

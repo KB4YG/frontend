@@ -7,7 +7,6 @@ import 'package:kb4yg/widgets/screen_template.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart' show Provider;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/parking_lot.dart';
 import '../providers/backend.dart';
 import '../widgets/error_card.dart';
@@ -15,6 +14,7 @@ import '../widgets/expanded_section.dart';
 import '../widgets/maps/parking_map.dart';
 import '../widgets/search_bar.dart';
 
+// Mobile app: use the location tab to get to this screen
 class CountyListScreen extends StatelessWidget {
   static const path = constants.routeLocations; // Beamer url path pattern
   const CountyListScreen({Key? key}) : super(key: key);
@@ -142,14 +142,7 @@ class _WebCountyListScreenState extends State<WebCountyListScreen> {
               ),
             )
           ],
-        )
-        //   } else {
-        //   }
-        // },
-        // ),
-        // ],
-        // ),
-        );
+        ));
   }
 }
 
@@ -281,46 +274,69 @@ class _CountyListState extends State<CountyList> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(10),
       constraints: const BoxConstraints(minWidth: 200, maxWidth: 500),
-      child: Column(
-        children: [
-          // Display search bar if more than three counties
-          if (widget.countyList.length > 3)
-            SearchBar(
-                editingController: _editingController,
-                onChanged: (value) => filterSearchResults(value),
-                hintText: 'Search counties'),
-          Expanded(
-            child: Scrollbar(
-              child: ListView.builder(
-                  itemCount: _displayedCounties.length,
-                  itemBuilder: (context, index) {
-                    String county = _displayedCounties[index];
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                      child: Card(
-                        elevation: 3.0,
-                        color: Colors.grey[200],
-                        margin: const EdgeInsets.all(8.0),
-                        child: Column(children: [
-                          TextButton(
-                            onPressed: () => viewCountyDetails(context, county),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                              child: Text(
-                                '${county.toUpperCase()} COUNTY',
-                                textScaleFactor: 1.2,
+      child: Card(
+        elevation: 10.0,
+        shadowColor: Colors.grey,
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          children: [
+            // Display search bar if more than three counties
+            if (widget.countyList.length > 3)
+              SearchBar(
+                  editingController: _editingController,
+                  onChanged: (value) => filterSearchResults(value),
+                  hintText: 'Search counties'),
+            Expanded(
+              child: Scrollbar(
+                child: ListView.builder(
+                    itemCount: _displayedCounties.length,
+                    itemBuilder: (context, index) {
+                      String county = _displayedCounties[index];
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                        child: Card(
+                          elevation: 3.0,
+                          color: Colors.green.shade300,
+                          margin: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            TextButton(
+                              clipBehavior: Clip.hardEdge,
+                              onPressed: () =>
+                                  viewCountyDetails(context, county),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                child: Text(
+                                  '${county.toUpperCase()} COUNTY',
+                                  textScaleFactor: 1.2,
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
-                            ),
-                          )
-                        ]),
-                      ),
-                    );
-                  }),
+                              style: ButtonStyle(
+                                shadowColor: MaterialStateProperty.all(
+                                  Colors.amber,
+                                ),
+                                enableFeedback: true,
+                                visualDensity:
+                                    VisualDensity.adaptivePlatformDensity,
+                              ),
+                            )
+                          ]),
+                        ),
+                      );
+                    }),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+
+  all(MaterialColor amber) {}
 }
