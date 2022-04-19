@@ -1,22 +1,22 @@
 import 'package:beamer/beamer.dart' show Beamer;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/providers/backend.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
-import 'package:kb4yg/utilities/sanitize_url.dart';
-import 'package:kb4yg/widgets/maps/parking_map.dart';
 import 'package:kb4yg/widgets/parking_table.dart';
 import 'package:kb4yg/widgets/screen_template.dart';
-import 'package:latlong2/latlong.dart';
 
-import '../benton_county.dart';
-import '../models/parking_lot.dart';
-import '../widgets/custom_loading_indicator.dart';
-import '../widgets/error_card.dart';
-import '../widgets/expanded_section.dart';
+import '../../benton_county.dart';
+import '../../models/parking_lot.dart';
+import '../../widgets/error_card.dart';
+import '../../widgets/expanded_section.dart';
+import '../../widgets/loading_indicator.dart';
+import 'county_map.dart';
 
 class CountyScreen extends StatefulWidget {
   final String countyName;
+
   const CountyScreen(this.countyName, {Key? key}) : super(key: key);
 
   @override
@@ -54,7 +54,7 @@ class _CountyScreenState extends State<CountyScreen> {
                   title: 'Failed to retrieve county information',
                   message: snapshot.error.toString());
             } else {
-              return const CustomLoadingIndicator();
+              return const LoadingIndicator();
             }
           }),
     );
@@ -63,6 +63,7 @@ class _CountyScreenState extends State<CountyScreen> {
 
 class CountyScreenContent extends StatefulWidget {
   final County county;
+
   const CountyScreenContent({Key? key, required this.county}) : super(key: key);
 
   @override
@@ -96,54 +97,65 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
       ExpandedSection(
         expand: !_isFullscreen,
         collapseVertical: !isWideScreen,
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-                maxHeight: isWideScreen // Limit height if not widescreen
-                    ? double.infinity
-                    : MediaQuery.of(context).size.height / 2),
-            child: Card(
-              margin: const EdgeInsets.all(8.0),
-              child: Scrollbar(
-                isAlwaysShown: true,
-                thickness: 6,
-                child: ParkingTable(
-                    county: _county,
-                    onRefresh: () async {
-                      // TODO: Fix bug where parking map is not updated here
-                      final updatedCounty = await BackendProvider.of(context)
-                          .getCounty(_county.name);
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isWideScreen)
+              SelectableText('${_county.name} County',
+                  style: Theme.of(context).textTheme.headline3),
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: isWideScreen // Limit height if not widescreen
+                        ? double.infinity
+                        : MediaQuery.of(context).size.height / 2),
+                child: Card(
+                  margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                  child: Scrollbar(
+                    isAlwaysShown: true,
+                    thickness: 6,
+                    child: ParkingTable(
+                      county: _county,
+                      onRefresh: () async {
+                        // TODO: Fix bug where parking map is not updated here
+                        final updatedCounty = await BackendProvider.of(context)
+                            .getCounty(_county.name);
 
-                      setState(() {
-                        _county.recreationAreas = updatedCounty.recreationAreas;
-                        _county.parkingLots = updatedCounty.parkingLots;
-                        _parkingLots = _county.parkingLots;
-                      });
-                      print(_parkingLots);
-                    }),
+                        setState(() {
+                          _county.recreationAreas =
+                              updatedCounty.recreationAreas;
+                          _county.parkingLots = updatedCounty.parkingLots;
+                          _parkingLots = _county.parkingLots;
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
       Expanded(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 300),
-          child: ParkingMap(
-            center: LatLng(_county.lat, _county.lng),
-            locations: _parkingLots,
-            onTap: (BuildContext context, ParkingLot loc) {
-              String route = sanitizeUrl(
-                  '${constants.routeLocations}/${_county.name}/${loc.name}');
-              Beamer.of(context).beamToNamed(route);
-              // TODO: Add links to parking loc
-              // Beamer.of(context).beamToNamed(loc.links.recreationArea);
-            },
-            maximizeToggle: () => setState(() {
-              _isFullscreen = !_isFullscreen;
-            }),
-          ),
-        ),
+        child: kIsWeb
+            ? CountyMap(
+                county: _county,
+                maximizeToggle: () =>
+                    setState(() => _isFullscreen = !_isFullscreen),
+              )
+            : Card(
+                elevation: 4,
+                clipBehavior: Clip.hardEdge,
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: CountyMap(
+                  county: _county,
+                  maximizeToggle: () =>
+                      setState(() => _isFullscreen = !_isFullscreen),
+                ),
+              ),
       )
     ];
   }

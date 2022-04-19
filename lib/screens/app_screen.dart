@@ -100,6 +100,7 @@ class _AppScreenState extends State<AppScreen> {
           ),
           bottomNavigationBar: Material(
             type: MaterialType.card,
+            elevation: 12.0,
             child: TabBar(
               labelColor: Theme.of(context).colorScheme.primary,
               unselectedLabelColor: Colors.blueGrey,
