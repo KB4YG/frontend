@@ -2,11 +2,11 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart' show BuildContext, ValueKey;
 import 'package:kb4yg/extensions/string_extension.dart';
 import 'package:kb4yg/screens/about_screen.dart';
-import 'package:kb4yg/screens/county_list_screen.dart';
-import 'package:kb4yg/screens/county_screen.dart';
+import 'package:kb4yg/screens/county_list/county_list_screen.dart';
+import 'package:kb4yg/screens/county_screen/county_screen.dart';
 import 'package:kb4yg/screens/help_screen.dart';
-import 'package:kb4yg/screens/home_screen.dart';
-import 'package:kb4yg/screens/recreation_area_screen.dart';
+import 'package:kb4yg/screens/home_screen/home_screen.dart';
+import 'package:kb4yg/screens/recreation_area_screen/recreation_area_screen.dart';
 import 'package:kb4yg/utilities/constants.dart';
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
@@ -40,22 +40,7 @@ class CountyLocation extends BeamLocation<BeamState> {
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    List<BeamPage> pages = [
-      const BeamPage(
-          key: ValueKey('county-list'),
-          title: 'Counties',
-          type: BeamPageType.fadeTransition,
-          child: CountyListScreen())
-    ];
-
-    if (state.pathParameters.containsKey(routeCountyId)) {
-      var countyName = sanitizeUrl(state.pathParameters[routeCountyId]!);
-      pages.add(BeamPage(
-          key: ValueKey('county-$countyName'),
-          title: countyName.capitalize(),
-          type: BeamPageType.noTransition,
-          child: CountyScreen(countyName.capitalize())));
-    }
+    BeamPage page;
 
     if (state.pathParameters.containsKey(routeRecAreaId)) {
       var recreationAreaUrl = sanitizeUrl('/' +
@@ -67,13 +52,26 @@ class CountyLocation extends BeamLocation<BeamState> {
           sanitizeUrl(state.pathParameters[routeRecAreaId]!)
               .replaceAll('-', ' ')
               .capitalizeAll();
-      pages.add(BeamPage(
+      page = BeamPage(
           key: ValueKey('rec-area-$recreationAreaUrl'),
           title: recreationAreaName,
           type: BeamPageType.fadeTransition,
-          child: RecreationAreaScreen(recreationAreaUrl, recreationAreaName)));
+          child: RecreationAreaScreen(recreationAreaUrl, recreationAreaName));
+    } else if (state.pathParameters.containsKey(routeCountyId)) {
+      var countyName = sanitizeUrl(state.pathParameters[routeCountyId]!);
+      page = BeamPage(
+          key: ValueKey('county-$countyName'),
+          title: countyName.capitalize(),
+          type: BeamPageType.noTransition,
+          child: CountyScreen(countyName.capitalize()));
+    } else {
+      page = const BeamPage(
+          key: ValueKey('county-list'),
+          title: 'Counties',
+          type: BeamPageType.fadeTransition,
+          child: CountyListScreen());
     }
 
-    return pages;
+    return [page];
   }
 }

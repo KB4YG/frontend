@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
   final PreferredSizeWidget? bottom;
+
   const MobileAppBar({Key? key, required this.title, this.bottom})
       : super(key: key);
 

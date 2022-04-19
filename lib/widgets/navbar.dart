@@ -3,79 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart';
 import 'package:kb4yg/widgets/theme_icon_button.dart';
 
-// class Navbar extends StatelessWidget {
-//   const Navbar({Key? key}) : super(key: key);
+import 'hover_button.dart';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return LayoutBuilder(builder: (context, constraints) {
-//       if (constraints.maxWidth > 800) {
-//         return const DesktopNavbar();
-//       } else {
-//         return const MobileNavbar();
-//       }
-//     });
-//   }
-// }
+class Navbar extends StatelessWidget {
+  const Navbar({Key? key}) : super(key: key);
 
-// class DesktopNavbar extends StatelessWidget {
-//   const DesktopNavbar({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth > 800) {
+        return const DesktopNavbar();
+      } else {
+        return const MobileNavbar();
+      }
+    });
+  }
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: const BoxDecoration(
-//         gradient: LinearGradient(
-//             begin: Alignment.centerLeft,
-//             end: Alignment.centerRight,
-//             colors: [Colors.green, Colors.lightGreen]),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: <Widget>[
-//             TextButton(
-//               child: const Text(
-//                 constants.title,
-//                 style: TextStyle(
-//                     // fontWeight: FontWeight.bold,
-//                     color: Colors.white,
-//                     fontSize: 30),
-//               ),
-//               onPressed: () =>
-//                   Beamer.of(context).beamToNamed(constants.routeHome),
-//             ),
-//             Row(
-//               children: const <Widget>[
-//                 NavbarButton(
-//                   route: constants.routeHome,
-//                   page: constants.pageHome,
-//                 ),
-//                 SizedBox(width: 20),
-//                 NavbarButton(
-//                   route: constants.routeLocations,
-//                   page: constants.pageLocations,
-//                 ),
-//                 SizedBox(width: 20),
-//                 NavbarButton(
-//                   route: constants.routeHelp,
-//                   page: constants.pageHelp,
-//                 ),
-//                 SizedBox(width: 20),
-//                 NavbarButton(
-//                   route: constants.routeAbout,
-//                   page: constants.pageAbout,
-//                 ),
-//                 SizedBox(width: 20),
-//               ],
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+class DesktopNavbar extends StatelessWidget {
+  const DesktopNavbar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +40,9 @@ import 'package:kb4yg/widgets/theme_icon_button.dart';
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             TextButton.icon(
-              icon: const Icon(Icons.drive_eta, color: Colors.white,
-              // Image.asset(
+              icon: const Icon(
+                Icons.drive_eta, color: Colors.white,
+                // Image.asset(
                 // 'assets/launcher/kb4yg.png',
                 // width: 50,
                 // height: 50,
@@ -110,7 +57,6 @@ import 'package:kb4yg/widgets/theme_icon_button.dart';
             ),
             Row(
               children: const <Widget>[
-                SizedBox(width: 20),
                 NavbarButton(route: routeHome, page: pageHome),
                 SizedBox(width: 20),
                 NavbarButton(route: routeLocations, page: pageLocations),
@@ -129,57 +75,8 @@ import 'package:kb4yg/widgets/theme_icon_button.dart';
   }
 }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: const BoxDecoration(
-//         gradient: LinearGradient(
-//             begin: Alignment.centerLeft,
-//             end: Alignment.centerRight,
-//             colors: [Colors.green, Colors.lightGreen]),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-//         child: Column(children: <Widget>[
-//           const Text(
-//             constants.title,
-//             style: TextStyle(
-//                 // fontWeight: FontWeight.bold,
-//                 color: Colors.white,
-//                 fontSize: 30),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.only(top: 12.0),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: const <Widget>[
-//                 NavbarButton(
-//                   route: constants.routeHome,
-//                   page: constants.pageHome,
-//                 ),
-//                 SizedBox(width: 10),
-//                 NavbarButton(
-//                   route: constants.routeLocations,
-//                   page: constants.pageLocations,
-//                 ),
-//                 SizedBox(width: 10),
-//                 NavbarButton(
-//                   route: constants.routeHelp,
-//                   page: constants.pageHelp,
-//                 ),
-//                 SizedBox(width: 10),
-//                 NavbarButton(
-//                   route: constants.routeAbout,
-//                   page: constants.pageAbout,
-//                 ),
-//               ],
-//             ),
-//           )
-//         ]),
-//       ),
-//     );
-//   }
-// }
+class MobileNavbar extends StatelessWidget {
+  const MobileNavbar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +120,7 @@ import 'package:kb4yg/widgets/theme_icon_button.dart';
 class NavbarButton extends StatefulWidget {
   final String route;
   final String page;
+
   const NavbarButton({Key? key, required this.route, required this.page})
       : super(key: key);
 

@@ -18,6 +18,7 @@ class ParkingMap extends StatefulWidget {
   final Widget? title;
   final void Function(BuildContext, ParkingLot)? onTap;
   final void Function()? maximizeToggle;
+
   const ParkingMap(
       {Key? key,
       required this.center,
@@ -34,11 +35,14 @@ class ParkingMap extends StatefulWidget {
 
 class _ParkingMapState extends State<ParkingMap> {
   late final List<Marker> markers;
+
   // Prevent user from scrolling outside state (update if expand beyond Oregon)
   final panBoundaryNE = LatLng(45.0, -118.0);
   final panBoundarySW = LatLng(43.0, -124.0);
+
   // Popup controller: used to trigger popup display/hiding
   final PopupController popupController = PopupController();
+
   // Map controller: handle zoom button actions
   final MapController mapController = MapController();
   bool _displaySnackBar = true;

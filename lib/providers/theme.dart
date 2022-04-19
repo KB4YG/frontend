@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart'
 class ThemeProvider extends ChangeNotifier {
   final SharedPreferences prefs;
   late ThemeMode themeMode;
+
   bool get isDark => themeMode == ThemeMode.dark;
 
   // Constructor
@@ -43,7 +44,7 @@ class Themes {
   static final lightTheme = ThemeData(
       fontFamily: 'OpenSans',
       textTheme: textTheme,
-      scaffoldBackgroundColor: const Color(0xfff6f7f9),
+      scaffoldBackgroundColor: const Color(0xfff4f7f5),
       primarySwatch: Colors.green,
       cardColor: const Color(0xfffefefe),
       elevatedButtonTheme: ElevatedButtonThemeData(

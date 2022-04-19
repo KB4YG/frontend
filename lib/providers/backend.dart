@@ -11,6 +11,7 @@ import '../models/recreation_area.dart';
 
 class BackendProvider {
   static const domain = 'cfb32cwake.execute-api.us-west-2.amazonaws.com';
+
   BackendProvider();
 
   Future<http.Response> queryBackend(Map<String, String>? parameters) async {

@@ -5,6 +5,7 @@ class ErrorCard extends StatefulWidget {
   final String title;
   final String body;
   final String? message;
+
   const ErrorCard(
       {Key? key,
       this.message,

@@ -293,7 +293,11 @@ const bentonCountyJson = {
     {
       "RecreationArea": "Fitton Green Natural Area",
       "About": "information here",
-      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
+      "Images": [
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
+      ],
       "List": [
         {
           "FireDanger": {"LastUpdate": 1643363148104, "Level": "low"},
@@ -315,7 +319,11 @@ const bentonCountyJson = {
     {
       "RecreationArea": "Bald Hill Farm",
       "About": "information here",
-      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
+      "Images": [
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
+      ],
       "List": [
         {
           "Address": "6460 NW Oak Creek Dr",
@@ -337,7 +345,11 @@ const bentonCountyJson = {
     {
       "RecreationArea": "Bald Hill Park",
       "About": "information here",
-      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
+      "Images": [
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
+      ],
       "List": [
         {
           "Address": "6460 NW Oak Creek Dr",
@@ -359,7 +371,11 @@ const bentonCountyJson = {
     {
       "RecreationArea": "McDonald-Dunn Forest",
       "About": "information here",
-      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
+      "Images": [
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
+      ],
       "List": [
         {
           "FireDanger": {"LastUpdate": 1643363148104, "Level": "low"},
@@ -373,7 +389,8 @@ const bentonCountyJson = {
           "ParkingLotName": "Baker Creek Bridge Trail",
           "CountyURL": "/benton",
           "ParkURL": "/benton/mcdonald-dunn-forest",
-          "LocationURL": "/benton/mcdonald-dunn-forest/baker-creek-bridge-trail",
+          "LocationURL":
+              "/benton/mcdonald-dunn-forest/baker-creek-bridge-trail",
           "Id": "e701a605-d425-471a-8b25-2c472d3f9a7c"
         },
         {
@@ -388,7 +405,8 @@ const bentonCountyJson = {
           "ParkingLotName": "Lewisburg Saddle Trailhead",
           "CountyURL": "/benton",
           "ParkURL": "/benton/mcdonald-dunn-forest",
-          "LocationURL": "/benton/mcdonald-dunn-forest/lewisburg-saddle-trailhead",
+          "LocationURL":
+              "/benton/mcdonald-dunn-forest/lewisburg-saddle-trailhead",
           "Id": "e701a605-d425-471a-8b25-2c472d3f9a7c"
         },
         {
@@ -411,7 +429,11 @@ const bentonCountyJson = {
     {
       "RecreationArea": "Cardwell Hill",
       "About": "information here",
-      "Images": ['https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg', 'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'] ,
+      "Images": [
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg',
+        'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-3.jpg'
+      ],
       "List": [
         {
           "FireDanger": {"LastUpdate": 1643363148104, "Level": "extreme"},

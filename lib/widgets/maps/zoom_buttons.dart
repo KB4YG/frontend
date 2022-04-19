@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 
 class ZoomButtons extends StatefulWidget {
   final MapController mapController;
+
   const ZoomButtons({Key? key, required this.mapController}) : super(key: key);
 
   @override

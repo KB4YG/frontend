@@ -4,6 +4,7 @@ import '../../utilities/hyperlink.dart';
 
 class AttributionCard extends StatelessWidget {
   static const attributionLink = 'https://www.openstreetmap.org/copyright';
+
   const AttributionCard({Key? key}) : super(key: key);
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show Colors, MaterialColor;
 import 'package:kb4yg/extensions/string_extension.dart';
 
-enum Danger {unknown, low, moderate, high, extreme}
+enum Danger { unknown, low, moderate, high, extreme }
 
 class FireDanger {
   final int lastUpdated;
