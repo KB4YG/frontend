@@ -1,55 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 
-class Carousel extends StatefulWidget {
-  Carousel(
-      {Key? key,
-      required this.urlImageList,
-      required this.assetImageList,
-      required this.areaNameList,
-      required this.areaName})
+class Carousel extends StatelessWidget {
+  final List<ImageProvider> images;
+  final List<String>? captions;
+  final BoxConstraints? constraints;
+
+  const Carousel(
+      {Key? key, required this.images, this.captions, this.constraints})
       : super(key: key);
-
-  final List<String?> urlImageList;
-  final List<String?> assetImageList;
-  final List<String?> areaNameList;
-  final String? areaName;
-  @override
-  State<Carousel> createState() => _CarouselState();
-}
-
-class _CarouselState extends State<Carousel> {
-  final List<String?> areaNameList2 = [];
-  //make decision based on the the type of image widget is used.
-  List<dynamic> loadImages() {
-    List<dynamic> loadImages = [];
-    if (widget.urlImageList.isNotEmpty) {
-      for (var i = 0; i < widget.urlImageList.length; i++) {
-        loadImages.add(Image.network(widget.urlImageList[i]!));
-        areaNameList2.add(widget.areaName);
-      }
-    } else {
-      for (var i = 0; i < widget.assetImageList.length; i++) {
-        loadImages.add(Image(image: AssetImage(widget.assetImageList[i]!)));
-        areaNameList2.add(widget.areaNameList[i]);
-      }
-    }
-
-    return loadImages;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        constraints: const BoxConstraints(maxWidth: 1000),
+        constraints: constraints,
         child: CarouselSlider.builder(
           options: CarouselOptions(
-            aspectRatio: 15 / 9,
+            aspectRatio: 16 / 9,
             autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 2),
+            autoPlayInterval: const Duration(seconds: 20),
             enlargeCenterPage: true,
           ),
-          itemCount: loadImages().length,
+          itemCount: images.length,
           itemBuilder:
               (BuildContext context, int itemIndex, int pageViewIndex) => Card(
             elevation: 10.0,
@@ -58,7 +30,7 @@ class _CarouselState extends State<Carousel> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-            child: Container(
+            child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(children: [
                 Expanded(
@@ -68,20 +40,19 @@ class _CarouselState extends State<Carousel> {
                       image: DecorationImage(
                         alignment: Alignment.center,
                         fit: BoxFit.fill,
-                        image: loadImages()[itemIndex].image,
+                        image: images[itemIndex],
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 3),
-                Container(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Text(
-                    areaNameList2[0]!,
-                    style: const TextStyle(
-                        fontSize: 17, fontWeight: FontWeight.bold),
-                  ),
-                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: captions == null
+                        ? null
+                        : SelectableText(
+                            captions![itemIndex],
+                            style: Theme.of(context).textTheme.caption,
+                          )),
               ]),
             ),
           ),
