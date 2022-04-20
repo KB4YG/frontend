@@ -53,6 +53,10 @@ class Themes {
             primary: Colors.green.shade50,
             side: BorderSide(color: Colors.green.shade100)),
       ),
+      tabBarTheme: const TabBarTheme(
+        labelColor: Colors.green,
+        unselectedLabelColor: Colors.blueGrey
+      ),
       colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
           .copyWith(tertiary: Colors.lightGreen));
 
@@ -67,6 +71,9 @@ class Themes {
             onPrimary: Colors.blueGrey.shade50,
             primary: Colors.blueGrey.shade700,
             side: BorderSide(color: Colors.blueGrey.shade600)),
+      ),
+      tabBarTheme: const TabBarTheme(
+        unselectedLabelColor: Colors.black54
       ),
       colorScheme: ColorScheme.fromSwatch(
               brightness: Brightness.dark,
