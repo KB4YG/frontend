@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,9 +15,8 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: title,
         centerTitle: true,
         bottom: bottom,
-        leading: (!(scaffold.isEndDrawerOpen) &&
-                (ModalRoute.of(context)?.canPop ?? false))
-            ? const BackButton()
+        leading: (!(scaffold.isEndDrawerOpen) && Beamer.of(context).canBeamBack)
+            ? BackButton(onPressed: () => Beamer.of(context).beamBack())
             : null,
         actions: [
           IconButton(
