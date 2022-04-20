@@ -87,7 +87,7 @@ class MobileNavbar extends StatelessWidget {
         Theme.of(context).colorScheme.tertiary
       ])),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+        padding: const EdgeInsets.symmetric(vertical: 15),
         child: Column(children: <Widget>[
           const Text(
             title,
