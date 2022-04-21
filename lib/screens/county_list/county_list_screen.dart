@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/screens/county_list/parking_lot_map.dart';
+import 'package:kb4yg/screens/county_list/county_list_map.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/loading_indicator.dart';
 import 'package:kb4yg/widgets/screen_template.dart';
@@ -36,7 +36,7 @@ class DesktopCountyListScreen extends StatefulWidget {
 }
 
 class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
-  late Future<List<String>> _futureCountyList;
+  late Future<List<String>> _countyList;
   late Future<List<ParkingLot>> _parkingLots;
   bool _isFullscreen = false;
 
@@ -44,24 +44,11 @@ class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    _futureCountyList = Future<List<String>>.value([
-      'BAKER',
-      'BENTON',
-      'CLACKAMAS',
-      'CLATSOP',
-      'COOS',
-      'DESCHUTES',
-      'DOUGLAS',
-      'LANE',
-      'LINN',
-      'MARION',
-      'MULTNOMAH',
-      'POLK',
-      'UNION',
-      'WASCO',
-      'WASHINGTON',
-    ]);
-    // _futureCountyList = BackendProvider.of(context).getCountyList();
+    // _futureCountyList = Future<List<String>>.value([
+    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
+    //   'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
+    // ]);
+    _countyList = BackendProvider.of(context).getCountyList();
   }
 
   @override
@@ -85,7 +72,7 @@ class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
                   // County list
                   Expanded(
                     child: FutureBuilder<List<String>>(
-                        future: _futureCountyList,
+                        future: _countyList,
                         builder: (context, snapshot) => snapshot.hasData
                             ? CountyList(countyList: snapshot.data!)
                             : snapshot.hasError
@@ -133,24 +120,11 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    _countyList = Future<List<String>>.value([
-      'BAKER',
-      'BENTON',
-      'CLACKAMAS',
-      'CLATSOP',
-      'COOS',
-      'DESCHUTES',
-      'DOUGLAS',
-      'LANE',
-      'LINN',
-      'MARION',
-      'MULTNOMAH',
-      'POLK',
-      'UNION',
-      'WASCO',
-      'WASHINGTON',
-    ]);
-    // _countyList = BackendProvider.of(context).getCountyList();
+    // _countyList = Future<List<String>>.value([
+    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
+    //   'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
+    // ]);
+    _countyList = BackendProvider.of(context).getCountyList();
   }
 
   @override

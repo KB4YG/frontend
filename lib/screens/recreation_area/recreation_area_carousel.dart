@@ -80,9 +80,9 @@ class MobileRecreationAreaCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 700),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Card(
         elevation: 10.0,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -94,6 +94,7 @@ class MobileRecreationAreaCarousel extends StatelessWidget {
           ),
           itemCount: images.length,
           itemBuilder: (context, itemIndex, pageViewIndex) => Card(
+            margin: const EdgeInsets.symmetric(vertical: 15),
             elevation: 10.0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -101,7 +102,7 @@ class MobileRecreationAreaCarousel extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: images[itemIndex],
               imageBuilder: (context, imageProvider) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     Expanded(
@@ -109,9 +110,10 @@ class MobileRecreationAreaCarousel extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20.0),
                           image: DecorationImage(
-                              image: imageProvider,
-                              alignment: Alignment.topCenter,
-                              fit: BoxFit.fitWidth),
+                            alignment: Alignment.topCenter,
+                            fit: BoxFit.fitWidth,
+                            image: imageProvider,
+                          ),
                         ),
                       ),
                     ),

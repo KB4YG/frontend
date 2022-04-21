@@ -4,7 +4,6 @@ import 'package:latlong2/latlong.dart';
 
 import '../../models/county.dart';
 import '../../models/parking_lot.dart';
-import '../../utilities/sanitize_url.dart';
 import '../../utilities/constants.dart' as constants;
 import '../../widgets/maps/parking_map.dart';
 
@@ -22,11 +21,11 @@ class CountyMap extends StatelessWidget {
           center: LatLng(county.lat, county.lng),
           locations: county.parkingLots,
           onTap: (BuildContext context, ParkingLot loc) {
-            String route = sanitizeUrl(
-                '${constants.routeLocations}/${county.name}/${loc.name}');
-            Beamer.of(context).beamToNamed(route);
+            // String route = sanitizeUrl(
+            //     '${constants.routeLocations}/${county.name}/${loc.name}');
+            // Beamer.of(context).beamToNamed(route);
             // TODO: Add links to parking loc
-            // Beamer.of(context).beamToNamed(loc.links.recreationArea);
+            Beamer.of(context).beamToNamed(loc.links[constants.linkRecArea]!);
           },
           maximizeToggle: maximizeToggle),
     );

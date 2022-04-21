@@ -16,8 +16,10 @@ import 'county_map.dart';
 
 class CountyScreen extends StatefulWidget {
   final String countyName;
+  final String countyUrl;
 
-  const CountyScreen(this.countyName, {Key? key}) : super(key: key);
+  const CountyScreen(this.countyName, this.countyUrl, {Key? key})
+      : super(key: key);
 
   @override
   State<CountyScreen> createState() => _CountyScreenState();
@@ -29,8 +31,8 @@ class _CountyScreenState extends State<CountyScreen> {
   @override
   void initState() {
     super.initState();
-    futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
-    // futureCounty = BackendProvider.of(context).getCounty(widget.countyName);
+    // futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
+    futureCounty = BackendProvider.of(context).getCounty(widget.countyUrl);
   }
 
   @override

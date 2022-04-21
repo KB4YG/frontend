@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart' show Beamer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
@@ -25,7 +26,7 @@ class ParkingLotMap extends StatelessWidget {
         locations: parkingLots,
         maximizeToggle: maximizeToggle,
         onTap: (BuildContext context, ParkingLot loc) {
-          // Beamer.of(context).beamToNamed(loc.links.recreationArea);
+          Beamer.of(context).beamToNamed(loc.links[constants.linkRecArea]!);
         },
         title: !kIsWeb
             ? null

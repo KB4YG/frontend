@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kb4yg/providers/theme.dart';
 
 class RecreationAreaInfo extends StatelessWidget {
   final String description;
@@ -18,6 +17,7 @@ class RecreationAreaInfo extends StatelessWidget {
         ),
         const Divider(thickness: 2),
         Container(
+          alignment: Alignment.centerLeft,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
           child: SelectableText(
             description,

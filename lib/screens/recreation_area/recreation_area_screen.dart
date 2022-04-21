@@ -7,16 +7,17 @@ import 'package:kb4yg/widgets/content_card.dart';
 import 'package:kb4yg/widgets/loading_indicator.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
+import '../../benton_county.dart';
 import '../../models/parking_lot.dart';
 import '../../widgets/error_card.dart';
 import '../../widgets/parking_lot_table.dart';
 import '../../widgets/screen_template.dart';
 
 class RecreationAreaScreen extends StatefulWidget {
-  final String recAreaUrl;
   final String recAreaName;
+  final String recAreaUrl;
 
-  const RecreationAreaScreen(this.recAreaUrl, this.recAreaName, {Key? key})
+  const RecreationAreaScreen(this.recAreaName, this.recAreaUrl, {Key? key})
       : super(key: key);
 
   @override
@@ -29,7 +30,8 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
   @override
   void initState() {
     super.initState();
-    recArea = BackendProvider.of(context).getRecreationArea(widget.recAreaUrl);
+    recArea = Future<RecreationArea>.value(RecreationArea.fromJson((bentonCountyJson['List']! as List)[0]));
+    // recArea = BackendProvider.of(context).getRecreationArea(widget.recAreaUrl);
   }
 
   void launchMap(BuildContext context, ParkingLot location) async {
@@ -91,16 +93,14 @@ class DesktopRecreationAreaScreen extends StatelessWidget {
             children: [
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: RecreationAreaInfo(recArea.info),
                 ),
               ),
               Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                  margin: const EdgeInsets.all(12.0),
                   elevation: 14,
-                  child: ParkingLotTable(
-                      parkingLots: recArea.parkingLots,
-                      timestamp: 'Updated: 4/18/2022 @ 2:10 pm')),
+                  child: ParkingLotTable(parkingLots: recArea.parkingLots)),
             ],
           ),
         ]),
@@ -128,9 +128,7 @@ class MobileRecreationAreaScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          child: ParkingLotTable(
-              parkingLots: recArea.parkingLots,
-              timestamp: 'Updated: 4/18/2022 @ 2:10 pm'),
+          child: ParkingLotTable(parkingLots: recArea.parkingLots),
         ),
         const SizedBox(height: 18),
         Card(
