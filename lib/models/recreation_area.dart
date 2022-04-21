@@ -8,6 +8,7 @@ class RecreationArea {
   final String parkingLotUrl;
   final List<String> imageUrls;
   final List<ParkingLot> parkingLots;
+  late final DateTime dt = parkingLots[0].dt;
   late final int spots =
       [for (var x in parkingLots) x.spots].fold(0, (p, c) => p + c);
   late final int handicap =
@@ -26,4 +27,6 @@ class RecreationArea {
         ] {
     parkingLots.sort((loc1, loc2) => loc1.name.compareTo(loc2.name));
   }
+
+  String get spotsStr => spots < 0 ? 'n/a' : spots.toString();
 }

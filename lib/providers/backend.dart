@@ -10,25 +10,25 @@ import '../models/parking_lot.dart';
 import '../models/recreation_area.dart';
 
 class BackendProvider {
-  static const domain = 'cfb32cwake.execute-api.us-west-2.amazonaws.com';
+  static const domain = 'dw03b89ydk.execute-api.us-west-2.amazonaws.com';
 
   BackendProvider();
 
   Future<http.Response> queryBackend(Map<String, String>? parameters) async {
-    if (kDebugMode) {
-      print('API CALL - parameters: $parameters');
-    }
+    if (kDebugMode) print('API CALL\n\t- parameters: $parameters');
     var url = Uri.https(domain, '/location', parameters);
-    var response = await http.get(url, headers: {'Accept': 'application/json'});
-    if (kDebugMode) {
-      print(response.statusCode);
+
+    http.Response response;
+    try {
+      response = await http.get(url, headers: {'Accept': 'application/json'});
+    } catch (e) {
+      throw Exception('Failed to connect to our servers: $e');
     }
-    // print(response.body);
-    if (response.statusCode == 200) {
-      return response;
-    } else {
-      throw Exception('Failed to fetch location data from API');
-    }
+
+    if (kDebugMode) print('\t- status code: ${response.statusCode}');
+    if (response.statusCode == 200) return response;
+
+    throw Exception('Failed to fetch location data from API: ${response.body}');
   }
 
   Future<List<ParkingLot>> fetchParkingLots() async {
@@ -39,22 +39,22 @@ class BackendProvider {
   }
 
   Future<ParkingLot> getParkingLot(String parkingLotName) async {
-    var response = await queryBackend({'parkingLotName': parkingLotName});
+    var response = await queryBackend({'LocationURL': parkingLotName});
     var jsonObj = json.decode(response.body);
     var parkingLot = ParkingLot.fromJson(jsonObj[0]);
     return parkingLot;
   }
 
   Future<RecreationArea> getRecreationArea(String recreationAreaUrl) async {
-    var response = await queryBackend({'parkURL': recreationAreaUrl});
+    var response = await queryBackend({'ParkURL': recreationAreaUrl});
     // check if not empty for RecreationArea/County or error code in future
     var jsonObj = Map<String, dynamic>.from(json.decode(response.body));
     var recreationArea = RecreationArea.fromJson(jsonObj);
     return recreationArea;
   }
 
-  Future<County> getCounty(String countyName) async {
-    var response = await queryBackend({'county': countyName});
+  Future<County> getCounty(String countyUrl) async {
+    var response = await queryBackend({'CountyURL': countyUrl});
     var jsonObj = json.decode(response.body);
     var county = County.fromJson(jsonObj);
     return county;

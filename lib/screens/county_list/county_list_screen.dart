@@ -44,11 +44,11 @@ class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    // _futureCountyList = Future<List<String>>.value([
-    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
-    //   'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
-    // ]);
-    _countyList = BackendProvider.of(context).getCountyList();
+    _countyList = Future<List<String>>.value([
+      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
+      'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
+    ]);
+    // _countyList = BackendProvider.of(context).getCountyList();
   }
 
   @override
@@ -120,11 +120,11 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    // _countyList = Future<List<String>>.value([
-    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
-    //   'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
-    // ]);
-    _countyList = BackendProvider.of(context).getCountyList();
+    _countyList = Future<List<String>>.value([
+      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
+      'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
+    ]);
+    // _countyList = BackendProvider.of(context).getCountyList();
   }
 
   @override

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:kb4yg/models/recreation_area.dart';
-import 'package:kb4yg/providers/backend.dart';
-import 'package:kb4yg/screens/recreation_area_screen/recreation_area_carousel.dart';
-import 'package:kb4yg/screens/recreation_area_screen/recreation_area_info.dart';
-import 'package:kb4yg/widgets/content_card.dart';
-import 'package:kb4yg/widgets/loading_indicator.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
+import 'recreation_area_carousel.dart';
+import 'recreation_area_info.dart';
 import '../../benton_county.dart';
 import '../../models/parking_lot.dart';
+import '../../models/recreation_area.dart';
+import '../../widgets/content_card.dart';
 import '../../widgets/error_card.dart';
+import '../../widgets/loading_indicator.dart';
 import '../../widgets/parking_lot_table.dart';
 import '../../widgets/screen_template.dart';
 

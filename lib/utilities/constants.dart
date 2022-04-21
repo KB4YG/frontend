@@ -5,6 +5,10 @@ const bullet = '\u2022 ';
 const oregonLat = 43.8041; // Oregon lat lng coordinates to center ParkingMap()
 const oregonLng = -120.5542;
 
+// Model links
+const linkRecArea = 'recreationArea';
+const linkCounty = 'county';
+
 // Preferences
 const prefCounty = 'selectedCounty';
 const prefDark = 'isDark'; // Save selected theme
