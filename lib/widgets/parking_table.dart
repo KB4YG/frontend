@@ -105,8 +105,7 @@ class _ParkingTableState extends State<ParkingTable> {
                         DataCell(Center(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Text(
-                                loc.spots == -1 ? 'n/a' : loc.spots.toString()),
+                            child: Text(loc.spotsStr),
                           ),
                         )),
                         DataCell(Center(

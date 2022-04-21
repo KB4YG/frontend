@@ -69,11 +69,11 @@ class ParkingMapPopup extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'General Parking: ${location.spots == -1 ? 'n/a' : location.spots}',
+                      'General Parking: ${location.spotsStr}',
                       style: const TextStyle(fontSize: 13.0),
                     ),
                     Text(
-                      'Handicap Parking: ${location.handicap == -1 ? 'n/a' : location.handicap}',
+                      'Handicap Parking: ${location.handicapStr}',
                       style: const TextStyle(fontSize: 13.0),
                     ),
                     // const SizedBox(height: 8),

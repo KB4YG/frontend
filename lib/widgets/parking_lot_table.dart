@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
-class ParkingLotTable extends StatelessWidget {
-  final List parkingLots;
-  final String? timestamp;
+import '../models/parking_lot.dart';
 
-  const ParkingLotTable({Key? key, required this.parkingLots, this.timestamp})
+class ParkingLotTable extends StatefulWidget {
+  final List<ParkingLot> parkingLots;
+
+  const ParkingLotTable({Key? key, required this.parkingLots})
       : super(key: key);
+
+  @override
+  State<ParkingLotTable> createState() => _ParkingLotTableState();
+}
+
+class _ParkingLotTableState extends State<ParkingLotTable> {
+  DateTime get dt => widget.parkingLots[0].dt;
+  late final DateFormat formatter;
+
+  @override
+  void initState() {
+    super.initState();
+    formatter = DateFormat('MM/dd/yyyy @ hh:mm a');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +44,15 @@ class ParkingLotTable extends StatelessWidget {
               label: Expanded(
                   child: Center(child: Icon(Icons.place, color: Colors.red)))),
         ], rows: [
-          for (var lot in parkingLots)
+          for (var lot in widget.parkingLots)
             DataRow(
               cells: [
                 DataCell(
                     Center(child: Text(lot.name, textAlign: TextAlign.center))),
                 DataCell(Center(
-                    child: Text(lot.spots.toString(),
-                        textAlign: TextAlign.center))),
+                    child: Text(lot.spotsStr, textAlign: TextAlign.center))),
                 DataCell(Center(
-                    child: Text(lot.handicap.toString(),
-                        textAlign: TextAlign.center))),
+                    child: Text(lot.handicapStr, textAlign: TextAlign.center))),
                 DataCell(Center(
                   child: ElevatedButton.icon(
                       onPressed: () => MapsLauncher.launchQuery(lot.address),
@@ -50,16 +64,14 @@ class ParkingLotTable extends StatelessWidget {
         ]),
         Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: timestamp == null
-                ? null
-                : Text(
-                    timestamp!,
-                    textScaleFactor: 1.2,
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        ?.copyWith(fontStyle: FontStyle.italic),
-                  ))
+            child: Text(
+              'Updated: ${formatter.format(dt)}',
+              textScaleFactor: 1.2,
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  ?.copyWith(fontStyle: FontStyle.italic),
+            ))
       ],
     );
   }
