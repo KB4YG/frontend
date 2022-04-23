@@ -7,11 +7,11 @@ import 'package:latlong2/latlong.dart';
 import '../../models/parking_lot.dart';
 import '../../widgets/maps/parking_map.dart';
 
-class ParkingLotMap extends StatelessWidget {
+class CountyListMap extends StatelessWidget {
   final List<ParkingLot> parkingLots;
   final Function()? maximizeToggle;
 
-  const ParkingLotMap(
+  const CountyListMap(
       {Key? key, required this.parkingLots, this.maximizeToggle})
       : super(key: key);
 

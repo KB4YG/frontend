@@ -31,8 +31,8 @@ class _CountyScreenState extends State<CountyScreen> {
   @override
   void initState() {
     super.initState();
-    futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
-    // futureCounty = BackendProvider.of(context).getCounty(widget.countyUrl);
+    // futureCounty = Future<County>.value(County.fromJson(bentonCountyJson));
+    futureCounty = BackendProvider.of(context).getCounty(widget.countyUrl);
   }
 
   @override
@@ -104,7 +104,7 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
           children: [
             if (isWideScreen)
               SelectableText('${_county.name} County',
-                  style: Theme.of(context).textTheme.headline3),
+                  style: Theme.of(context).textTheme.headline4),
             Center(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -112,7 +112,7 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
                         ? double.infinity
                         : MediaQuery.of(context).size.height / 2),
                 child: Card(
-                  margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                  margin: const EdgeInsets.all(10),
                   child: Scrollbar(
                     isAlwaysShown: true,
                     thickness: 6,

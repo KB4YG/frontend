@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/screen_template.dart';
 
-import '../../widgets/content_card.dart';
+import '../../widgets/screen_card.dart';
 import 'home_screen_carousel.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -40,14 +40,14 @@ class WebHomeScreen extends StatelessWidget {
         const HomeScreenCarousel(),
         Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: isNarrow ? 12.0 : 40.0, vertical: 30),
+                horizontal: isNarrow ? 14.0 : 40.0, vertical: 30),
             child: SelectableText.rich(
               TextSpan(children: [
                 TextSpan(
-                    text: 'Welcome to Know Before You Go!\n\n',
-                    style: isNarrow
-                        ? Theme.of(context).textTheme.headline5
-                        : Theme.of(context).textTheme.headline4),
+                    text: isNarrow
+                        ? 'Welcome to KB4YG!\n\n'
+                        : 'Welcome to Know Before You Go!\n\n',
+                    style: Theme.of(context).textTheme.headline4),
                 const TextSpan(
                     text: 'To view parking availability for a natural '
                         'recreation area, press the "View Locations" button '
@@ -77,10 +77,10 @@ class MobileHomeScreen extends StatelessWidget {
       const HomeScreenCarousel(),
       MobileScreenCard(
         child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
             child: SelectableText.rich(TextSpan(children: [
               TextSpan(
-                  text: 'Welcome to Know Before You Go!\n\n',
+                  text: 'Welcome to KB4YG!\n\n',
                   style: Theme.of(context).textTheme.headline5),
               const TextSpan(
                   text: 'To view parking availability for a natural recreation '

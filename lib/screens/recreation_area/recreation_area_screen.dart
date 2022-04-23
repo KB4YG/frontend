@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
+import '../../providers/backend.dart';
 import 'recreation_area_carousel.dart';
 import 'recreation_area_info.dart';
 import '../../benton_county.dart';
 import '../../models/parking_lot.dart';
 import '../../models/recreation_area.dart';
-import '../../widgets/content_card.dart';
+import '../../widgets/screen_card.dart';
 import '../../widgets/error_card.dart';
 import '../../widgets/loading_indicator.dart';
 import '../../widgets/parking_lot_table.dart';
@@ -29,8 +30,8 @@ class _RecreationAreaScreenState extends State<RecreationAreaScreen> {
   @override
   void initState() {
     super.initState();
-    recArea = Future<RecreationArea>.value(RecreationArea.fromJson((bentonCountyJson['List']! as List)[0]));
-    // recArea = BackendProvider.of(context).getRecreationArea(widget.recAreaUrl);
+    // recArea = Future<RecreationArea>.value(RecreationArea.fromJson((bentonCountyJson['List']! as List)[0]));
+    recArea = BackendProvider.of(context).getRecreationArea(widget.recAreaUrl);
   }
 
   void launchMap(BuildContext context, ParkingLot location) async {

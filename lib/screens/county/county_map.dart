@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -15,16 +16,20 @@ class CountyMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWideScreen = MediaQuery.of(context).size.width > 1000;
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 300),
       child: ParkingMap(
+          title: (kIsWeb && !isWideScreen)
+              ? Text(
+                  '${county.name} County',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline4,
+                )
+              : null,
           center: LatLng(county.lat, county.lng),
           locations: county.parkingLots,
           onTap: (BuildContext context, ParkingLot loc) {
-            // String route = sanitizeUrl(
-            //     '${constants.routeLocations}/${county.name}/${loc.name}');
-            // Beamer.of(context).beamToNamed(route);
-            // TODO: Add links to parking loc
             Beamer.of(context).beamToNamed(loc.links[constants.linkRecArea]!);
           },
           maximizeToggle: maximizeToggle),

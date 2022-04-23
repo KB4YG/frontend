@@ -44,11 +44,11 @@ class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    _countyList = Future<List<String>>.value([
-      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
-      'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
-    ]);
-    // _countyList = BackendProvider.of(context).getCountyList();
+    // _countyList = Future<List<String>>.value([
+    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
+    //   'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
+    // ]);
+    _countyList = BackendProvider.of(context).getCountyList();
   }
 
   @override
@@ -89,7 +89,7 @@ class _DesktopCountyListScreenState extends State<DesktopCountyListScreen> {
               child: FutureBuilder<List<ParkingLot>>(
                   future: _parkingLots,
                   builder: (context, snapshot) => snapshot.hasData
-                      ? ParkingLotMap(
+                      ? CountyListMap(
                           parkingLots: snapshot.data!,
                           maximizeToggle: () => setState(() {
                                 _isFullscreen = !_isFullscreen;
@@ -120,11 +120,11 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
   void initState() {
     super.initState();
     _parkingLots = BackendProvider.of(context).fetchParkingLots();
-    _countyList = Future<List<String>>.value([
-      'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
-      'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
-    ]);
-    // _countyList = BackendProvider.of(context).getCountyList();
+    // _countyList = Future<List<String>>.value([
+    //   'BAKER', 'BENTON', 'CLACKAMAS', 'CLATSOP', 'COOS', 'DESCHUTES', 'DOUGLAS',
+    //   'LANE', 'LINN', 'MARION', 'MULTNOMAH', 'POLK', 'UNION', 'WASCO', 'WASHINGTON',
+    // ]);
+    _countyList = BackendProvider.of(context).getCountyList();
   }
 
   @override
@@ -152,7 +152,7 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
                   FutureBuilder<List<ParkingLot>>(
                       future: _parkingLots,
                       builder: (context, snapshot) => snapshot.hasData
-                          ? ParkingLotMap(parkingLots: snapshot.data!)
+                          ? CountyListMap(parkingLots: snapshot.data!)
                           : snapshot.hasError
                               ? ErrorCard(
                                   title: 'Failed to retrieve county list',

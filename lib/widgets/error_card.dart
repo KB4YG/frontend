@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/widgets/expanded_section.dart';
+import 'package:kb4yg/widgets/screen_card.dart';
 
 class ErrorCard extends StatefulWidget {
   final String title;
@@ -27,8 +27,7 @@ class _ErrorCardState extends State<ErrorCard> {
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
-        child: Card(
-          margin: const EdgeInsets.symmetric(vertical: 20),
+        child: ScreenCard(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
