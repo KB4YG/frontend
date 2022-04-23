@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show BuildContext;
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
 import '../models/county.dart';
 import '../models/parking_lot.dart';
 import '../models/recreation_area.dart';
@@ -13,10 +11,12 @@ class BackendProvider {
   static const domain = 'dw03b89ydk.execute-api.us-west-2.amazonaws.com';
   static const endpoint = '/locations';
 
+
   BackendProvider();
 
   Future<http.Response> queryBackend(Map<String, String>? parameters) async {
     if (kDebugMode) print('API CALL\n\t- parameters: $parameters');
+
     var url = Uri.https(domain, endpoint, parameters);
 
     http.Response response;

@@ -156,6 +156,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
           iconMargin: const EdgeInsets.only(bottom: 1.0),
         )
       ],
+
     );
   }
 }

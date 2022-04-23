@@ -34,6 +34,7 @@ class ParkingLot {
       handicap = -1;
       dt = DateTime.fromMillisecondsSinceEpoch(0);
     }
+
   }
 
   String get spotsStr => spots < 0 ? 'n/a' : spots.toString();
