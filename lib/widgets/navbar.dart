@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/utilities/constants.dart';
+import 'package:kb4yg/widgets/theme_icon_button.dart';
 
 import 'hover_button.dart';
 
@@ -25,37 +26,46 @@ class DesktopNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Colors.green, Colors.lightGreen]),
-      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Theme.of(context).primaryColor,
+            Theme.of(context).colorScheme.tertiary
+          ]),
+          border: Border(
+              bottom: BorderSide(
+                  color: Theme.of(context).primaryColorLight, width: 5.0))),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+        padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 40),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            TextButton(
-              child: const Text(
+            TextButton.icon(
+              icon: const Icon(
+                Icons.drive_eta, color: Colors.white,
+                // Image.asset(
+                // 'assets/launcher/kb4yg.png',
+                // width: 50,
+                // height: 50,
+              ),
+              label: Text(
                 title,
                 style: TextStyle(
-                    // fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: 30),
+                    fontSize: Theme.of(context).textTheme.headline5?.fontSize),
               ),
               onPressed: () => Beamer.of(context).beamToNamed(routeHome),
             ),
             Row(
               children: const <Widget>[
                 NavbarButton(route: routeHome, page: pageHome),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 NavbarButton(route: routeLocations, page: pageLocations),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 NavbarButton(route: routeHelp, page: pageHelp),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 NavbarButton(route: routeAbout, page: pageAbout),
                 SizedBox(width: 20),
+                ThemeIconButton()
               ],
             )
           ],
@@ -71,14 +81,13 @@ class MobileNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Colors.green, Colors.lightGreen]),
-      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+        Theme.of(context).primaryColor,
+        Theme.of(context).colorScheme.tertiary
+      ])),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+        padding: const EdgeInsets.symmetric(vertical: 15),
         child: Column(children: <Widget>[
           const Text(
             title,
@@ -111,6 +120,7 @@ class MobileNavbar extends StatelessWidget {
 class NavbarButton extends StatefulWidget {
   final String route;
   final String page;
+
   const NavbarButton({Key? key, required this.route, required this.page})
       : super(key: key);
 
@@ -123,7 +133,8 @@ class _NavbarButtonState extends State<NavbarButton> {
 
   Widget child() => TextButton(
       onPressed: () => Beamer.of(context).beamToNamed(widget.route),
-      child: Text(widget.page, style: const TextStyle(color: Colors.white)));
+      child: Text(widget.page.toUpperCase(),
+          style: const TextStyle(color: Colors.white, letterSpacing: 1.8)));
 
   @override
   Widget build(BuildContext context) {

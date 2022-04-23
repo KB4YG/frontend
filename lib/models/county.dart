@@ -10,16 +10,17 @@ class County {
   final double lng;
   List<RecreationArea> recreationAreas;
   late List<ParkingLot> parkingLots;
-  late final FireDanger fireDanger = [for (var x in recreationAreas) x.fireDanger]
-      .fold(recreationAreas[0].fireDanger, (p, c) => p.level.index > c.level.index ? p : c);
+  late final FireDanger fireDanger = [
+    for (var x in recreationAreas) x.fireDanger
+  ].fold(recreationAreas[0].fireDanger,
+      (p, c) => p.level.index > c.level.index ? p : c);
 
   County.fromJson(Map<String, dynamic> json)
       : name = json['County'],
         lat = json['Latitude'],
         lng = json['Longitude'],
         recreationAreas = [
-          for (var recArea in json['List'])
-            RecreationArea.fromJson(recArea)
+          for (var recArea in json['List']) RecreationArea.fromJson(recArea)
         ] {
     parkingLots = [for (var recArea in recreationAreas) ...recArea.parkingLots];
   }

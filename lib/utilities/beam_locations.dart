@@ -1,12 +1,13 @@
 import 'package:beamer/beamer.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart' show BuildContext, ValueKey;
 import 'package:kb4yg/extensions/string_extension.dart';
 import 'package:kb4yg/screens/about_screen.dart';
-import 'package:kb4yg/screens/county_list_screen.dart';
-import 'package:kb4yg/screens/county_screen.dart';
+import 'package:kb4yg/screens/county_list/county_list_screen.dart';
+import 'package:kb4yg/screens/county/county_screen.dart';
 import 'package:kb4yg/screens/help_screen.dart';
-import 'package:kb4yg/screens/home_screen.dart';
-import 'package:kb4yg/screens/recreation_area_screen.dart';
+import 'package:kb4yg/screens/home/home_screen.dart';
+import 'package:kb4yg/screens/recreation_area/recreation_area_screen.dart';
 import 'package:kb4yg/utilities/constants.dart';
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
@@ -40,40 +41,37 @@ class CountyLocation extends BeamLocation<BeamState> {
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    List<BeamPage> pages = [
-      const BeamPage(
-          key: ValueKey('county-list'),
-          title: 'Counties',
-          type: BeamPageType.fadeTransition,
-          child: CountyListScreen())
-    ];
+    BeamPage page;
 
-    if (state.pathParameters.containsKey(routeCountyId)) {
-      var countyName = sanitizeUrl(state.pathParameters[routeCountyId]!);
-      pages.add(BeamPage(
-          key: ValueKey('county-$countyName'),
-          title: countyName.capitalize(),
-          type: BeamPageType.noTransition,
-          child: CountyScreen(countyName.capitalize())));
-    }
+    var url = sanitizeUrl(state.uri.toString()).replaceAll(routeLocations, '');
+    if (kDebugMode) print('URL - "$url"');
 
     if (state.pathParameters.containsKey(routeRecAreaId)) {
-      var recreationAreaUrl = sanitizeUrl('/' +
-          state.pathParameters[routeCountyId]! +
-          '/' +
-          state.pathParameters[routeRecAreaId]!);
       // Guess the recreation area name based on url
       var recreationAreaName =
           sanitizeUrl(state.pathParameters[routeRecAreaId]!)
               .replaceAll('-', ' ')
               .capitalizeAll();
-      pages.add(BeamPage(
-          key: ValueKey('rec-area-$recreationAreaUrl'),
+      page = BeamPage(
+          key: ValueKey('rec-area-$url'),
           title: recreationAreaName,
           type: BeamPageType.fadeTransition,
-          child: RecreationAreaScreen(recreationAreaUrl, recreationAreaName)));
+          child: RecreationAreaScreen(recreationAreaName, url));
+    } else if (state.pathParameters.containsKey(routeCountyId)) {
+      var countyName = state.pathParameters[routeCountyId]!.capitalize();
+      page = BeamPage(
+          key: ValueKey('county-$countyName'),
+          title: countyName.capitalize(),
+          type: BeamPageType.noTransition,
+          child: CountyScreen(countyName, url));
+    } else {
+      page = const BeamPage(
+          key: ValueKey('county-list'),
+          title: 'Counties',
+          type: BeamPageType.fadeTransition,
+          child: CountyListScreen());
     }
 
-    return pages;
+    return [page];
   }
 }

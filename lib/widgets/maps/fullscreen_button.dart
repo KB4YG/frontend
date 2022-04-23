@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class FullscreenButton extends StatefulWidget {
   final void Function()? maximizeToggle;
+
   const FullscreenButton({Key? key, required this.maximizeToggle})
       : super(key: key);
 
@@ -15,6 +16,7 @@ class _FullscreenButtonState extends State<FullscreenButton> {
     const Icon(Icons.fullscreen_exit)
   ];
   int _iconIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.small(
