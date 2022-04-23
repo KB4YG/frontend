@@ -4,6 +4,7 @@ class SearchBar extends StatelessWidget {
   final TextEditingController editingController;
   final void Function(String)? onChanged;
   final String? hintText;
+
   const SearchBar(
       {Key? key,
       required this.editingController,

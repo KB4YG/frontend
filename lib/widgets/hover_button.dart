@@ -4,6 +4,7 @@ class HoverButton extends StatefulWidget {
   final Widget? child;
   final Color hoverColor;
   final bool inverted;
+
   const HoverButton(
       {Key? key,
       this.child,

@@ -1,89 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:intl/intl.dart' show DateFormat;
+
+import '../models/parking_lot.dart';
 
 class ParkingLotTable extends StatefulWidget {
+  final List<ParkingLot> parkingLots;
+
   const ParkingLotTable({Key? key, required this.parkingLots})
       : super(key: key);
-
-  final List parkingLots;
 
   @override
   State<ParkingLotTable> createState() => _ParkingLotTableState();
 }
 
 class _ParkingLotTableState extends State<ParkingLotTable> {
+  DateTime get dt => widget.parkingLots[0].dt;
+  late final DateFormat formatter;
+
+  @override
+  void initState() {
+    super.initState();
+    formatter = DateFormat('MM/dd/yyyy @ hh:mm a');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DataTable(
-      columnSpacing: MediaQuery.of(context).size.width / 15,
-      columns: dataColumns(widget.parkingLots),
-      rows: dataRows(widget.parkingLots),
-    );
-  }
-
-  List<DataColumn> dataColumns(parkingLots) {
-    List<DataColumn> dataColumns = [
-      const DataColumn(
-        label: Text(
-          'Parking Lot',
-        ),
-      ),
-      const DataColumn(
-        label: Icon(
-          Icons.drive_eta,
-        ),
-      ),
-      const DataColumn(
-        label: Icon(
-          Icons.accessible,
-          color: Colors.blue,
-        ),
-      ),
-      DataColumn(
-          label: Row(children: const [
-        Text('       '),
-        Icon(
-          Icons.place,
-          color: Colors.red,
-        ),
-      ])),
-    ];
-
-    return dataColumns;
-  }
-
-  List<DataRow> dataRows(parkingLots) {
-    List<DataRow> dataRow = [];
-
-    parkingLots.forEach((lot) {
-      dataRow.add(DataRow(
-        cells: <DataCell>[
-          DataCell(
-            Text(lot.name),
-            onDoubleTap: () {},
+    return Column(
+      children: [
+        DataTable(columnSpacing: 40, columns: const [
+          DataColumn(
+            label: Expanded(
+              child: Text(
+                'Parking Lot',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
-          DataCell(Text(" ${lot.spots.toString()}")),
-          DataCell(Text("  ${lot.handicap.toString()}")),
-          DataCell(Container(
-            width: 85,
-            height: 30,
-            alignment: Alignment.bottomRight,
-            child: ElevatedButton.icon(
-                onPressed: () {
-                  MapsLauncher.launchQuery(lot.address);
-                },
-                icon: const Icon(
-                  Icons.assistant_direction,
-                ),
-                label: const Text("Map"),
-                style: ElevatedButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 11),
-                )),
-          )),
-        ],
-      ));
-    });
-
-    return dataRow;
+          DataColumn(label: Icon(Icons.drive_eta)),
+          DataColumn(label: Icon(Icons.accessible, color: Colors.blue)),
+          DataColumn(
+              label: Expanded(
+                  child: Center(child: Icon(Icons.place, color: Colors.red)))),
+        ], rows: [
+          for (var lot in widget.parkingLots)
+            DataRow(
+              cells: [
+                DataCell(
+                    Center(child: Text(lot.name, textAlign: TextAlign.center))),
+                DataCell(Center(
+                    child: Text(lot.spotsStr, textAlign: TextAlign.center))),
+                DataCell(Center(
+                    child: Text(lot.handicapStr, textAlign: TextAlign.center))),
+                DataCell(Center(
+                  child: ElevatedButton.icon(
+                      onPressed: () => MapsLauncher.launchQuery(lot.address),
+                      icon: const Icon(Icons.assistant_direction),
+                      label: const Text('Map')),
+                ))
+              ],
+            )
+        ]),
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Text(
+              'Updated: ${formatter.format(dt)}',
+              textScaleFactor: 1.2,
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  ?.copyWith(fontStyle: FontStyle.italic),
+            ))
+      ],
+    );
   }
 }
