@@ -7,6 +7,7 @@ class ParkingMapPopup extends StatelessWidget {
   final Marker marker;
   final ParkingLot location;
   final void Function()? onTap;
+
   const ParkingMapPopup(
       {required this.marker,
       required this.location,
@@ -48,10 +49,12 @@ class ParkingMapPopup extends StatelessWidget {
                           Shadow(
                               color: Theme.of(context).colorScheme.secondary,
                               offset: const Offset(0, -3))
-                        ], // Use shadow to create space above link underline
+                        ],
+                        // Use shadow to create space above link underline
                         color: Colors.transparent,
                         decoration: TextDecoration.underline,
-                        decorationColor: Theme.of(context).colorScheme.secondary,
+                        decorationColor:
+                            Theme.of(context).colorScheme.secondary,
                         decorationThickness: 3.0,
                         fontWeight: FontWeight.w500,
                         fontSize: 16.0,
@@ -66,11 +69,11 @@ class ParkingMapPopup extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'General Parking: ${location.spots == -1 ? 'n/a' : location.spots}',
+                      'General Parking: ${location.spotsStr}',
                       style: const TextStyle(fontSize: 13.0),
                     ),
                     Text(
-                      'Handicap Parking: ${location.handicap == -1 ? 'n/a' : location.handicap}',
+                      'Handicap Parking: ${location.handicapStr}',
                       style: const TextStyle(fontSize: 13.0),
                     ),
                     // const SizedBox(height: 8),

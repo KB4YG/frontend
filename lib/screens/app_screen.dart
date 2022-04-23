@@ -88,43 +88,45 @@ class _AppScreenState extends State<AppScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 4,
-        child: Scaffold(
-          body: TabBarView(
-            children: [
-              Beamer(routerDelegate: _routerDelegates[0]),
-              Beamer(routerDelegate: _routerDelegates[1]),
-              Beamer(routerDelegate: _routerDelegates[2]),
-              Beamer(routerDelegate: _routerDelegates[3])
-            ],
-          ),
-          bottomNavigationBar: const TabBar(
-            labelColor: Colors.green,
-            unselectedLabelColor: Colors.black54,
+      length: 4,
+      child: Scaffold(
+        body: TabBarView(
+          children: [
+            Beamer(routerDelegate: _routerDelegates[0]),
+            Beamer(routerDelegate: _routerDelegates[1]),
+            Beamer(routerDelegate: _routerDelegates[2]),
+            Beamer(routerDelegate: _routerDelegates[3])
+          ],
+        ),
+        bottomNavigationBar: const ColoredBox(
+          color: Colors.white,
+          child: TabBar(
             indicatorColor: Colors.transparent,
             tabs: [
               Tab(
+                text: constants.pageHome,
                 icon: Icon(Icons.home),
                 iconMargin: EdgeInsets.only(bottom: 1.0),
-                text: 'Home',
               ),
               Tab(
+                text: constants.pageLocations,
                 icon: Icon(Icons.directions_car),
                 iconMargin: EdgeInsets.only(bottom: 1.0),
-                text: 'Location',
               ),
               Tab(
+                text: constants.pageHelp,
                 icon: Icon(Icons.help),
                 iconMargin: EdgeInsets.only(bottom: 1.0),
-                text: 'Help',
               ),
               Tab(
+                text: constants.pageAbout,
                 icon: Icon(Icons.info),
                 iconMargin: EdgeInsets.only(bottom: 1.0),
-                text: 'Info',
               )
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

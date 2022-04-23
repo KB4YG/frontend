@@ -10,6 +10,7 @@ class ScreenTemplate extends StatelessWidget {
   final PreferredSizeWidget? bottom;
   final Widget child;
   final bool hasScrollbar;
+
   const ScreenTemplate(
       {Key? key,
       this.title,
@@ -33,6 +34,7 @@ class MobileScreenTemplate extends StatelessWidget {
   final PreferredSizeWidget? bottom;
   final Widget child;
   final bool hasScrollbar;
+
   const MobileScreenTemplate(
       {Key? key,
       required this.title,
@@ -44,19 +46,11 @@ class MobileScreenTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: MobileAppBar(title: title, bottom: bottom),
       endDrawer: const Settings(),
       body: hasScrollbar
-          ? Scrollbar(
-              child: SingleChildScrollView(
-                child: Container(
-                    constraints: const BoxConstraints(maxWidth: 1000),
-                    child: child),
-              ),
-            )
-          : Container(
-              constraints: const BoxConstraints(maxWidth: 1000), child: child),
+          ? Scrollbar(child: SingleChildScrollView(child: child))
+          : child,
     );
   }
 }
@@ -64,17 +58,17 @@ class MobileScreenTemplate extends StatelessWidget {
 class WebScreenTemplate extends StatelessWidget {
   final bool hasScrollbar;
   final Widget child;
+
   const WebScreenTemplate(
       {Key? key, required this.hasScrollbar, required this.child})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
-    // return Scaffold(
-    //     body: hasScrollbar
-    //         ? SingleChildScrollView( //undo
-    //             child: Column(children: [const Navbar(), child]))
-    //         : Column(children: [const Navbar(), Expanded(child: child)]));
+    return Scaffold(
+        body: hasScrollbar
+            ? SingleChildScrollView(
+                primary: true, child: Column(children: [const Navbar(), child]))
+            : Column(children: [const Navbar(), Expanded(child: child)]));
   }
 }
