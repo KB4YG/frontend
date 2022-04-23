@@ -11,12 +11,13 @@ import '../models/recreation_area.dart';
 
 class BackendProvider {
   static const domain = 'dw03b89ydk.execute-api.us-west-2.amazonaws.com';
+  static const endpoint = '/locations';
 
   BackendProvider();
 
   Future<http.Response> queryBackend(Map<String, String>? parameters) async {
     if (kDebugMode) print('API CALL\n\t- parameters: $parameters');
-    var url = Uri.https(domain, '/location', parameters);
+    var url = Uri.https(domain, endpoint, parameters);
 
     http.Response response;
     try {
@@ -26,7 +27,9 @@ class BackendProvider {
     }
 
     if (kDebugMode) print('\t- status code: ${response.statusCode}');
-    if (response.statusCode == 200) return response;
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return response;
+    }
 
     throw Exception('Failed to fetch location data from API: ${response.body}');
   }
@@ -61,7 +64,7 @@ class BackendProvider {
   }
 
   Future<List<String>> getCountyList({String state = 'OR'}) async {
-    var response = await queryBackend({'county': 'all'});
+    var response = await queryBackend({'CountyURL': 'all'});
     var jsonObj = json.decode(response.body);
     var countyList = List<String>.from(jsonObj['Counties']);
     return countyList;
