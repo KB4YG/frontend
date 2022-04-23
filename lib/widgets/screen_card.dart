@@ -39,7 +39,7 @@ class MobileScreenCard extends StatelessWidget {
     return Card(
       elevation: 8.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      margin: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
       child: child,
     );
   }

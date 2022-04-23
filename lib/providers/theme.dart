@@ -64,6 +64,7 @@ class Themes {
       fontFamily: 'OpenSans',
       textTheme: textTheme,
       indicatorColor: Colors.lightBlue.shade300,
+      tabBarTheme: const TabBarTheme(unselectedLabelColor: Colors.white60),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Colors.blueGrey, foregroundColor: Colors.white),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -71,9 +72,6 @@ class Themes {
             onPrimary: Colors.blueGrey.shade50,
             primary: Colors.blueGrey.shade700,
             side: BorderSide(color: Colors.blueGrey.shade600)),
-      ),
-      tabBarTheme: const TabBarTheme(
-        unselectedLabelColor: Colors.black54
       ),
       colorScheme: ColorScheme.fromSwatch(
               brightness: Brightness.dark,
