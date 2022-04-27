@@ -28,7 +28,7 @@ class ParkingLot {
     if ((json['ParkingData'] as List).isNotEmpty) {
       spots = json['ParkingData'][0]['OpenGeneral'];
       handicap = json['ParkingData'][0]['OpenHandicap'];
-      dt = json['ParkingData'][0]['LastUpdate'];
+      dt = DateTime.fromMillisecondsSinceEpoch(json['ParkingData'][0]['LastUpdate']);
     } else {
       spots = -1;
       handicap = -1;
