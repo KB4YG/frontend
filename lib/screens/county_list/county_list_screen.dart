@@ -135,6 +135,8 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
             hasScrollbar: false,
             title: const Text('Select Location'),
             bottom: const TabBar(
+              labelColor: Colors.white,
+              unselectedLabelColor: Colors.white60,
               tabs: [Tab(text: 'County List'), Tab(text: 'Map')],
             ),
             child: TabBarView(
