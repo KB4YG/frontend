@@ -24,7 +24,10 @@ class CountyMap extends StatelessWidget {
               ? Text(
                   '${county.name} County',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4
+                      ?.copyWith(color: Colors.grey.shade200),
                 )
               : null,
           center: LatLng(county.lat, county.lng),
