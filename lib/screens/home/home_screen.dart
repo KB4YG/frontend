@@ -80,7 +80,7 @@ class MobileHomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
             child: SelectableText.rich(TextSpan(children: [
               TextSpan(
-                  text: 'Welcome to KB4YG!\n\n',
+                  text: 'Welcome to KB4YG!\n',
                   style: Theme.of(context).textTheme.headline5),
               const TextSpan(
                   text: 'To view parking availability for a natural recreation '
