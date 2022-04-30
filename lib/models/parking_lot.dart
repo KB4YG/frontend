@@ -1,18 +1,29 @@
 import '../utilities/constants.dart';
 import 'fire_danger.dart';
 
+/// Access point to a recreation area.
 class ParkingLot {
   final String name;
-  final String address; // Address of parking lot (able to put into Google Maps)
-  final double lat; // Latitude of address, decimal degrees
-  final double lng; // Longitude of address, decimal degrees
-  late final int spots; // Number of general parking spots currently available
-  late final int handicap; // Number of handicap parking currently available
-  final String county; // Name of county parking lot is in
-  final String recreationArea; // Name of recreation area parking lot is in
-  final FireDanger fireDanger; // ODF Term - low, moderate, high, or extreme
-  late final DateTime dt; // Datetime the parking spot count was last updated
-  final Map<String, String> links = {}; // Links to county / rec area pages
+  /// Address of parking lot (able to put into Google Maps).
+  final String address;
+  /// Latitude of address, decimal degrees.
+  final double lat;
+  /// Longitude of address, decimal degrees.
+  final double lng;
+  /// Number of general parking spots currently available. Negative values indicate a lack of existence or an error.
+  late final int spots;
+  /// Number of handicap parking currently available. Negative values indicate a lack of existence or an error.
+  late final int handicap;
+  /// Name of county parking lot is in.
+  final String county;
+  /// Name of recreation area parking lot is in.
+  final String recreationArea;
+  /// ODF Term - low, moderate, high, or extreme.
+  final FireDanger fireDanger;
+  /// Datetime the parking spot count was last updated. Set to epoch if error.
+  late final DateTime dt;
+  /// HATEOAS links to county / rec area pages.
+  final Map<String, String> links = {};
 
   ParkingLot.fromJson(Map<String, dynamic> json)
       : name = json['ParkingLotName'],
@@ -26,9 +37,13 @@ class ParkingLot {
     links[linkCounty] = routeLocations + json['CountyURL'];
     // Handle edge case of empty parking data (shouldn't happen but could)
     if ((json['ParkingData'] as List).isNotEmpty) {
-      spots = json['ParkingData'][0]['OpenGeneral'];
-      handicap = json['ParkingData'][0]['OpenHandicap'];
-      dt = DateTime.fromMillisecondsSinceEpoch(json['ParkingData'][0]['LastUpdate']);
+      // First entry is most recent (sorted in database by timestamp)
+      var spotsGeneral = json['ParkingData'][0]['UsedGeneral'];
+      var spotsHandicap = json['ParkingData'][0]['UsedHandicap'];
+      spots = spotsGeneral < 0 ? -1 : json['TotalGeneral'] - spotsGeneral;
+      handicap = spotsHandicap < 0 ? -1 : json['TotalHandicap'] - spotsHandicap;
+      dt = DateTime.fromMillisecondsSinceEpoch(
+          json['ParkingData'][0]['LastUpdate']);
     } else {
       spots = -1;
       handicap = -1;
