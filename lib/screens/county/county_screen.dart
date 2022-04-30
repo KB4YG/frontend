@@ -117,7 +117,8 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
                     isAlwaysShown: true,
                     thickness: 6,
                     child: ParkingTable(
-                      county: _county,
+                      locations: _county.recreationAreas,
+                      fireDangerColor: _county.fireDanger.color,
                       onRefresh: () async {
                         // TODO: Fix bug where parking map is not updated here
                         final updatedCounty = await BackendProvider.of(context)

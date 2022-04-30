@@ -1,7 +1,6 @@
 import 'package:beamer/beamer.dart' show Beamer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/models/county.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
@@ -9,10 +8,15 @@ import '../models/recreation_area.dart';
 import '../utilities/hyperlink.dart';
 
 class ParkingTable extends StatefulWidget {
-  final County county;
+  final List<RecreationArea> locations;
+  final MaterialColor fireDangerColor;
   final Future<void> Function() onRefresh;
 
-  const ParkingTable({Key? key, required this.county, required this.onRefresh})
+  const ParkingTable(
+      {Key? key,
+      required this.locations,
+      required this.fireDangerColor,
+      required this.onRefresh})
       : super(key: key);
 
   @override
@@ -20,7 +24,7 @@ class ParkingTable extends StatefulWidget {
 }
 
 class _ParkingTableState extends State<ParkingTable> {
-  List<RecreationArea> get locations => widget.county.recreationAreas;
+  List<RecreationArea> get locations => widget.locations;
   int _columnIndex = 0;
   bool _isAscending = true;
 
@@ -83,7 +87,7 @@ class _ParkingTableState extends State<ParkingTable> {
                     label: Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Icon(Icons.local_fire_department,
-                          color: widget.county.fireDanger.color),
+                          color: widget.fireDangerColor),
                     ),
                   ),
                 ],
@@ -109,9 +113,7 @@ class _ParkingTableState extends State<ParkingTable> {
                           ),
                         )),
                         DataCell(Center(
-                          child: Text(loc.handicap == -1
-                              ? 'n/a'
-                              : loc.handicap.toString()),
+                          child: Text(loc.handicapStr),
                         )),
                         DataCell(Center(
                           child: Text(loc.fireDanger.toString(),

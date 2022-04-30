@@ -40,12 +40,20 @@ class DesktopNavbar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             TextButton.icon(
-              icon: const Icon(
-                Icons.drive_eta, color: Colors.white,
-                // Image.asset(
-                // 'assets/launcher/kb4yg.png',
-                // width: 50,
-                // height: 50,
+              icon: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xfff0f1f1),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      width: 2.2, color: Theme.of(context).primaryColorLight),
+                ),
+                padding: const EdgeInsets.all(3),
+                child: Image.asset(
+                  'assets/leaf-logo.png',
+                  filterQuality: FilterQuality.medium,
+                  width: 30,
+                  height: 30,
+                ),
               ),
               label: Text(
                 title,
