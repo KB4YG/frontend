@@ -16,7 +16,7 @@ class ThemeProvider extends ChangeNotifier {
     final darkPref = prefs.getBool(constants.prefDark);
     // Use dark theme if user selected preference or system theme is dark
     themeMode = darkPref == true ||
-            (darkPref != null &&
+            (darkPref == null &&
                 WidgetsBinding.instance!.window.platformBrightness ==
                     Brightness.dark)
         ? ThemeMode.dark
