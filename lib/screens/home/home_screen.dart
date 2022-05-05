@@ -45,7 +45,7 @@ class WebHomeScreen extends StatelessWidget {
               TextSpan(children: [
                 TextSpan(
                     text: isNarrow
-                        ? 'Welcome to KB4YG!\n\n'
+                        ? 'Welcome to KB4YG!\n'
                         : 'Welcome to Know Before You Go!\n\n',
                     style: Theme.of(context).textTheme.headline4),
                 const TextSpan(

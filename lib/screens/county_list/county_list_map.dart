@@ -22,13 +22,12 @@ class CountyListMap extends StatelessWidget {
       child: ParkingMap(
         zoom: kIsWeb ? 7.0 : 6.0,
         center: LatLng(constants.oregonLat, constants.oregonLng),
-        // Oregon
         locations: parkingLots,
         maximizeToggle: maximizeToggle,
         onTap: (BuildContext context, ParkingLot loc) {
           Beamer.of(context).beamToNamed(loc.links[constants.linkRecArea]!);
         },
-        title: !kIsWeb
+        title: MediaQuery.of(context).size.width <= 500
             ? null
             : Text('Explore by Map',
                 textAlign: TextAlign.center,
