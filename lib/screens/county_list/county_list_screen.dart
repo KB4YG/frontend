@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kb4yg/screens/county_list/county_list_map.dart';
 import 'package:kb4yg/utilities/constants.dart' as constants;
@@ -130,7 +129,7 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: kIsWeb ? 1 : 2,
+        length: 2,
         child: ScreenTemplate(
             hasScrollbar: false,
             title: const Text('Select Location'),
@@ -150,16 +149,15 @@ class _MobileCountyListScreenState extends State<MobileCountyListScreen> {
                                 title: 'Failed to retrieve county list',
                                 message: snapshot.error.toString())
                             : const LoadingIndicator()),
-                if (!kIsWeb)
-                  FutureBuilder<List<ParkingLot>>(
-                      future: _parkingLots,
-                      builder: (context, snapshot) => snapshot.hasData
-                          ? CountyListMap(parkingLots: snapshot.data!)
-                          : snapshot.hasError
-                              ? ErrorCard(
-                                  title: 'Failed to retrieve county list',
-                                  message: snapshot.error.toString())
-                              : const LoadingIndicator())
+                FutureBuilder<List<ParkingLot>>(
+                    future: _parkingLots,
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? CountyListMap(parkingLots: snapshot.data!)
+                        : snapshot.hasError
+                            ? ErrorCard(
+                                title: 'Failed to retrieve county list',
+                                message: snapshot.error.toString())
+                            : const LoadingIndicator())
               ],
             )));
   }

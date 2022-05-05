@@ -4,6 +4,7 @@ import 'package:kb4yg/widgets/settings.dart';
 
 import 'mobile_app_bar.dart';
 import 'navbar.dart';
+import 'navigation_drawer.dart';
 
 class ScreenTemplate extends StatelessWidget {
   final Widget? title;
@@ -20,7 +21,7 @@ class ScreenTemplate extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => kIsWeb
+  Widget build(BuildContext context) => MediaQuery.of(context).size.width > 600
       ? WebScreenTemplate(hasScrollbar: hasScrollbar, child: child)
       : MobileScreenTemplate(
           title: title,
@@ -47,6 +48,7 @@ class MobileScreenTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MobileAppBar(title: title, bottom: bottom),
+      drawer: !kIsWeb ? null : const NavigationDrawer(),
       endDrawer: const Settings(),
       body: hasScrollbar
           ? Scrollbar(child: SingleChildScrollView(child: child))

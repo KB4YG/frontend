@@ -7,8 +7,7 @@ import 'package:kb4yg/utilities/constants.dart' as constants;
 import 'package:kb4yg/widgets/parking_table.dart';
 import 'package:kb4yg/widgets/screen_template.dart';
 
-import '../../benton_county.dart';
-import '../../models/parking_lot.dart';
+// import '../../benton_county.dart';
 import '../../widgets/error_card.dart';
 import '../../widgets/expanded_section.dart';
 import '../../widgets/loading_indicator.dart';
@@ -74,14 +73,12 @@ class CountyScreenContent extends StatefulWidget {
 
 class _CountyScreenContentState extends State<CountyScreenContent> {
   late final County _county;
-  late List<ParkingLot> _parkingLots;
   bool _isFullscreen = false;
 
   @override
   void initState() {
     super.initState();
     _county = widget.county;
-    _parkingLots = _county.parkingLots;
   }
 
   @override
@@ -128,7 +125,6 @@ class _CountyScreenContentState extends State<CountyScreenContent> {
                           _county.recreationAreas =
                               updatedCounty.recreationAreas;
                           _county.parkingLots = updatedCounty.parkingLots;
-                          _parkingLots = _county.parkingLots;
                         });
                       },
                     ),
