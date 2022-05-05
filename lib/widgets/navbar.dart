@@ -4,6 +4,7 @@ import 'package:kb4yg/utilities/constants.dart';
 import 'package:kb4yg/widgets/theme_icon_button.dart';
 
 import 'hover_button.dart';
+import 'logo.dart';
 
 class Navbar extends StatelessWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -40,21 +41,7 @@ class DesktopNavbar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             TextButton.icon(
-              icon: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xfff0f1f1),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      width: 2.2, color: Theme.of(context).primaryColorLight),
-                ),
-                padding: const EdgeInsets.all(3),
-                child: Image.asset(
-                  'assets/leaf-logo.png',
-                  filterQuality: FilterQuality.medium,
-                  width: 30,
-                  height: 30,
-                ),
-              ),
+              icon: const Logo(),
               label: Text(
                 title,
                 style: TextStyle(
