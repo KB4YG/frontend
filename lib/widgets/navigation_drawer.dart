@@ -23,7 +23,7 @@ class NavigationDrawer extends StatelessWidget {
                   padding: EdgeInsets.only(right: 12.0),
                   child: Logo(),
                 ),
-                Text('Page Navigation', textScaleFactor: 1.4),
+                Text('KB4YG', textScaleFactor: 1.4),
               ],
             ),
           ),

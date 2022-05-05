@@ -20,7 +20,9 @@ class CountyMap extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 300),
       child: ParkingMap(
-          title: (kIsWeb && !isWideScreen)
+          title: (kIsWeb &&
+                  !isWideScreen &&
+                  MediaQuery.of(context).size.width > 600)
               ? Text(
                   '${county.name} County',
                   textAlign: TextAlign.center,

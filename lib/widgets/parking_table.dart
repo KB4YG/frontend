@@ -53,14 +53,16 @@ class _ParkingTableState extends State<ParkingTable> {
                   DataColumn(
                     onSort: onSort,
                     tooltip: 'Name of recreation area',
-                    label: const Expanded(
+                    label: Expanded(
                       child: Text(
                         // Allow more room on smaller screens
-                        kIsWeb ? 'Recreation Area' : 'Location',
+                        MediaQuery.of(context).size.width > 600
+                            ? 'Recreation Area'
+                            : 'Location',
                         overflow: TextOverflow.ellipsis,
                         textScaleFactor: 1.4,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -96,7 +98,6 @@ class _ParkingTableState extends State<ParkingTable> {
                     DataRow(
                       onSelectChanged: (bool? selected) {
                         if (selected == true) {
-                          // todo: loc links
                           String route = constants.routeLocations;
                           route += sanitizeUrl(loc.parkingLotUrl);
                           Beamer.of(context).beamToNamed(route);
