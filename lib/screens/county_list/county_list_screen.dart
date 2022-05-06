@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kb4yg/screens/county_list/county_list_map.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/constants.dart' as constants;
 import 'package:kb4yg/widgets/loading_indicator.dart';
 import 'package:kb4yg/widgets/screen_template.dart';
 

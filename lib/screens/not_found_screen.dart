@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart' show BeamPage, BeamPageType, Beamer;
 import 'package:flutter/material.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/constants.dart' as constants;
 import 'package:kb4yg/widgets/screen_card.dart';
 import 'package:kb4yg/widgets/screen_template.dart';
 

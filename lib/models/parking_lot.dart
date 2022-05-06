@@ -1,4 +1,4 @@
-import '../utilities/constants.dart';
+import '../constants.dart';
 import 'fire_danger.dart';
 
 /// Access point to a recreation area.
@@ -38,8 +38,8 @@ class ParkingLot {
     // Handle edge case of empty parking data (shouldn't happen but could)
     if ((json['ParkingData'] as List).isNotEmpty) {
       // First entry is most recent (sorted in database by timestamp)
-      var spotsGeneral = json['ParkingData'][0]['UsedGeneral'];
-      var spotsHandicap = json['ParkingData'][0]['UsedHandicap'];
+      int spotsGeneral = json['ParkingData'][0]['UsedGeneral'];
+      int spotsHandicap = json['ParkingData'][0]['UsedHandicap'];
       spots = spotsGeneral < 0 ? -1 : json['TotalGeneral'] - spotsGeneral;
       handicap = spotsHandicap < 0 ? -1 : json['TotalHandicap'] - spotsHandicap;
       dt = DateTime.fromMillisecondsSinceEpoch(

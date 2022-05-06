@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../models/county.dart';
 import '../../models/parking_lot.dart';
-import '../../utilities/constants.dart' as constants;
+import '../../constants.dart' as constants;
 import '../../widgets/maps/parking_map.dart';
 
 class CountyMap extends StatelessWidget {

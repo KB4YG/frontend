@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/constants.dart' as constants;
 
 import '../utilities/beam_locations.dart';
 import '../widgets/custom_tab_bar.dart';

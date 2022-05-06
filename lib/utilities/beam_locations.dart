@@ -8,7 +8,7 @@ import 'package:kb4yg/screens/county/county_screen.dart';
 import 'package:kb4yg/screens/help_screen.dart';
 import 'package:kb4yg/screens/home/home_screen.dart';
 import 'package:kb4yg/screens/recreation_area/recreation_area_screen.dart';
-import 'package:kb4yg/utilities/constants.dart';
+import 'package:kb4yg/constants.dart';
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
 class HomeLocation extends BeamLocation<BeamState> {
