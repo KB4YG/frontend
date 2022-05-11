@@ -10,7 +10,8 @@
 
 ## Introduction
 
-Know Before You Go (KB4YG) is
+Know Before You Go (KB4YG) is a cross-platform Flutter application available on Android, iOS, and 
+the web.
 
 
 ### Resources
@@ -37,7 +38,7 @@ which offers tutorials, samples, guidance on mobile development, and a full API 
 ## Folder Structure
 One of the most confusing aspects of Flutter (initially, at least) for us was the folder structure.
 This section attempts to demystify this default structure while also explaining our additions. For 
-reference, our folder structure was guided by the content of [this webpage](https://www.geeksforgeeks.org/flutter-file-structure/)
+reference, our folder structure was informed by [this style guide](https://www.geeksforgeeks.org/flutter-file-structure/)
 
 By default, Flutter created three main folders in the root directory: lib, android, ios, and web.
 The latter three folders contain files specific to their respective platforms. Very few files in these
@@ -45,19 +46,19 @@ directories were manually added or modified by us, so a newcomer hoping to famil
 our codebase might best ignore them for now. The following list describes the purpose of every 
 notable folder in the project:
 
-- .github: Workflows associated with this repository (see [How to Deploy Website](#deployment))
-- android: Android specific files.
-- assets: Static assets (fonts, home screen images, logo, etc.).
-- doc: Documentation files (e.g., the images within this README).
-- ios: iOS specific files.
-- lib: Widgets, classes, and functions that make up the KB4YG application. ("library".)
-- web: Web specific files.
-- lib/extensions: Helper functions for pre-existing classes (e.g., String.Capitalize()). 
-- lib/models: Classes that modularize and help interact with data from the backend.
-- lib/providers: Singletons used throughout the application, typically to interact with external APIs.
-- lib/screens: Primary views of the user interface of the app.
-- lib/utilities: Functions or logic used in the app.
-- lib/widgets: Widgets (discrete "object" on screen) / layouts.
+- `.github`: Workflows associated with this repository (see [How to Deploy Website](#deployment)).
+- `android`: Android specific files.
+- `assets`: Static assets (fonts, home screen images, logo, etc.).
+- `doc`: Documentation files (e.g., the images within this README).
+- `ios`: iOS specific files.
+- `lib`: Widgets, classes, and functions that make up the KB4YG application. ("library".)
+- `web`: Web specific files.
+- `lib/extensions`: Helper functions for pre-existing classes (e.g., `String.Capitalize()`). 
+- `lib/models`: Classes that modularize and help interact with data from the backend.
+- `lib/providers`: Singletons used throughout the application, typically to interact with external APIs.
+- `lib/screens`: Primary views of the user interface of the app.
+- `lib/utilities`: Functions or logic used in the app.
+- `lib/widgets`: Widgets (discrete "object" on screen) / layouts.
 
 
 ## Application Flow
@@ -118,9 +119,9 @@ you to rollback to previous site versions.
 [repo](https://github.com/JohannesMilke/flutter_firebase_hosting/blob/master/.github/workflows/main.yml) 
 for more information on GitHub flows.)
 
-We primarily chose Firebase since it was easy to both setup a Flutter application and purchase a 
-domain from Google Domains. Using the (Firebase console)[https://console.firebase.google.com], one
-is able to rollback the site to previous versions, handle domains, and monitor usage. 
+We chose Firebase since it was easy to both setup a Flutter application and purchase a domain from 
+Google Domains. Using the [Firebase console](https://console.firebase.google.com), one is able to 
+rollback the site to previous versions, handle domains, and monitor usage. 
 
 [comment]: <> ([Website downloads for the month of May]&#40;doc/img/firebase-hosting-usage.png&#41;)
 
@@ -163,3 +164,9 @@ KB4YG grows in popularity.
   sometimes contain web addresses, but we are unable to display them as links easily. Maybe create a 
   parser that creates the necessary `TextSpan()` links from the related field in the 
   `RecreationArea()` model, making the addresses clickable.
+- One downside of Flutter for the web is poor SEO (search engine optimization). Hopefully, the 
+  Flutter development team will improve SEO in a future update. But in the interim, one  may be able 
+  to create a normal, static HTML page that users will first visit before starting up the actual 
+  application, or just add meta tags to index.html. [PageSpeed Insights](https://pagespeed.web.dev/report?url=kb4yg.org) 
+  can evaluate a website's performance and [this blog post](https://cinnamon.agency/blog/post/flutter_and_seo) 
+  describes the SEO problem in more detail.
