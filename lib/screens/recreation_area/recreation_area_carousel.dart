@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/loading_indicator.dart';
@@ -43,7 +44,7 @@ class WebRecreationAreaCarousel extends StatelessWidget {
                       image: DecorationImage(
                           opacity: .75,
                           image: imageProvider,
-                          alignment: Alignment.topCenter,
+                          alignment: Alignment.bottomCenter,
                           fit: BoxFit.fitWidth)),
                   child: Align(
                     alignment: Alignment.bottomLeft,
@@ -61,7 +62,10 @@ class WebRecreationAreaCarousel extends StatelessWidget {
             ],
           ),
           placeholder: (context, url) => const LoadingIndicator(),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+          errorWidget: (context, url, error) {
+            if (kDebugMode) print(error);
+            return const Icon(Icons.error);
+          },
         ),
       ),
     );
@@ -127,7 +131,10 @@ class MobileRecreationAreaCarousel extends StatelessWidget {
                 ),
               ),
               placeholder: (context, url) => const LoadingIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) {
+                if (kDebugMode) print(error);
+                return const Icon(Icons.error);
+              },
             ),
           ),
         ),

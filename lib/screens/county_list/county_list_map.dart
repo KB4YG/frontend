@@ -27,7 +27,7 @@ class CountyListMap extends StatelessWidget {
         onTap: (BuildContext context, ParkingLot loc) {
           Beamer.of(context).beamToNamed(loc.links[constants.linkRecArea]!);
         },
-        title: MediaQuery.of(context).size.width <= 500
+        title: MediaQuery.of(context).size.width <= 500 || !kIsWeb
             ? null
             : Text('Explore by Map',
                 textAlign: TextAlign.center,

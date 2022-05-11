@@ -77,18 +77,24 @@ class MobileHomeScreen extends StatelessWidget {
       const HomeScreenCarousel(),
       MobileScreenCard(
         child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
-            child: SelectableText.rich(TextSpan(children: [
-              TextSpan(
-                  text: 'Welcome to KB4YG!\n',
-                  style: Theme.of(context).textTheme.headline5),
-              const TextSpan(
-                  text: 'To view parking availability for a natural recreation '
-                      'area, press the car icon on the bottom navigation bar '
-                      'and select the county where the natural area is '
-                      'located.\n\nDon\'t know which county a recreation area '
-                      'is in? No problem! Just select one from our map.')
-            ], style: Theme.of(context).textTheme.bodyText1))),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 25),
+          child: Column(
+            children: [
+              SelectableText(
+                'Welcome to KB4YG!\n',
+                style: Theme.of(context).textTheme.headline5,
+                textAlign: TextAlign.center,
+              ),
+              SelectableText(
+                  'To view parking availability for a natural recreation '
+                  'area, press the car icon on the bottom navigation bar '
+                  'and select the county where the natural area is '
+                  'located.\n\nDon\'t know which county a recreation area '
+                  'is in? No problem! Just select one from our map.',
+                  style: Theme.of(context).textTheme.bodyText1),
+            ],
+          ),
+        ),
       )
     ]);
   }
