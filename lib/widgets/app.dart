@@ -31,6 +31,11 @@ class _AppState extends State<App> {
     // Determine whether to display intro/tutorial screen
     _isFirstRun = prefs.getBool(constants.prefIntro);
 
+    // Change router delegate based on whether on web or mobile app.
+    // This is so that the mobile app tabs can save nested navigation (e.g.,
+    //  return to RecreationAreaScreen() rather than CountyListScreen() when
+    //  tapping Locations tab after navigating to another screen).
+    // See AppScreen() for more info.
     if (kIsWeb) {
       _routerDelegate = BeamerDelegate(
           initialPath: constants.routeHome,
@@ -61,7 +66,7 @@ class _AppState extends State<App> {
     return _isFirstRun == false || kIsWeb
         ? MaterialApp.router(
             title: constants.title,
-            themeMode: themeProvider.themeMode,
+            themeMode: themeProvider.themeMode, // This is where theme is updated
             theme: Themes.lightTheme,
             darkTheme: Themes.darkTheme,
             debugShowCheckedModeBanner: false,

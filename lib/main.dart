@@ -10,13 +10,17 @@ void main() async {
   // Wait for widget initialization
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Remove "#" from URL
+  // Remove "#" from URL (makes URL look more native to web)
   Beamer.setPathUrlStrategy();
 
-  // Get preferences of user (used for theme and county parking info)
+  // Get preferences of user (used for theme and mobile intro screen)
   final prefs = await SharedPreferences.getInstance();
 
-  // Run application
+  // Run application (lib/widgets/app.dart)
+  // MultiProvider allows us to reference the objects passed to it throughout the widget tree.
+  // For instance, we can write "Provider.of<BackendProvider>(context, listen: false);"
+  // (or use the method "BackendProvider.of(context);" for brevity)
+  // to access the single instance of BackendProvider() created here.
   return runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider<ThemeProvider>(

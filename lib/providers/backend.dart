@@ -16,7 +16,7 @@ class BackendProvider {
 
   BackendProvider();
 
-  /// Queries backend [domain]
+  /// Queries backend [domain] at [endpoint] with [parameters].
   Future<http.Response> queryBackend(Map<String, String>? parameters) async {
     if (kDebugMode) print('API CALL\n\t- parameters: $parameters');
     var url = Uri.https(domain, endpoint, parameters);
@@ -44,7 +44,7 @@ class BackendProvider {
     return parkingLots;
   }
 
-  /// Get a specific parking lot by its name.
+  /// Get a specific parking lot by its name [parkingLotName].
   Future<ParkingLot> getParkingLot(String parkingLotName) async {
     var response = await queryBackend({'LocationURL': parkingLotName});
     var jsonObj = json.decode(response.body);
@@ -52,7 +52,7 @@ class BackendProvider {
     return parkingLot;
   }
 
-  /// Get RecreationArea() object from corresponding URL.
+  /// Get RecreationArea() object from corresponding URL [recreationAreaUrl].
   Future<RecreationArea> getRecreationArea(String recreationAreaUrl) async {
     var response = await queryBackend({'ParkURL': recreationAreaUrl});
     // check if not empty for RecreationArea/County or error code in future
@@ -61,7 +61,7 @@ class BackendProvider {
     return recreationArea;
   }
 
-  /// Get County() object from corresponding URL.
+  /// Get County() object from corresponding URL [countyUrL].
   Future<County> getCounty(String countyUrl) async {
     var response = await queryBackend({'CountyURL': countyUrl});
     var jsonObj = json.decode(response.body);

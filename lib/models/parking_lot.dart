@@ -23,8 +23,28 @@ class ParkingLot {
   /// Datetime the parking spot count was last updated. Set to epoch if error.
   late final DateTime dt;
   /// HATEOAS links to county / rec area pages.
+  /// Access with constants [linkRecArea] and [linkCounty] in [constants.dart].
+  ///
+  /// - links[[][linkRecArea]] -> url of [RecreationAreaScreen] this parking lot is in.
+  /// - links[[][linkCounty]] -> url of [CountyScreen] this parking lot is in.
   final Map<String, String> links = {};
 
+  /// Construct [ParkingLot] from JSON object.
+  ///
+  /// Required fields:
+  /// - ParkingLotName (string)
+  /// - Address (string)
+  /// - Latitude (double)
+  /// - Longitude (double)
+  /// - County (string)
+  /// - RecreationArea (string)
+  /// - FireDanger ([FireDanger] object)
+  /// - ParkURL (string)
+  /// - CountyURL (string)
+  /// - TotalGeneral (int)
+  /// - TotalHandicap (int)
+  /// - ParkingData (list of map with type string, dynamic)
+  ///     - UsedGeneral (string), UsedHandicap (string), LastUpdate (int in epoch form)
   ParkingLot.fromJson(Map<String, dynamic> json)
       : name = json['ParkingLotName'],
         address = json['Address'],
@@ -33,17 +53,19 @@ class ParkingLot {
         county = json['County'],
         recreationArea = json['RecreationArea'],
         fireDanger = FireDanger.fromJson(json['FireDanger']) {
+    // Populate HATEOAS links
     links[linkRecArea] = routeLocations + json['ParkURL'];
     links[linkCounty] = routeLocations + json['CountyURL'];
     // Handle edge case of empty parking data (shouldn't happen but could)
     if ((json['ParkingData'] as List).isNotEmpty) {
       // First entry is most recent (sorted in database by timestamp)
-      int spotsGeneral = json['ParkingData'][0]['UsedGeneral'];
-      int spotsHandicap = json['ParkingData'][0]['UsedHandicap'];
+      final parkingData = Map<String, dynamic>.from(json['ParkingData'][0]);
+      int spotsGeneral = parkingData['UsedGeneral'];
+      int spotsHandicap = parkingData['UsedHandicap'];
+      // Calculate available spots (total - used)
       spots = spotsGeneral < 0 ? -1 : json['TotalGeneral'] - spotsGeneral;
       handicap = spotsHandicap < 0 ? -1 : json['TotalHandicap'] - spotsHandicap;
-      dt = DateTime.fromMillisecondsSinceEpoch(
-          json['ParkingData'][0]['LastUpdate']);
+      dt = DateTime.fromMillisecondsSinceEpoch(parkingData['LastUpdate']);
     } else {
       spots = -1;
       handicap = -1;

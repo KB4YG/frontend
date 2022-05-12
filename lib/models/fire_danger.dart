@@ -14,6 +14,8 @@ class FireDanger {
   /// Color associated with danger level.
   late final MaterialColor color = matchFireDangerColor(level);
 
+  /// Construct FireDanger object from JSON file.
+  /// Requires fields LastUpdate (int in epoch form) and Level (string).
   FireDanger.fromJson(Map<String, dynamic> json)
       : lastUpdated = json['LastUpdate'],
         levelStr = json['Level'];
