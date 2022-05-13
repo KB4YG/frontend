@@ -106,6 +106,18 @@ with a future constructor that uses the test file (`Future<County>.value(County.
 This way one can more easily test and modify location data without affecting information in the database.
 
 ## Deployment
+Here are some resources that will provide you with a step by step process on how to publish or update your mobile app to the app store: 
+
+These links will lead you to the most up to date resources because it's written the Google Flutter team: 
+
+- For Android (Google Play Store) - https://docs.flutter.dev/deployment/android
+- For IOS (App Store) - https://docs.flutter.dev/deployment/ios
+
+If you rather watch a video, here are some links to videos on flutter app deployment:
+
+- For Android (Google Play Store) - https://www.youtube.com/watch?v=g0GNuoCOtaQ&ab_channel=JohannesMilke
+
+- For IOS (App Store) - https://www.youtube.com/watch?v=akFF1uJWZck&ab_channel=MJSDCoding
 
 
 ### How to Deploy Website
