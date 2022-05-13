@@ -132,10 +132,10 @@ KB4YG grows in popularity.
 ### How to Deploy Mobile App
 Here are some resources that will provide you with a step by step process on how to publish or update your mobile app to the app store: 
 
-   These links will lead you to the most up to date resources because it's written the Google Flutter team: 
+- These links will lead you to the most up to date resources because it's written the Google Flutter team: 
 
-      - For Android (Google Play Store) - https://docs.flutter.dev/deployment/android
-      - For IOS (App Store) - https://docs.flutter.dev/deployment/ios
+  - For Android (Google Play Store) - https://docs.flutter.dev/deployment/android
+    - For IOS (App Store) - https://docs.flutter.dev/deployment/ios
 
    If you rather watch a video, here are some links to videos on flutter app deployment:
 
