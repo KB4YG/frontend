@@ -27,7 +27,7 @@ which offers tutorials, samples, guidance on mobile development, and a full API 
 
 
 ## Running Locally
-Before beginning setting up this project, it’s essential to know that there is a slight chance that you might run into trouble setting up the environment flutter. For troubleshooting, I would recommend Google searching these issues or searching on YouTube for a troubleshooting video that matches the problem that you are having.
+Before beginning setting up this project, it’s essential to know that there is a slight chance that you might run into trouble setting up the environment flutter. For troubleshooting, I would recommend [Google](https://www.google.com/) searching these issues or searching on [YouTube](https://www.youtube.com/) for a troubleshooting video that matches the problem that you are having.
 
 1. Install Flutter: https://docs.flutter.dev/get-started/install
 2. Set up IDE (Android Studio recommended): https://docs.flutter.dev/get-started/editor
