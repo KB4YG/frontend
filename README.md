@@ -48,7 +48,7 @@ directories were manually added or modified by us, so a newcomer hoping to famil
 our codebase might best ignore them for now. The following list describes the purpose of every 
 notable folder in the project:
 
-![Lib file structure image](https://github.com/KB4YG/frontend/blob/doc-test/doc/img/lib_file_structure.png)
+![Lib file structure image]([https://github.com/KB4YG/frontend/blob/doc-test/doc/img/lib_file_structure.png](https://github.com/KB4YG/frontend/blob/doc-test/doc/img/lib%20file%20structure.svg))
 
 - `.github`: Workflows associated with this repository (see [How to Deploy Website](#deployment)).
 - `android`: Android specific files.
