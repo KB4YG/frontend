@@ -54,7 +54,8 @@ class IconKeyTable extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: SelectableText(
                     'Handicap parking. The number of handicap spots currently '
-                    'available.'),
+                    'available. Listed as "n/a" if there is no designated '
+                    'handicap parking'),
               )
             ]),
             TableRow(children: [

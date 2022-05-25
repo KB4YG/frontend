@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart' show BeamPage, BeamPageType;
 import 'package:flutter/material.dart';
 import 'package:kb4yg/constants.dart' show routeAbout, appVersion;
+import 'package:kb4yg/widgets/logo.dart';
 import 'package:kb4yg/widgets/screen_card.dart';
 
 import '../widgets/screen_template.dart';
@@ -59,10 +60,8 @@ class AboutScreen extends StatelessWidget {
                           'a picture at a fixed interval (which is different for each '
                           'location based on predicted traffic) during the day. This image '
                           'is then analyzed with a computer vision algorithm that counts '
-                          'the number of available parking spots, which is then stored in '
-                          'our cloud database. The KB4YG application and website draw from '
-                          'the most recent entries of this database to display up-to-date '
-                          'parking information.',
+                          'the number of available parking spots. The KB4YG application and '
+                           'website then display this up-to-date parking information.',
                     ),
                   ], style: Theme.of(context).textTheme.bodyText1),
                 ),
@@ -81,9 +80,8 @@ class AboutScreen extends StatelessWidget {
                   onPressed: () => showAboutDialog(
                       context: context,
                       applicationVersion: appVersion,
-                      // TODO: add KB4YG icon
                       // TODO: pick license
-                      applicationIcon: const Icon(Icons.directions_car_filled),
+                      applicationIcon: const Logo(),
                       applicationLegalese:
                           'Know Before You Go is licensed under the X license.'),
                 ),

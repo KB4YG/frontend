@@ -63,6 +63,7 @@ class _AppState extends State<App> {
     // Get current theme (listening with ChangeNotifierProvider())
     final themeProvider = Provider.of<ThemeProvider>(context);
 
+    // Load intro screen if first time running, else load home screen
     return _isFirstRun == false || kIsWeb
         ? MaterialApp.router(
             title: constants.title,
@@ -75,6 +76,6 @@ class _AppState extends State<App> {
             backButtonDispatcher:
                 BeamerBackButtonDispatcher(delegate: _routerDelegate),
           )
-        : const MaterialApp(home: IntroScreen());
+        : const MaterialApp(home: IntroScreen(), debugShowCheckedModeBanner: false,);
   }
 }
