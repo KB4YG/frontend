@@ -59,7 +59,8 @@ flutter:
 
   assets:
     - assets/leaf-logo.png
-    - assets/images/
+    - assets/images/ # Static images (e.g., on home screen)
+    - assets/intro/ # On-boarding gifs
 
   fonts:
     - family: OpenSans
