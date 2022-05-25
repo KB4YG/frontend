@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../widgets/loading_indicator.dart';
@@ -25,7 +25,7 @@ class WebRecreationAreaCarousel extends StatelessWidget {
           height: 400,
           viewportFraction: 1,
           autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 20),
+          autoPlayInterval: const Duration(seconds: 17),
         ),
         itemCount: images.length,
         itemBuilder: (context, itemIndex, pageViewIndex) => CachedNetworkImage(
@@ -85,57 +85,53 @@ class MobileRecreationAreaCarousel extends StatelessWidget {
     return Container(
       constraints: const BoxConstraints(maxWidth: 700),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Card(
-        elevation: 10.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+      child: CarouselSlider.builder(
+        options: CarouselOptions(
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 17),
+          enlargeCenterPage: true,
         ),
-        child: CarouselSlider.builder(
-          options: CarouselOptions(
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 20),
-            enlargeCenterPage: true,
+        itemCount: images.length,
+        itemBuilder: (context, itemIndex, pageViewIndex) => Card(
+          margin: const EdgeInsets.symmetric(vertical: 15),
+          elevation: 10.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
           ),
-          itemCount: images.length,
-          itemBuilder: (context, itemIndex, pageViewIndex) => Card(
-            margin: const EdgeInsets.symmetric(vertical: 15),
-            elevation: 10.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: CachedNetworkImage(
-              imageUrl: images[itemIndex],
-              imageBuilder: (context, imageProvider) => Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          image: DecorationImage(
-                            alignment: Alignment.topCenter,
-                            fit: BoxFit.fitWidth,
-                            image: imageProvider,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: SelectableText(
-                          caption,
-                          style: Theme.of(context).textTheme.caption,
-                        )),
-                  ],
+          child: CachedNetworkImage(
+            memCacheHeight: 444,
+            memCacheWidth: 250,
+            imageUrl: images[itemIndex],
+            imageBuilder: (context, imageProvider) => Padding(
+              padding: const EdgeInsets.all(10.0),
+              // child: Column(
+              //   children: [
+              // Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  image: DecorationImage(
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.fitWidth,
+                    image: imageProvider,
+                  ),
                 ),
               ),
-              placeholder: (context, url) => const LoadingIndicator(),
-              errorWidget: (context, url, error) {
-                if (kDebugMode) print(error);
-                return const Icon(Icons.error);
-              },
+              // ),
+              //   Padding(
+              //       padding: const EdgeInsets.only(top: 10),
+              //       child: SelectableText(
+              //         caption,
+              //         style: Theme.of(context).textTheme.caption,
+              //       )),
+              // ],
+              // ),
             ),
+            placeholder: (context, url) => const LoadingIndicator(),
+            errorWidget: (context, url, error) {
+              if (kDebugMode) print(error);
+              return const Icon(Icons.error);
+            },
           ),
         ),
       ),
