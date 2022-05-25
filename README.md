@@ -1,3 +1,42 @@
+<div align="center">
+  <img src="https://raw.githubusercontent.com/KB4YG/kb4yg.github.io/main/assets/icon-white.png" 
+    alt="KB4YG logo" width="200" height="auto" />
+  <h1> KB4YG </h1> 
+</div>
+
+Oak Creek Valley is a very popular destination for hiking and recreation for the city of Corvallis.
+Recreation areas in Oak Creek Valley include the McDonald Forest, Cardwell Hill, Fitton Green,
+Bald Hill Farm, and more. These natural areas are enjoyed by many for hiking, mountain biking, and
+other recreational activities. Our project, Know Before You Go (abbreviated KB4YG), is an Internet
+of things (IoT) project with a mobile app to help park visitors determine how busy a recreation site
+is before they arrive. Providing the number of available parking spots helps alleviate traffic
+congestion at trailheads, saving visitors time and gas while preventing overuse of natural areas.
+
+<div align="center">
+  <a href="https://github.com/KB4YG/frontend/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/KB4YG/frontend" alt="contributors" />
+  </a>
+  <a href="https://github.com/KB4YG/frontend/commits">
+    <img src="https://img.shields.io/github/last-commit/KB4YG/frontend" alt="last update" />
+  </a>
+  <a href="https://github.com/KB4YG/frontend/stargazers">
+    <img src="https://img.shields.io/github/stars/KB4YG/frontend" alt="stars" />
+  </a>
+  <a href="https://github.com/KB4YG/frontend/issues/">
+    <img src="https://img.shields.io/github/issues/KB4YG/frontend" alt="open issues" />
+  </a>
+
+<a href="https://kb4yg.github.io">Demo</a>
+<span> · </span>
+<a href="https://github.com/KB4YG/frontend">Frontend</a>
+<span> · </span>
+<a href="https://github.com/KB4YG/backend">Backend</a>
+<span> · </span>
+<a href="https://github.com/KB4YG/ml">ML</a>
+<span> · </span>
+<a href="https://github.com/KB4YG/iot">IoT</a>
+</div>
+
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Running Locally](#running-locally)
