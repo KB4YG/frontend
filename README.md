@@ -8,10 +8,10 @@ Oak Creek Valley is a region near the city of Corvallis filled with areas for hi
 Recreation areas in Oak Creek Valley include the McDonald-Dunn Forest, Cardwell Hill, Fitton Green,
 Bald Hill Farm, and more. These natural areas are enjoyed by many for hiking, mountain biking, and
 other recreational activities. Our project, Know Before You Go (KB4YG), is an Internet of Things (IoT) 
-project with a mobile app to help both landowners monitor land usage and park visitors determine how 
-busy a recreation site is before they arrive. Providing the number of available parking spots helps 
-alleviate traffic congestion at trailheads, saving visitors time and gas while preventing overuse of 
-natural areas.
+and machine learning project with a mobile app that aims to help both landowners monitor land usage 
+and park visitors determine how busy a recreation site is before they arrive. Providing the number 
+of available parking spots helps alleviate traffic congestion at trailheads, saving visitors time 
+and gas while preventing overuse of natural areas.
 
 <div align="center">
   <a href="https://github.com/KB4YG/frontend/graphs/contributors">
@@ -27,8 +27,7 @@ natural areas.
     <img src="https://img.shields.io/github/issues/KB4YG/frontend" alt="open issues" />
   </a>
 
-  
-  <a href="https://kb4yg.github.io">Demo</a>
+  <a href="https://kb4yg.org">Demo</a>
   <span> · </span>
     <a href="https://github.com/KB4YG/frontend">Frontend</a>
   <span> · </span>
@@ -50,17 +49,15 @@ natural areas.
 
 
 ## Introduction
-
 The Know Before You Go (KB4YG) project was the product of eight students at Oregon State University 
 during the 2021-2022 Senior Capstone course. These eight students were divided into three groups: 
 IoT, Backend, and Frontend.
 
-This repository stores the frontend of the KB4YG app: a cross-platform Flutter application available 
-on Android, iOS, and the [web](https://kb4yg.org).
+This repository stores the frontend code of the project. The KB4YG app is a cross-platform Flutter 
+application available on Android, iOS, and the [web](https://kb4yg.org).
 
 
 ### Resources
-
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
@@ -131,6 +128,8 @@ On the web, the user clicks on one of the items in the [Navbar()](lib/widgets/na
 the [NavigationDrawer()](lib/widgets/navigation_drawer.dart) on a phone) to navigate to a particular page. 
 On mobile, the user taps on one of the bottom tabs of the [CustomTabBar()](lib/widgets/custom_tab_bar.dart).
 
+See the [Screens](#screens) for details regarding each screen.
+
 
 ## Implementation Details
 
@@ -197,7 +196,7 @@ To source the data used by the four data models, we created the [BackendProvider
 singleton as an interface for the Backend's API. 
 
 This object is initialized in [main.dart](lib/main.dart) so it may be accessed throughout the widget 
-tree thanks to the third-party [Provider][https://pub.dev/packages/provider] package. 
+tree thanks to the third-party [Provider](https://pub.dev/packages/provider) package. 
 
 For instance, `final backend = Provider.of<BackendProvider>(context, listen: false);` (or `BackendProvider.of(context);` 
 for brevity) retrieves the instance of `BackendProvider` to call one of its fetch methods. Alternatively, 
@@ -218,6 +217,74 @@ Details regarding the backend implementation can be found at <https://github.com
 
 
 ### Screens
+While the [Application Flow](#application-flow) section outlines the high-level interactions between 
+the screens of the application, this section explains our implementation in more detail.
+
+Each screen is located within the [lib/screens](lib/screens) directory, but some screens are in a 
+nested folder depending on whether widgets on the screen were modularized into separate files.
+
+#### 1. [HomeScreen()](lib/screens/home/home_screen.dart)
+![Home screen](doc/img/screen-home.png)
+
+The default landing screen of the app. Displays a welcome message and static images of select 
+recreation areas within Oak Creek Valley (which are stored in [assets/images](assets/images)).
+
+The web version of this screen has a "View Locations" button while the mobile app does not due to 
+there not being a shared `Beamer` ancestor between them in the latter. See [Areas for Improvement](#areas-for-improvement) 
+for more details regarding this limitation.
+
+#### 2. [HelpScreen()](lib/screens/help_screen.dart)
+![Help screen](doc/img/screen-help.png)
+
+Displays an icon key table that describes the meaning of icons used throughout the app.
+
+#### 3. [AboutScreen()](lib/screens/about_screen.dart)
+![About screen](doc/img/screen-about.png)
+
+Describes the application and answers potential questions of the user.
+
+#### 4. [CountyListScreen()](lib/screens/county_list/county_list_screen.dart)
+![County list screen](doc/img/screen-county-list.png)
+
+Provides a list of supported counties for the user to choose from. Selecting one of these counties 
+redirects the user to the associated `CountyScreen`. A search filter is dynamically added to the list 
+if there are three or more counties.
+
+If the screen width is large enough, then the screen also displays a map of all monitored parking 
+lots. Selecting one of these pins and pressing the popup card redirects the user to the associated 
+`RecreationAreaScreen`.
+
+#### 5. [CountyScreen()](lib/screens/county/county_screen.dart)
+![County screen](doc/img/screen-county.png)
+
+Displays details for the specified county in a table and, if the screen is wide enough, a map with 
+all parking lots within the scope of the county. Related to the [County model](#models).
+
+Pressing a row in the table or the popup card in the map redirects the user to the `RecreationAreaScreen`.
+
+#### 6. [RecreationAreaScreen()](lib/screens/recreation_area/recreation_area_screen.dart)
+![Recreation area screen](doc/img/screen-recreation-area.png)
+
+Displays details for the specified recreation area, such as available parking, a description, and images. 
+Related to the [RecreationArea model](#models).
+
+Pressing the "Map" button in the column with a pin launches either 1) Google Maps (if on the web) 
+or 2) a navigation app on the user's mobile device (if on mobile and one is available). This functionality 
+is accomplished using the [Maps Launcher](https://pub.dev/packages/maps_launcher) package.
+
+#### 7. [NotFoundScreen()](lib/screens/not_found_screen.dart)
+![Not found screen](doc/img/screen-not-found.png)
+
+Displays a 404 error for requested pages that do not exist. Web only.
+
+#### 8. [IntroScreen()](lib/screens/intro_screen.dart)
+![Introductory screen](doc/img/screen-intro.png)
+
+Highlights the main features of the app on the user first launch. Mobile only.
+
+#### 9. [AppScreen()](lib/screens/app_screen.dart)
+
+Wraps the application in a scaffold widget that displays tabs for the various screens. Mobile only.
 
 
 ### Routing / Navigation
@@ -229,7 +296,7 @@ Details regarding the backend implementation can be found at <https://github.com
 ### Testing
 We created a file ([benton_county.dart](lib/benton_county.dart)) to model how data is stored in the 
 backend. So on any screen that queries the backend for information (`CountyListScreen()`, `CountyScreen()`, 
-`RecreationAreaScreen()`), one may replace backend context accessor (`BackendProvider.of(context).getCounty(widget.countyUrl);`)
+`RecreationAreaScreen()`), one may replace the backend context accessor (`BackendProvider.of(context).getCounty(widget.countyUrl);`)
 with a future constructor that uses the test file (`Future<County>.value(County.fromJson(bentonCountyJson));`).
 This way one can more easily test and modify location data without affecting information in the database.
 
@@ -268,15 +335,15 @@ KB4YG grows in popularity.
 
 - Gestures seem to be disabled / don't work correctly on phones with Firefox (Chrome works great though). 
   We suspect this may just be a limitation of Flutter on non-chromium based browsers.
-- Refreshing the ParkingLot()s (models/parking_lot.dart) of a ParkingMap() (widgets/maps/parking_map.dart)
+- Refreshing the [ParkingLot()](lib/models/parking_lot.dart)s of a [ParkingMap()](lib/widgets/maps/parking_map.dart)
   updates the spot counts but will cause errors if the number of locations shrinks. I.e., a given pin
-  will not disappear even if one calls setState() to update the parking lots in a ParkingMap()'s 
+  will not disappear even if one calls `setState()` to update the parking lots in a `ParkingMap()`'s 
   parent widget. Tapping on this defunct card on the map will cause an exception due to the underlying
   data no longer existing. We prioritized our time elsewhere as the likelihood of the number of parking
   lots reducing between reloads is low/non-existent. Stated differently, while the spot counts may 
   change, there would be no reason (save for some backend error) why a given parking lot would cease
-  to be in the database. One potential solution would be to attach a ChangeNotifier() or some other
-  listener as a parent to a ParkingMap().
+  to be in the database. One potential solution would be to attach a `ChangeNotifier()` or some other
+  listener as a parent to a `ParkingMap()`.
 
 ### Areas for Improvement
 
