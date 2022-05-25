@@ -10,8 +10,8 @@
 
 ## Introduction
 
-Know Before You Go (KB4YG) is a cross-platform Flutter application available on Android, iOS, and 
-the web.
+This repository stores the frontend of the Know Before You Go (KB4YG) project. The KB4YG app is a 
+cross-platform Flutter application available on Android, iOS, and the web.
 
 
 ### Resources
@@ -64,13 +64,14 @@ notable folder in the project:
 ## Application Flow
 ![Startup program flow](doc/img/startup-flowchart.png)
 
-First, we enter the `main()` function in `main.dart`, where the code initializes and runs `App()`. 
-The `App()` (`widgets/app.dart`) widget checks whether it is the user's first time running the app 
+First, we enter [main()](lib/main.dart) in `main.dart`, where the code initializes and runs the 
+[App()](lib/widgets/app.dart) widget, which checks whether it is the user's first time running the app 
 and on what platform.
 
-If not on the web (i.e., using the mobile app) and the user hasn't opened the app before, the `IntroScreen()` 
-(`screens/intro_screen.dart`) is displayed and guides the user through the various screens within the app. 
-Afterwards (or if the user has opened the application before), the `AppScreen()` is built and displayed
+If not on the web (i.e., using the mobile app) and the user hasn't opened the app before, the 
+[IntroScreen()](lib/screens/intro_screen.dart) is displayed and guides the user through the various screens within the app. 
+Afterwards (or if the user has opened the application before), the [AppScreen()](lib/screens/app_screen.dart) 
+is built and displayed.
 
 After the above occurs on the mobile app or if the user is accessing the website, the `HomeScreen()` 
 (`screens/home`) introduces the application, at which point the user is able to navigate to any of the 
@@ -89,8 +90,68 @@ On mobile, the user taps on one of the bottom tabs of the `CustomTabBar()` (`wid
 ## Implementation Details
 
 ### Models
+The frontend was tasked with displaying parking spot counts and fire danger information for each 
+location our application supports. To handle this data, we created four models, all of which are
+stored in the [lib/models](lib/models) directory.
+
+For each model, an instance is constructed by parsing a JSON file sent from the backend (see 
+[Backend Connection](#backend-connection)), which is requested based on the current screen (see 
+[Routing / Navigation](#routing-/-navigation)).
+
+The following sections describe notable design decisions for each model. (Observe that the first 
+three models are listed below in ascending level of abstraction.)
+
+#### [ParkingLot()](lib/models/parking_lot.dart)
+The base level unit of the project where we collect parking data. Contains the actual parking spot 
+counts and [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) links to the related recreation area and
+county screens. 
+
+We used the convention where a negative parking spot value indicates either 1) an error or 2) no 
+established parking spots of that type for the parking lot. For instance, Fitton Green has no designated
+handicap parking, so the whole system (IoT->Backend->Frontend) will use some negative value (e.g., -1) 
+to convey this difference between all-in-use and never-available. Use the `spotStr` or `handicapStr` 
+getters to access string variants of these parking counts (returns 'n/a' for negative counts).
+
+Regarding naming motivation, we considered `AccessPoint` instead of `ParkingLot` but chose the latter
+due to its increased specificity and relevancy towards the use case of the user. Note that a parking
+lot may just be a gravel or dirt covered rather than cemented.
+
+#### [RecreationArea()](lib/models/recreation_area.dart)
+A collection of parking lots that provide access to a natural area. Contains information relevant to 
+the recreation area (e.g., name and description).
+
+Note that the `spots` and`handicap` properties contain the totals for each parking lot that provides 
+access to the recreation area. Likewise, `fireDanger` is the highest fire danger level and `dt` is 
+the least recent timestamp amongst associated parking lots.
+
+We chose `RecreationArea` over something like `NaturalArea` since it highlighted that a location may 
+be more "domesticated" (e.g., a park rather than a hiking trail).
+
+#### [County()](lib/models/county.dart)
+A collection of recreation areas within a county. Also contains info. relevant to the county, such as
+name, latitude, and longitude.
+
+Similar to a `RecreationArea`, many of its properties aggregate or interpret values of its 
+encapsulated data structures.
+
+#### [FireDanger()](lib/models/fire_danger.dart) 
+The risk of fire ignition for a region as designated by the Oregon Department of Forestry (ODF).
+
+One requirement of the frontend application was to inform recreationists about the likelihood of a 
+fire igniting, which is a growing concern as the effects of climate change continue to worsen.
+
+Toward that end, the `FireDanger` acts essentially as a glorified enum, wrapping a string that 
+describes the fire danger level with information such as its associated color and the timestamp of its
+designation (danger level can vary throughout the year).
+
+See [ODF's website](https://www.oregon.gov/odf/fire/Pages/weather.aspx) for more information.
+
 
 ### Backend Connection
+To source the data used by the four data models, we created [BackendProvider()](lib/providers/backend.dart)
+as an interface for the Backend's API.
+
+Details regarding the backend implementation can be found at <https://github.com/KB4YG/backend>. 
 
 ### Screens
 
