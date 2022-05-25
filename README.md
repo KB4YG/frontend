@@ -4,13 +4,14 @@
   <h1> KB4YG </h1> 
 </div>
 
-Oak Creek Valley is a very popular destination for hiking and recreation for the city of Corvallis.
-Recreation areas in Oak Creek Valley include the McDonald Forest, Cardwell Hill, Fitton Green,
+Oak Creek Valley is a region near the city of Corvallis filled with areas for hiking and recreation.
+Recreation areas in Oak Creek Valley include the McDonald-Dunn Forest, Cardwell Hill, Fitton Green,
 Bald Hill Farm, and more. These natural areas are enjoyed by many for hiking, mountain biking, and
-other recreational activities. Our project, Know Before You Go (abbreviated KB4YG), is an Internet
-of things (IoT) project with a mobile app to help park visitors determine how busy a recreation site
-is before they arrive. Providing the number of available parking spots helps alleviate traffic
-congestion at trailheads, saving visitors time and gas while preventing overuse of natural areas.
+other recreational activities. Our project, Know Before You Go (KB4YG), is an Internet of Things (IoT) 
+project with a mobile app to help both landowners monitor land usage and park visitors determine how 
+busy a recreation site is before they arrive. Providing the number of available parking spots helps 
+alleviate traffic congestion at trailheads, saving visitors time and gas while preventing overuse of 
+natural areas.
 
 <div align="center">
   <a href="https://github.com/KB4YG/frontend/graphs/contributors">
@@ -26,15 +27,16 @@ congestion at trailheads, saving visitors time and gas while preventing overuse 
     <img src="https://img.shields.io/github/issues/KB4YG/frontend" alt="open issues" />
   </a>
 
-<a href="https://kb4yg.github.io">Demo</a>
-<span> · </span>
-<a href="https://github.com/KB4YG/frontend">Frontend</a>
-<span> · </span>
-<a href="https://github.com/KB4YG/backend">Backend</a>
-<span> · </span>
-<a href="https://github.com/KB4YG/ml">ML</a>
-<span> · </span>
-<a href="https://github.com/KB4YG/iot">IoT</a>
+  
+  <a href="https://kb4yg.github.io">Demo</a>
+  <span> · </span>
+    <a href="https://github.com/KB4YG/frontend">Frontend</a>
+  <span> · </span>
+    <a href="https://github.com/KB4YG/backend">Backend</a>
+  <span> · </span>
+    <a href="https://github.com/KB4YG/ml">ML</a>
+  <span> · </span>
+    <a href="https://github.com/KB4YG/iot">IoT</a>
 </div>
 
 # Table of Contents
@@ -49,8 +51,12 @@ congestion at trailheads, saving visitors time and gas while preventing overuse 
 
 ## Introduction
 
-This repository stores the frontend of the Know Before You Go (KB4YG) project. The KB4YG app is a 
-cross-platform Flutter application available on Android, iOS, and the web.
+The Know Before You Go (KB4YG) project was the product of eight students at Oregon State University 
+during the 2021-2022 Senior Capstone course. These eight students were divided into three groups: 
+IoT, Backend, and Frontend.
+
+This repository stores the frontend of the KB4YG app: a cross-platform Flutter application available 
+on Android, iOS, and the [web](https://kb4yg.org).
 
 
 ### Resources
@@ -59,7 +65,7 @@ A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-- [YouTube Playlist](https://www.youtube.com/playlist?list=PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ)
+- [YouTube Playlist: Netninja's Flutter Tutorial for Beginners](https://www.youtube.com/playlist?list=PL4cUxeGkcC9jLYyp2Aoh6hcWuxFDX6PBJ)
 
 For help getting started with Flutter, view the [online documentation](https://flutter.dev/docs), 
 which offers tutorials, samples, guidance on mobile development, and a full API reference.
@@ -112,18 +118,18 @@ If not on the web (i.e., using the mobile app) and the user hasn't opened the ap
 Afterwards (or if the user has opened the application before), the [AppScreen()](lib/screens/app_screen.dart) 
 is built and displayed.
 
-After the above occurs on the mobile app or if the user is accessing the website, the `HomeScreen()` 
-(`screens/home`) introduces the application, at which point the user is able to navigate to any of the 
-main screens as shown below.
+After the above occurs on the mobile app or if the user is accessing the website, the [HomeScreen()](lib/screens/home) 
+introduces the application, at which point the user is able to navigate to any of the main screens as 
+shown below.
 
 ![Screen flowchart](doc/img/screens.png)
 
 The text boxes at the top of each column show the page name displayed to the user (i.e., what they
 click/tap on) while each rounded rectangle represents a particular screen.
 
-On the web, the user clicks on one of the items in the `Navbar()` (`widgets/navbar.dart`) (or in 
-the `NavigationDrawer()` (`widgets/navigation_drawer.dart`) on a phone) to navigate to a particular page. 
-On mobile, the user taps on one of the bottom tabs of the `CustomTabBar()` (`widgets/custom_tab_bar.dart`).
+On the web, the user clicks on one of the items in the [Navbar()](lib/widgets/navbar.dart) (or in 
+the [NavigationDrawer()](lib/widgets/navigation_drawer.dart) on a phone) to navigate to a particular page. 
+On mobile, the user taps on one of the bottom tabs of the [CustomTabBar()](lib/widgets/custom_tab_bar.dart).
 
 
 ## Implementation Details
@@ -140,7 +146,7 @@ For each model, an instance is constructed by parsing a JSON file sent from the 
 The following sections describe notable design decisions for each model. (Observe that the first 
 three models are listed below in ascending level of abstraction.)
 
-#### [ParkingLot()](lib/models/parking_lot.dart)
+#### 1. [ParkingLot()](lib/models/parking_lot.dart)
 The base level unit of the project where we collect parking data. Contains the actual parking spot 
 counts and [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) links to the related recreation area and
 county screens. 
@@ -155,7 +161,7 @@ Regarding naming motivation, we considered `AccessPoint` instead of `ParkingLot`
 due to its increased specificity and relevancy towards the use case of the user. Note that a parking
 lot may just be a gravel or dirt covered rather than cemented.
 
-#### [RecreationArea()](lib/models/recreation_area.dart)
+#### 2. [RecreationArea()](lib/models/recreation_area.dart)
 A collection of parking lots that provide access to a natural area. Contains information relevant to 
 the recreation area (e.g., name and description).
 
@@ -166,20 +172,20 @@ the least recent timestamp amongst associated parking lots.
 We chose `RecreationArea` over something like `NaturalArea` since it highlighted that a location may 
 be more "domesticated" (e.g., a park rather than a hiking trail).
 
-#### [County()](lib/models/county.dart)
+#### 3. [County()](lib/models/county.dart)
 A collection of recreation areas within a county. Also contains info. relevant to the county, such as
 name, latitude, and longitude.
 
 Similar to a `RecreationArea`, many of its properties aggregate or interpret values of its 
 encapsulated data structures.
 
-#### [FireDanger()](lib/models/fire_danger.dart) 
+#### 4. [FireDanger()](lib/models/fire_danger.dart) 
 The risk of fire ignition for a region as designated by the Oregon Department of Forestry (ODF).
 
 One requirement of the frontend application was to inform recreationists about the likelihood of a 
 fire igniting, which is a growing concern as the effects of climate change continue to worsen.
 
-Toward that end, the `FireDanger` acts essentially as a glorified enum, wrapping a string that 
+Toward that end, the `FireDanger` class acts essentially as a glorified enum, wrapping a string that 
 describes the fire danger level with information such as its associated color and the timestamp of its
 designation (danger level can vary throughout the year).
 
@@ -187,26 +193,48 @@ See [ODF's website](https://www.oregon.gov/odf/fire/Pages/weather.aspx) for more
 
 
 ### Backend Connection
-To source the data used by the four data models, we created [BackendProvider()](lib/providers/backend.dart)
-as an interface for the Backend's API.
+To source the data used by the four data models, we created the [BackendProvider()](lib/providers/backend.dart)
+singleton as an interface for the Backend's API. 
+
+This object is initialized in [main.dart](lib/main.dart) so it may be accessed throughout the widget 
+tree thanks to the third-party [Provider][https://pub.dev/packages/provider] package. 
+
+For instance, `final backend = Provider.of<BackendProvider>(context, listen: false);` (or `BackendProvider.of(context);` 
+for brevity) retrieves the instance of `BackendProvider` to call one of its fetch methods. Alternatively, 
+one may evoke these functions without storing an instance of the singleton using, for example, 
+`BackendProvider.of(context).getCountyList()`.
+
+These fetch methods send an asynchronous GET request to the backend API at the `/locations` endpoint 
+and parse the returned JSON object into the corresponding data model as described in the 
+[Models](#models) section.
+
+Each screen that uses information from the backend wraps the screens content in a [FutureBuilder](https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html).
+The `future` property of the `FutureBuilder` is set to the value returned by the fetch functions of 
+`BackendProvider` (e.g., `Future<List<String>> x = BackendProvider.of(context).getCountyList();` 
+where `x` is the value passed as the builder's `future` argument). This approach allows one to handle 
+exceptions by checking the `hasError` property of the snapshot.
 
 Details regarding the backend implementation can be found at <https://github.com/KB4YG/backend>. 
 
+
 ### Screens
+
 
 ### Routing / Navigation
 
+
 ### Theme
 
+
 ### Testing
-We created a file (`benton_county.dart`) to model how data is stored in the backend. So on any screen
-that queries the backend for information (`CountyListScreen()`, `CountyScreen()`, `RecreationAreaScreen()`),
-one may replace backend context accessor (`BackendProvider.of(context).getCounty(widget.countyUrl);`)
+We created a file ([benton_county.dart](lib/benton_county.dart)) to model how data is stored in the 
+backend. So on any screen that queries the backend for information (`CountyListScreen()`, `CountyScreen()`, 
+`RecreationAreaScreen()`), one may replace backend context accessor (`BackendProvider.of(context).getCounty(widget.countyUrl);`)
 with a future constructor that uses the test file (`Future<County>.value(County.fromJson(bentonCountyJson));`).
 This way one can more easily test and modify location data without affecting information in the database.
 
-## Deployment
 
+## Deployment
 
 ### How to Deploy Website
 
