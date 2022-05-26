@@ -85,8 +85,10 @@ reference, our folder structure was informed by [this style guide](https://www.g
 By default, Flutter created three main folders in the root directory: lib, android, ios, and web.
 The latter three folders contain files specific to their respective platforms. Very few files in these
 directories were manually added or modified by us, so a newcomer hoping to familiarize themself with
-our codebase might best ignore them for now. The following list describes the purpose of every 
+our codebase might best ignore them for now. The following image and list describes the purpose of every 
 notable folder in the project:
+
+![Library file structure](doc/img/lib-file-structure.png)
 
 - `.github`: Workflows associated with this repository (see [How to Deploy Website](#deployment)).
 - `android`: Android specific files.
@@ -302,9 +304,9 @@ area, navigated to the `HomeScreen`, and tapped on the "Locations" tab again, th
 to where you left off; without saving nested navigation you would see the `CountyListScreen` instead.
 
 Read the [API documentation for Beamer](https://pub.dev/packages/beamer) to understand how it works. 
-In effect, navigation is performed by calling `Beamer.of(context).beamToNamed({routeName}`. Valid routes
-are specified by the `BeamerDelegate` that is passed as the `routerDelegate` argument of a `Beamer` 
-when it is first initialized. 
+In effect, navigation is performed by calling `Beamer.of(context).beamToNamed({routeName});`. Valid 
+routes are specified by the `BeamerDelegate` that is passed as the `routerDelegate` argument of a 
+`Beamer` when it is first initialized. 
 
 On mobile, navigation is implemented with multiple `Beamer`s and `BeamerDelegate`s in the [AppScreen()](lib/screens/app_screen.dart). 
 We used multiple `Beamer` `BeamerDelegate` pairs so that the user's nested navigation is not lost when
@@ -328,7 +330,7 @@ We allow the user to toggle between light-mode and dark-mode. Theming is impleme
 `ThemeProvider` is instantiated in [main.dart](lib/main.dart), and thus may be accessed throughout 
 the widget tree using `Provider.of<ThemeProvider>(context);`. 
 
-In the [App widget](lib/widgets/app.dart), we use the above command to add a listener than rebuilds 
+In the [App widget](lib/widgets/app.dart), we use the above command to add a listener that rebuilds 
 the widget tree when the field `themeMode` in `ThemeProvider` changes. The function `toggleTheme()` 
 of `ThemeProvider` toggles this field and is triggered by the [theme_switch](lib/widgets/theme_switch.dart) 
 widget (mobile) or the [theme_icon_button](lib/widgets/theme_icon_button.dart) widget (web).
@@ -368,7 +370,12 @@ expect this limit to be an issue with the current popularity of our project, but
 KB4YG grows in popularity.
 
 ### How to Deploy Mobile App
-
+Here are some resources that provide a step by step process on how to publish or update Flutter  
+applications on mobile:
+- [Flutter Docs: Android Deployment Docs](https://docs.flutter.dev/deployment/android)
+- [Flutter Docs: iOS Deployment Docs](https://docs.flutter.dev/deployment/ios)
+- [Youtube: How To Publish Flutter App On Play Store](https://www.youtube.com/watch?v=g0GNuoCOtaQ&ab_channel=JohannesMilke)
+- [Youtube: Build and Release Flutter App to App Store](https://www.youtube.com/watch?v=akFF1uJWZck&ab_channel=MJSDCoding)
 
 ## Future Development
 
