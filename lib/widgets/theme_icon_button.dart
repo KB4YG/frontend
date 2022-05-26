@@ -3,14 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../providers/theme.dart';
 
-class ThemeIconButton extends StatefulWidget {
+class ThemeIconButton extends StatelessWidget {
   const ThemeIconButton({Key? key}) : super(key: key);
 
-  @override
-  State<ThemeIconButton> createState() => _ThemeIconButtonState();
-}
-
-class _ThemeIconButtonState extends State<ThemeIconButton> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
