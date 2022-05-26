@@ -361,7 +361,7 @@ We chose Firebase since it was easy to both setup a Flutter application and purc
 Google Domains. Using the [Firebase console](https://console.firebase.google.com), one is able to 
 rollback the site to previous versions, handle domains, and monitor usage. 
 
-[Website downloads for the month of May](doc/img/firebase-hosting-usage.png)
+![Website downloads for the month of May](doc/img/firebase-hosting-usage.png)
 
 NOTE: Firebase (free tier) has a 10 GB storage limit (which shouldn't be an issue since you can just 
 delete old versions of the site) and a 10 GB download limit. Given that each page might cause the 
