@@ -32,7 +32,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   flutter_launcher_icons: ^0.9.2    # CLI tool to generate ios/android icons (in assets/launcher)
   flutter_native_splash: ^2.1.6     # CLI tool to generate splash screen images for web/ios/android
 
@@ -60,7 +60,7 @@ flutter:
   assets:
     - assets/leaf-logo.png
     - assets/images/ # Static images (e.g., on home screen)
-    - assets/intro/ # On-boarding gifs
+    - assets/intro/ # On-boarding images
 
   fonts:
     - family: OpenSans
