@@ -1,4 +1,3 @@
-<> 
 <div align="center">
   <img src="https://raw.githubusercontent.com/KB4YG/kb4yg.github.io/main/assets/icon-white.png" 
     alt="KB4YG logo" width="200" height="auto" />
@@ -89,7 +88,7 @@ directories were manually added or modified by us, so a newcomer hoping to famil
 our codebase might best ignore them for now. The following image and list describes the purpose of every 
 notable folder in the project:
 
-![Library file structure](doc/img/lib-file-structure.svg)
+<div align="center"> ![Library file structure](doc/img/lib-file-structure.svg) </div>
 
 - `.github`: Workflows associated with this repository (see [How to Deploy Website](#deployment)).
 - `android`: Android specific files.
@@ -107,7 +106,7 @@ notable folder in the project:
 
 
 ## Application Flow
-![Startup program flow](doc/img/startup-flowchart.png)
+<div align="center"> ![Startup program flow](doc/img/startup-flowchart.png) </div>
 
 First, we enter [main()](lib/main.dart) in `main.dart`, where the code initializes and runs the 
 [App()](lib/widgets/app.dart) widget, which checks whether it is the user's first time running the app 
@@ -122,7 +121,7 @@ After the above occurs on the mobile app or if the user is accessing the website
 introduces the application, at which point the user is able to navigate to any of the main screens as 
 shown below.
 
-![Screen flowchart](doc/img/screens.png)
+<div align="center"> ![Screen flowchart](doc/img/screens.png) </div>
 
 The text boxes at the top of each column show the page name displayed to the user (i.e., what they
 click/tap on) while each rounded rectangle represents a particular screen.
@@ -227,7 +226,7 @@ Each screen is located within the [lib/screens](lib/screens) directory, but some
 nested folder depending on whether widgets on the screen were modularized into separate files.
 
 #### 1. [HomeScreen()](lib/screens/home/home_screen.dart)
-![Home screen](doc/img/screen-home.png)
+<div align="center"> ![Home screen](doc/img/screen-home.png) </div>
 
 The default landing screen of the app. Displays a welcome message and static images of select 
 recreation areas within Oak Creek Valley (which are stored in [assets/images](assets/images)).
@@ -237,17 +236,17 @@ there not being a shared `Beamer()` ancestor between them in the latter. See [Ar
 for more details regarding this limitation.
 
 #### 2. [HelpScreen()](lib/screens/help_screen.dart)
-![Help screen](doc/img/screen-help.png)
+<div align="center"> ![Help screen](doc/img/screen-help.png) </div>
 
 Displays an icon key table that describes the meaning of icons used throughout the app.
 
 #### 3. [AboutScreen()](lib/screens/about_screen.dart)
-![About screen](doc/img/screen-about.png)
+<div align="center"> ![About screen](doc/img/screen-about.png) </div>
 
 Describes the application and answers potential questions of the user.
 
 #### 4. [CountyListScreen()](lib/screens/county_list/county_list_screen.dart)
-![County list screen](doc/img/screen-county-list.png)
+<div align="center"> ![County list screen](doc/img/screen-county-list.png) </div>
 
 Provides a list of supported counties for the user to choose from. Selecting one of these counties 
 redirects the user to the associated `CountyScreen()`. A search filter is dynamically added to the list 
@@ -258,7 +257,7 @@ lots. Selecting one of these pins and pressing the popup card redirects the user
 `RecreationAreaScreen`.
 
 #### 5. [CountyScreen()](lib/screens/county/county_screen.dart)
-![County screen](doc/img/screen-county.png)
+<div align="center"> ![County screen](doc/img/screen-county.png) </div>
 
 Displays details for the specified county in a table and, if the screen is wide enough, a map with 
 all parking lots within the scope of the county. Related to the [County model](#models).
@@ -266,7 +265,7 @@ all parking lots within the scope of the county. Related to the [County model](#
 Pressing a row in the table or the popup card in the map redirects the user to the `RecreationAreaScreen`.
 
 #### 6. [RecreationAreaScreen()](lib/screens/recreation_area/recreation_area_screen.dart)
-![Recreation area screen](doc/img/screen-recreation-area.png)
+<div align="center"> ![Recreation area screen](doc/img/screen-recreation-area.png) </div>
 
 Displays details for the specified recreation area, such as available parking, a description, and images. 
 Related to the [RecreationArea model](#models).
@@ -276,12 +275,12 @@ or 2) a navigation app on the user's mobile device (if on mobile and one is avai
 is accomplished using the [Maps Launcher](https://pub.dev/packages/maps_launcher) package.
 
 #### 7. [NotFoundScreen()](lib/screens/not_found_screen.dart)
-![Not found screen](doc/img/screen-not-found.png)
+<div align="center"> ![Not found screen](doc/img/screen-not-found.png) </div>
 
 Displays a 404 error for requested pages that do not exist. Web only.
 
 #### 8. [IntroScreen()](lib/screens/intro_screen.dart)
-![Introductory screen](doc/img/screen-intro.png)
+<div align="center"> ![Introductory screen](doc/img/screen-intro.png) </div>
 
 Highlights the main features of the app on the user first launch. Mobile only.
 
@@ -362,7 +361,7 @@ We chose Firebase since it was easy to both setup a Flutter application and purc
 Google Domains. Using the [Firebase console](https://console.firebase.google.com), one is able to 
 rollback the site to previous versions, handle domains, and monitor usage. 
 
-![Website downloads for the month of May](doc/img/firebase-hosting-usage.png)
+<div align="center"> ![Website downloads for the month of May](doc/img/firebase-hosting-usage.png) </div>
 
 NOTE: Firebase (free tier) has a 10 GB storage limit (which shouldn't be an issue since you can just 
 delete old versions of the site) and a 10 GB download limit. Given that each page might cause the 
