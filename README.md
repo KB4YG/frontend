@@ -80,7 +80,7 @@ which offers tutorials, samples, guidance on mobile development, and a full API 
 ## Folder Structure
 One of the most confusing aspects of Flutter (initially, at least) for us was the folder structure.
 This section attempts to demystify this default structure while also explaining our additions. For 
-reference, our folder structure was informed by [this style guide](https://www.geeksforgeeks.org/flutter-file-structure/)
+reference, our folder structure was informed by [this style guide](https://www.geeksforgeeks.org/flutter-file-structure/).
 
 By default, Flutter created three main folders in the root directory: lib, android, ios, and web.
 The latter three folders contain files specific to their respective platforms. Very few files in these
@@ -93,7 +93,7 @@ notable folder in the project:
 - `assets`: Static assets (fonts, home screen images, logo, etc.).
 - `doc`: Documentation files (e.g., the images within this README).
 - `ios`: iOS specific files.
-- `lib`: Widgets, classes, and functions that make up the KB4YG application. ("library".)
+- `lib`: Library of widgets, classes, and functions that make up the KB4YG application.
 - `web`: Web specific files.
 - `lib/extensions`: Helper functions for pre-existing classes (e.g., `String.Capitalize()`). 
 - `lib/models`: Classes that modularize and help interact with data from the backend.
@@ -201,7 +201,7 @@ tree thanks to the third-party [Provider](https://pub.dev/packages/provider) pac
 For instance, `final backend = Provider.of<BackendProvider>(context, listen: false);` (or `BackendProvider.of(context);` 
 for brevity) retrieves the instance of `BackendProvider` to call one of its fetch methods. Alternatively, 
 one may evoke these functions without storing an instance of the singleton using, for example, 
-`BackendProvider.of(context).getCountyList()`.
+`BackendProvider.of(context).getCountyList();`.
 
 These fetch methods send an asynchronous GET request to the backend API at the `/locations` endpoint 
 and parse the returned JSON object into the corresponding data model as described in the 
@@ -288,9 +288,50 @@ Wraps the application in a scaffold widget that displays tabs for the various sc
 
 
 ### Routing / Navigation
+Flutter has two native approaches to handling navigation between screens: the simple [Navigator class](https://api.flutter.dev/flutter/widgets/Navigator-class.html), 
+which does not handle when a user goes to specific URL on the web (e.g., "kb4yg.org/locations/benton/fitton-green"), 
+and the [Router class](https://api.flutter.dev/flutter/widgets/Router-class.html), which can be 
+customized to our advanced needs but is cumbersome and tedious to work with.
+
+Due to these in-ideal options, the KB4YG app uses the third-party package [Beamer](https://pub.dev/packages/beamer) 
+for its routing needs. 
+
+On the web, this allows us to handle whatever URL the user enters with ease. On mobile, Beamer helps 
+save nested navigation. For instance, if you were in the "Locations" tab and selected a recreation 
+area, navigated to the `HomeScreen`, and tapped on the "Locations" tab again, then you would return 
+to where you left off; without saving nested navigation you would see the `CountyListScreen` instead.
+
+Read the [API documentation for Beamer](https://pub.dev/packages/beamer) to understand how it works. 
+In effect, navigation is performed by calling `Beamer.of(context).beamToNamed({routeName}`. Valid routes
+are specified by the `BeamerDelegate` that is passed as the `routerDelegate` argument of a `Beamer` 
+when it is first initialized. 
+
+On mobile, navigation is implemented with multiple `Beamer`s and `BeamerDelegate`s in the [AppScreen()](lib/screens/app_screen.dart). 
+We used multiple `Beamer` `BeamerDelegate` pairs so that the user's nested navigation is not lost when
+cycling between tabs.
+
+On the web, routing is implemented with a single `Beamer` in the [App widget](lib/widgets/app.dart) 
+since we don't have tabs and thus do not need to save nested navigation.
+
+A `BeamerDelegate` requires a location builder to be specified. Location builders take in a list of 
+beam locations. Each `BeamLocation` extended class requires the patterns it is to be matched with as 
+well as a build function that returns the `BeamPage` to build. In our implementation, beam locations 
+for each screen are implemented in [lib/utilities/beam_locations.dart](lib/utilities/beam_locations.dart)
+and `BeamPage`s are declared within each screen object (except for screens within the "Locations" tab).
+
+Route names and pattern-matching formats are located in [lib/constants.dart](lib/constants.dart).
 
 
 ### Theme
+We allow the user to toggle between light-mode and dark-mode. Theming is implemented with the 
+[ThemeProvider](lib/providers/theme.dart) class, which extends [ChangeNotifier](https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html).
+`ThemeProvider` is instantiated in [main.dart](lib/main.dart), and thus may be accessed throughout 
+the widget tree using `Provider.of<ThemeProvider>(context);`. 
+
+In the [App widget](lib/widgets/app.dart), we use the above command to add a listener than rebuilds 
+the widget tree when the field `themeMode` in `ThemeProvider` changes. The function `toggleTheme()` 
+of `ThemeProvider` toggles this field and is triggered by the [theme_switch](lib/widgets/theme_switch.dart) 
+widget (mobile) or the [theme_icon_button](lib/widgets/theme_icon_button.dart) widget (web).
 
 
 ### Testing
@@ -305,10 +346,10 @@ This way one can more easily test and modify location data without affecting inf
 
 ### How to Deploy Website
 
-Running `git push` triggers a GitHub action that automatically deploys the site with Firebase.
-IMPORTANT: this means that any merge or push to master will rebuild the website, so the master branch 
-is tied with production. Note that a failed build will leave the site unchanged and Firebase allows 
-you to rollback to previous site versions.
+Pushing to or merging the master branch triggers a GitHub action that automatically deploys the site 
+with Firebase. IMPORTANT: this means that any merge or push to master will rebuild the website, so 
+the master branch is tied with production. Note that a failed build will leave the site unchanged 
+and Firebase allows you to rollback to previous site versions.
 
 (See https://www.youtube.com/watch?v=xJo7Mqse960 and the related 
 [repo](https://github.com/JohannesMilke/flutter_firebase_hosting/blob/master/.github/workflows/main.yml) 
@@ -318,7 +359,7 @@ We chose Firebase since it was easy to both setup a Flutter application and purc
 Google Domains. Using the [Firebase console](https://console.firebase.google.com), one is able to 
 rollback the site to previous versions, handle domains, and monitor usage. 
 
-[comment]: <> ([Website downloads for the month of May]&#40;doc/img/firebase-hosting-usage.png&#41;)
+[Website downloads for the month of May](doc/img/firebase-hosting-usage.png)
 
 NOTE: Firebase (free tier) has a 10 GB storage limit (which shouldn't be an issue since you can just 
 delete old versions of the site) and a 10 GB download limit. Given that each page might cause the 
