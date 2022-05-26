@@ -1,3 +1,4 @@
+<> 
 <div align="center">
   <img src="https://raw.githubusercontent.com/KB4YG/kb4yg.github.io/main/assets/icon-white.png" 
     alt="KB4YG logo" width="200" height="auto" />
@@ -88,7 +89,7 @@ directories were manually added or modified by us, so a newcomer hoping to famil
 our codebase might best ignore them for now. The following image and list describes the purpose of every 
 notable folder in the project:
 
-![Library file structure](doc/img/lib-file-structure.png)
+![Library file structure](doc/img/lib-file-structure.svg)
 
 - `.github`: Workflows associated with this repository (see [How to Deploy Website](#deployment)).
 - `android`: Android specific files.
@@ -142,7 +143,7 @@ stored in the [lib/models](lib/models) directory.
 
 For each model, an instance is constructed by parsing a JSON file sent from the backend (see 
 [Backend Connection](#backend-connection)), which is requested based on the current screen (see 
-[Routing / Navigation](#routing-/-navigation)).
+[Routing / Navigation](#routing--navigation)).
 
 The following sections describe notable design decisions for each model. (Observe that the first 
 three models are listed below in ascending level of abstraction.)
@@ -158,7 +159,7 @@ handicap parking, so the whole system (IoT->Backend->Frontend) will use some neg
 to convey this difference between all-in-use and never-available. Use the `spotStr` or `handicapStr` 
 getters to access string variants of these parking counts (returns 'n/a' for negative counts).
 
-Regarding naming motivation, we considered `AccessPoint` instead of `ParkingLot` but chose the latter
+Regarding naming motivation, we considered "AccessPoint" instead of "ParkingLot" but chose the latter
 due to its increased specificity and relevancy towards the use case of the user. Note that a parking
 lot may just be a gravel or dirt covered rather than cemented.
 
@@ -170,14 +171,14 @@ Note that the `spots` and`handicap` properties contain the totals for each parki
 access to the recreation area. Likewise, `fireDanger` is the highest fire danger level and `dt` is 
 the least recent timestamp amongst associated parking lots.
 
-We chose `RecreationArea` over something like `NaturalArea` since it highlighted that a location may 
+We chose "RecreationArea" over something like "NaturalArea" since it highlighted that a location may 
 be more "domesticated" (e.g., a park rather than a hiking trail).
 
 #### 3. [County()](lib/models/county.dart)
 A collection of recreation areas within a county. Also contains info. relevant to the county, such as
 name, latitude, and longitude.
 
-Similar to a `RecreationArea`, many of its properties aggregate or interpret values of its 
+Similar to a `RecreationArea()`, many of its properties aggregate or interpret values of its 
 encapsulated data structures.
 
 #### 4. [FireDanger()](lib/models/fire_danger.dart) 
@@ -186,7 +187,7 @@ The risk of fire ignition for a region as designated by the Oregon Department of
 One requirement of the frontend application was to inform recreationists about the likelihood of a 
 fire igniting, which is a growing concern as the effects of climate change continue to worsen.
 
-Toward that end, the `FireDanger` class acts essentially as a glorified enum, wrapping a string that 
+Toward that end, the `FireDanger()` class acts essentially as a glorified enum, wrapping a string that 
 describes the fire danger level with information such as its associated color and the timestamp of its
 designation (danger level can vary throughout the year).
 
@@ -201,7 +202,7 @@ This object is initialized in [main.dart](lib/main.dart) so it may be accessed t
 tree thanks to the third-party [Provider](https://pub.dev/packages/provider) package. 
 
 For instance, `final backend = Provider.of<BackendProvider>(context, listen: false);` (or `BackendProvider.of(context);` 
-for brevity) retrieves the instance of `BackendProvider` to call one of its fetch methods. Alternatively, 
+for brevity) retrieves the instance of `BackendProvider()` to call one of its fetch methods. Alternatively, 
 one may evoke these functions without storing an instance of the singleton using, for example, 
 `BackendProvider.of(context).getCountyList();`.
 
@@ -210,8 +211,8 @@ and parse the returned JSON object into the corresponding data model as describe
 [Models](#models) section.
 
 Each screen that uses information from the backend wraps the screens content in a [FutureBuilder](https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html).
-The `future` property of the `FutureBuilder` is set to the value returned by the fetch functions of 
-`BackendProvider` (e.g., `Future<List<String>> x = BackendProvider.of(context).getCountyList();` 
+The `future` property of the `FutureBuilder()` is set to the value returned by the fetch functions of 
+`BackendProvider()` (e.g., `Future<List<String>> x = BackendProvider.of(context).getCountyList();` 
 where `x` is the value passed as the builder's `future` argument). This approach allows one to handle 
 exceptions by checking the `hasError` property of the snapshot.
 
@@ -232,7 +233,7 @@ The default landing screen of the app. Displays a welcome message and static ima
 recreation areas within Oak Creek Valley (which are stored in [assets/images](assets/images)).
 
 The web version of this screen has a "View Locations" button while the mobile app does not due to 
-there not being a shared `Beamer` ancestor between them in the latter. See [Areas for Improvement](#areas-for-improvement) 
+there not being a shared `Beamer()` ancestor between them in the latter. See [Areas for Improvement](#areas-for-improvement) 
 for more details regarding this limitation.
 
 #### 2. [HelpScreen()](lib/screens/help_screen.dart)
@@ -249,7 +250,7 @@ Describes the application and answers potential questions of the user.
 ![County list screen](doc/img/screen-county-list.png)
 
 Provides a list of supported counties for the user to choose from. Selecting one of these counties 
-redirects the user to the associated `CountyScreen`. A search filter is dynamically added to the list 
+redirects the user to the associated `CountyScreen()`. A search filter is dynamically added to the list 
 if there are three or more counties.
 
 If the screen width is large enough, then the screen also displays a map of all monitored parking 
@@ -300,26 +301,26 @@ for its routing needs.
 
 On the web, this allows us to handle whatever URL the user enters with ease. On mobile, Beamer helps 
 save nested navigation. For instance, if you were in the "Locations" tab and selected a recreation 
-area, navigated to the `HomeScreen`, and tapped on the "Locations" tab again, then you would return 
-to where you left off; without saving nested navigation you would see the `CountyListScreen` instead.
+area, navigated to the `HomeScreen()`, and tapped on the "Locations" tab again, then you would return 
+to where you left off; without saving nested navigation you would see the `CountyListScreen()` instead.
 
 Read the [API documentation for Beamer](https://pub.dev/packages/beamer) to understand how it works. 
 In effect, navigation is performed by calling `Beamer.of(context).beamToNamed({routeName});`. Valid 
-routes are specified by the `BeamerDelegate` that is passed as the `routerDelegate` argument of a 
-`Beamer` when it is first initialized. 
+routes are specified by the `BeamerDelegate()` that is passed as the `routerDelegate` argument of a 
+`Beamer()` when it is first initialized. 
 
-On mobile, navigation is implemented with multiple `Beamer`s and `BeamerDelegate`s in the [AppScreen()](lib/screens/app_screen.dart). 
-We used multiple `Beamer` `BeamerDelegate` pairs so that the user's nested navigation is not lost when
+On mobile, navigation is implemented with multiple `Beamer()`s and `BeamerDelegate()`s in the [AppScreen()](lib/screens/app_screen.dart). 
+We used multiple `Beamer()` `BeamerDelegate()` pairs so that the user's nested navigation is not lost when
 cycling between tabs.
 
-On the web, routing is implemented with a single `Beamer` in the [App widget](lib/widgets/app.dart) 
+On the web, routing is implemented with a single `Beamer()` in the [App widget](lib/widgets/app.dart) 
 since we don't have tabs and thus do not need to save nested navigation.
 
-A `BeamerDelegate` requires a location builder to be specified. Location builders take in a list of 
-beam locations. Each `BeamLocation` extended class requires the patterns it is to be matched with as 
-well as a build function that returns the `BeamPage` to build. In our implementation, beam locations 
+A `BeamerDelegate()` requires a location builder to be specified. Location builders take in a list of 
+beam locations. Each `BeamLocation()` extended class requires the patterns it is to be matched with as 
+well as a build function that returns the `BeamPage()` to build. In our implementation, beam locations 
 for each screen are implemented in [lib/utilities/beam_locations.dart](lib/utilities/beam_locations.dart)
-and `BeamPage`s are declared within each screen object (except for screens within the "Locations" tab).
+and `BeamPage()`s are declared within each screen object (except for screens within the "Locations" tab).
 
 Route names and pattern-matching formats are located in [lib/constants.dart](lib/constants.dart).
 
@@ -327,12 +328,12 @@ Route names and pattern-matching formats are located in [lib/constants.dart](lib
 ### Theme
 We allow the user to toggle between light-mode and dark-mode. Theming is implemented with the 
 [ThemeProvider](lib/providers/theme.dart) class, which extends [ChangeNotifier](https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html).
-`ThemeProvider` is instantiated in [main.dart](lib/main.dart), and thus may be accessed throughout 
+`ThemeProvider()` is instantiated in [main.dart](lib/main.dart), and thus may be accessed throughout 
 the widget tree using `Provider.of<ThemeProvider>(context);`. 
 
 In the [App widget](lib/widgets/app.dart), we use the above command to add a listener that rebuilds 
-the widget tree when the field `themeMode` in `ThemeProvider` changes. The function `toggleTheme()` 
-of `ThemeProvider` toggles this field and is triggered by the [theme_switch](lib/widgets/theme_switch.dart) 
+the widget tree when the field `themeMode` in `ThemeProvider()` changes. The function `toggleTheme()` 
+of `ThemeProvider()` toggles this field and is triggered by the [theme_switch](lib/widgets/theme_switch.dart) 
 widget (mobile) or the [theme_icon_button](lib/widgets/theme_icon_button.dart) widget (web).
 
 
@@ -372,8 +373,8 @@ KB4YG grows in popularity.
 ### How to Deploy Mobile App
 Here are some resources that provide a step by step process on how to publish or update Flutter  
 applications on mobile:
-- [Flutter Docs: Android Deployment Docs](https://docs.flutter.dev/deployment/android)
-- [Flutter Docs: iOS Deployment Docs](https://docs.flutter.dev/deployment/ios)
+- [Flutter Docs: Android Deployment](https://docs.flutter.dev/deployment/android)
+- [Flutter Docs: iOS Deployment](https://docs.flutter.dev/deployment/ios)
 - [Youtube: How To Publish Flutter App On Play Store](https://www.youtube.com/watch?v=g0GNuoCOtaQ&ab_channel=JohannesMilke)
 - [Youtube: Build and Release Flutter App to App Store](https://www.youtube.com/watch?v=akFF1uJWZck&ab_channel=MJSDCoding)
 
