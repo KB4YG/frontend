@@ -80,10 +80,9 @@ class AboutScreen extends StatelessWidget {
                   onPressed: () => showAboutDialog(
                       context: context,
                       applicationVersion: appVersion,
-                      // TODO: pick license
                       applicationIcon: const Logo(),
                       applicationLegalese:
-                          'Know Before You Go is licensed under the X license.'),
+                          'This project is licensed under the terms of the MIT license.'),
                 ),
               ),
             ],
