@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kb4yg/providers/theme.dart';
 import 'package:kb4yg/screens/intro_screen.dart';
 import 'package:kb4yg/utilities/beam_locations.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/constants.dart' as constants;
 import 'package:provider/provider.dart' show Provider;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
@@ -31,6 +31,11 @@ class _AppState extends State<App> {
     // Determine whether to display intro/tutorial screen
     _isFirstRun = prefs.getBool(constants.prefIntro);
 
+    // Change router delegate based on whether on web or mobile app.
+    // This is so that the mobile app tabs can save nested navigation (e.g.,
+    //  return to RecreationAreaScreen() rather than CountyListScreen() when
+    //  tapping Locations tab after navigating to another screen).
+    // See AppScreen() for more info.
     if (kIsWeb) {
       _routerDelegate = BeamerDelegate(
           initialPath: constants.routeHome,
@@ -58,10 +63,11 @@ class _AppState extends State<App> {
     // Get current theme (listening with ChangeNotifierProvider())
     final themeProvider = Provider.of<ThemeProvider>(context);
 
+    // Load intro screen if first time running, else load home screen
     return _isFirstRun == false || kIsWeb
         ? MaterialApp.router(
             title: constants.title,
-            themeMode: themeProvider.themeMode,
+            themeMode: themeProvider.themeMode, // This is where theme is updated
             theme: Themes.lightTheme,
             darkTheme: Themes.darkTheme,
             debugShowCheckedModeBanner: false,
@@ -70,6 +76,6 @@ class _AppState extends State<App> {
             backButtonDispatcher:
                 BeamerBackButtonDispatcher(delegate: _routerDelegate),
           )
-        : const MaterialApp(home: IntroScreen());
+        : const MaterialApp(home: IntroScreen(), debugShowCheckedModeBanner: false,);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:beamer/beamer.dart' show Beamer;
 import 'package:flutter/material.dart';
 
-import '../utilities/constants.dart';
+import '../constants.dart';
 import 'logo.dart';
 
 /// Navigation drawer for web browser on mobile phone.

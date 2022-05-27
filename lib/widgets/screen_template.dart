@@ -21,7 +21,7 @@ class ScreenTemplate extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => MediaQuery.of(context).size.width > 600
+  Widget build(BuildContext context) => MediaQuery.of(context).size.width > 600 && kIsWeb
       ? WebScreenTemplate(hasScrollbar: hasScrollbar, child: child)
       : MobileScreenTemplate(
           title: title,

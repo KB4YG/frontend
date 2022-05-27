@@ -22,7 +22,7 @@ class HomeScreenCarousel extends StatelessWidget {
         options: CarouselOptions(
           aspectRatio: 16 / 9,
           autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 20),
+          autoPlayInterval: const Duration(seconds: 17),
           enlargeCenterPage: true,
         ),
         itemCount: images.length,

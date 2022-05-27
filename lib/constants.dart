@@ -10,17 +10,17 @@ const linkRecArea = 'recreationArea';
 const linkCounty = 'county';
 
 // Preferences
-const prefCounty = 'selectedCounty';
+const prefCounty = 'selectedCounty'; // Not in use
 const prefDark = 'isDark'; // Save selected theme
 const prefIntro = 'isFirstRun'; // Mobile - store whether to show intro screen
 
-// Navbar page names
+// Navbar page names (strings user clicks on in CustomTabBar() on mobile or Navbar() on web)
 const pageHome = 'Home';
 const pageLocations = 'Locations';
 const pageHelp = 'Help';
 const pageAbout = 'About';
 
-// Navigation
+// Navigation (URL paths, see lib/utilities/beam_locations.dart)
 const routeRoot = '/';
 const routeHome = '/home';
 const routeUnknown = '/404';

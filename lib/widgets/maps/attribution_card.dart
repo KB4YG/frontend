@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../utilities/hyperlink.dart';
 
+/// OpenStreetMap requires attribution for use of their servers.
+/// See https://www.openstreetmap.org/copyright.
 class AttributionCard extends StatelessWidget {
   static const attributionLink = 'https://www.openstreetmap.org/copyright';
 

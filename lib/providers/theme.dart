@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:kb4yg/utilities/constants.dart' as constants;
+import 'package:kb4yg/constants.dart' as constants;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 
@@ -13,8 +13,10 @@ class ThemeProvider extends ChangeNotifier {
   // Constructor
   ThemeProvider({required this.prefs}) {
     if (kDebugMode) print('Initialized Theme Provider');
+    // Get dark theme preference from shared prefs
     final darkPref = prefs.getBool(constants.prefDark);
-    // Use dark theme if user selected preference or system theme is dark
+    // Use dark theme if user selected it before or system theme is dark
+    // (darkPref == null is needed if set light theme as preference)
     themeMode = darkPref == true ||
             (darkPref == null &&
                 WidgetsBinding.instance!.window.platformBrightness ==
@@ -23,8 +25,10 @@ class ThemeProvider extends ChangeNotifier {
         : ThemeMode.light;
   }
 
+  /// Sets theme to dark if [isDark] is true, light if false, or opposite of current
+  /// theme if left null. Notifies listeners of [ThemeProvider] to rebuild widget tree.
   void toggleTheme(bool? isDark) {
-    isDark = isDark ?? !this.isDark; // If parameter left null check mode
+    isDark = isDark ?? !this.isDark; // If isDark parameter is null check mode
     if (kDebugMode) print('Toggled Theme to ${isDark ? 'Dark' : 'Light'}');
     prefs.setBool(constants.prefDark, isDark);
     themeMode = isDark ? ThemeMode.dark : ThemeMode.light;

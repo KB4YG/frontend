@@ -22,11 +22,19 @@ class RecreationArea {
   /// Least recent timestamp (time updated) amongst parking lots.
   late final DateTime dt = [for (var x in parkingLots) x.dt]
       .fold(parkingLots[0].dt, (p, c) => p.isAfter(c) ? c : p);
-  /// Highest fire danger level amongst parking lots.
+  /// Highest fire danger level amongst parking lots in recreation area.
+  // Create a list of FireDanger objects in each parking lot & compares to find
+  // highest threat
   late final FireDanger fireDanger = [for (var x in parkingLots) x.fireDanger]
       .fold(parkingLots[0].fireDanger,
           (p, c) => p.level.index > c.level.index ? p : c);
 
+  /// Construct [RecreationArea] from JSON object.
+  /// Required fields:
+  /// - RecreationArea (string)
+  /// - About (string)
+  /// - Images (array of strings)
+  /// - List (array of [ParkingLot] objects)
   RecreationArea.fromJson(Map<String, dynamic> json)
       : name = json['RecreationArea'],
         info = json['About'],

@@ -8,7 +8,7 @@ import 'package:kb4yg/screens/county/county_screen.dart';
 import 'package:kb4yg/screens/help_screen.dart';
 import 'package:kb4yg/screens/home/home_screen.dart';
 import 'package:kb4yg/screens/recreation_area/recreation_area_screen.dart';
-import 'package:kb4yg/utilities/constants.dart';
+import 'package:kb4yg/constants.dart';
 import 'package:kb4yg/utilities/sanitize_url.dart';
 
 class HomeLocation extends BeamLocation<BeamState> {
@@ -41,11 +41,14 @@ class CountyLocation extends BeamLocation<BeamState> {
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    // Used to return list of pages (e.g. CountyList and County for RecreationArea)
+    // but now only return list of one since building multiple seemed unnecessary?
     BeamPage page;
 
     var url = sanitizeUrl(state.uri.toString()).replaceAll(routeLocations, '');
     if (kDebugMode) print('URL - "$url"');
 
+    // Create BeamPage() based on path parameters
     if (state.pathParameters.containsKey(routeRecAreaId)) {
       // Guess the recreation area name based on url
       var recreationAreaName =

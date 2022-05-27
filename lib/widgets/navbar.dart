@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/utilities/constants.dart';
+import 'package:kb4yg/constants.dart';
 import 'package:kb4yg/widgets/theme_icon_button.dart';
 
 import 'hover_button.dart';

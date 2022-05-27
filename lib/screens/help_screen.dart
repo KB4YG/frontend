@@ -1,6 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:kb4yg/utilities/constants.dart' show routeHelp;
+import 'package:kb4yg/constants.dart' show routeHelp;
 import 'package:kb4yg/widgets/screen_card.dart';
 import 'package:kb4yg/widgets/icon_key_table.dart';
 import 'package:kb4yg/widgets/screen_template.dart';

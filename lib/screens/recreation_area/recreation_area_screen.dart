@@ -4,7 +4,6 @@ import 'package:maps_launcher/maps_launcher.dart';
 import '../../providers/backend.dart';
 import 'recreation_area_carousel.dart';
 import 'recreation_area_info.dart';
-import '../../benton_county.dart';
 import '../../models/parking_lot.dart';
 import '../../models/recreation_area.dart';
 import '../../widgets/screen_card.dart';
@@ -118,7 +117,7 @@ class MobileRecreationAreaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         MobileRecreationAreaCarousel(
             images: recArea.imageUrls, caption: recArea.name),

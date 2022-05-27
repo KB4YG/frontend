@@ -16,11 +16,15 @@ class County {
   /// All parking lots in county
   late List<ParkingLot> parkingLots;
   /// Highest fire danger level in county.
+  // Create a list of FireDanger objects in each rec area & compares to find
+  // highest threat
   late final FireDanger fireDanger = [
     for (var x in recreationAreas) x.fireDanger
   ].fold(recreationAreas[0].fireDanger,
       (p, c) => p.level.index > c.level.index ? p : c);
 
+  /// Construct County object from JSON file. Requires fields County (string),
+  /// Latitude (double), Longitude (double), and List (array of RecreationArea objects).
   County.fromJson(Map<String, dynamic> json)
       : name = json['County'],
         lat = json['Latitude'],
