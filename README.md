@@ -4,7 +4,7 @@
   <h1> KB4YG </h1> 
 </div>
 
-Oak Creek Valley is a region near the city of Corvallis filled with areas for hiking and recreation.
+Oak Creek Valley is a region around the city of Corvallis filled with areas for hiking and recreation.
 Recreation areas in Oak Creek Valley include the McDonald-Dunn Forest, Cardwell Hill, Fitton Green,
 Bald Hill Farm, and more. These natural areas are enjoyed by many for hiking, mountain biking, and
 other recreational activities. Our project, Know Before You Go (KB4YG), is an Internet of Things (IoT) 
@@ -130,7 +130,7 @@ On the web, the user clicks on one of the items in the [Navbar()](lib/widgets/na
 the [NavigationDrawer()](lib/widgets/navigation_drawer.dart) on a phone) to navigate to a particular page. 
 On mobile, the user taps on one of the bottom tabs of the [CustomTabBar()](lib/widgets/custom_tab_bar.dart).
 
-See the [Screens](#screens) for details regarding each screen.
+See the [Screens](#screens) section for details regarding each screen.
 
 
 ## Implementation Details
@@ -282,7 +282,7 @@ Displays a 404 error for requested pages that do not exist. Web only.
 #### 8. [IntroScreen()](lib/screens/intro_screen.dart)
 ![Introductory screen](doc/img/screen-intro.png)
 
-Highlights the main features of the app on the user first launch. Mobile only.
+Highlights the main features of the app on the user's first launch. Mobile only.
 
 #### 9. [AppScreen()](lib/screens/app_screen.dart)
 
@@ -301,7 +301,7 @@ for its routing needs.
 On the web, this allows us to handle whatever URL the user enters with ease. On mobile, Beamer helps 
 save nested navigation. For instance, if you were in the "Locations" tab and selected a recreation 
 area, navigated to the `HomeScreen()`, and tapped on the "Locations" tab again, then you would return 
-to where you left off; without saving nested navigation you would see the `CountyListScreen()` instead.
+to where you left off. Without saving nested navigation you would see the `CountyListScreen()` instead.
 
 Read the [API documentation for Beamer](https://pub.dev/packages/beamer) to understand how it works. 
 In effect, navigation is performed by calling `Beamer.of(context).beamToNamed({routeName});`. Valid 
@@ -413,3 +413,8 @@ applications on mobile:
   application, or just add meta tags to index.html. [PageSpeed Insights](https://pagespeed.web.dev/report?url=kb4yg.org) 
   can evaluate a website's performance and [this blog post](https://cinnamon.agency/blog/post/flutter_and_seo) 
   describes the SEO problem in more detail.
+- When navigating between the `CountyListScreen()` and the `CountyScreen()`, there may be a way to 
+  increase the smoothness of the transition using a [hero animation](https://docs.flutter.dev/development/ui/animations/hero-animations). 
+- If possible (which it may not be), a nice quality of life feature would be the ability to zoom in 
+  to or otherwise enhance images within the app, allowing users on mobile to view recreation areas 
+  in more detail or with greater clarity.
